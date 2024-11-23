@@ -29,7 +29,6 @@ local.properties
 *.keystore
 
 # Generated files
-build/
 captures/
 .externalNativeBuild/
 cxx/
@@ -38,7 +37,6 @@ output.json
 *.ap_
 
 # IntelliJ IDEA files
-.idea/
 *.ipr
 *.iws
 
@@ -79,7 +77,6 @@ google-services.xml
 crashlytics.properties
 
 # Miscellaneous
-*.log
 *.tmp
 *.temp
 *.swp
@@ -89,13 +86,10 @@ crashlytics.properties
 *.bkp
 
 # JetBrains IDEs
-.idea/inspectionProfiles/
 .idea/gradle.xml
 .idea/misc.xml
 .idea/tasks.xml
-.idea/modules.xml
 .idea/encodings.xml
-.idea/workspace.xml
 
 # Exclude generated API documentation
 doc/api/
