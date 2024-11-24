@@ -1,3 +1,19 @@
 <resources>
-    <string name="app_name">HabitTrackerNew</string>
+    <string name="app_name">HabitTracker</string>
+
+    <!--region Home Tab -->
+    <string name="home_tab_title">Home</string>
+    <!--endregion-->
+
+    <!--region Habits Tab -->
+    <string name="habits_tab_title">Hábitos</string>
+    <!--endregion-->
+
+    <!--region Progress Tab -->
+    <string name="progress_tab_title">Progresso</string>
+    <!--endregion-->
+
+    <!--region Profile Tab -->
+    <string name="profile_tab_title">Perfil</string>
+    <!--endregion-->
 </resources>
