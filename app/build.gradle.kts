@@ -1,7 +1,9 @@
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.dagger.hilt)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("kotlin-kapt")
 }
 
 android {
@@ -36,6 +38,10 @@ android {
     }
 }
 
+kapt {
+    correctErrorTypes = true
+}
+
 dependencies {
 
     implementation(libs.androidx.core.ktx)
@@ -46,11 +52,17 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.dagger.hilt)
+    kapt(libs.dagger.hilt.compiler)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
+    androidTestImplementation(libs.androidx.navigation.testing)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 }
