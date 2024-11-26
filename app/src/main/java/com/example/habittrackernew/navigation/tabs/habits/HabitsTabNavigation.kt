@@ -1,12 +1,12 @@
 package com.example.habittrackernew.navigation.tabs.habits
 
 import androidx.navigation.NavController
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.navigation
 import androidx.navigation.navOptions
 import com.example.habittrackernew.ui.screen.habits.navigation.HABITS_LIST_ROUTE
+import com.example.habittrackernew.ui.screen.habits.navigation.habitsListScreen
 
 const val HABITS_TAB_ROUTE = "habits_tab_route"
 
@@ -17,12 +17,6 @@ fun NavGraphBuilder.habitsNavGraph(navController: NavController) = navigation(
     route = HABITS_TAB_ROUTE
 ) {
     val navOptions = navOptions {
-        // Pop up to the start destination of the graph to
-        // avoid building up a large stack of destinations
-        // on the back stack as users select items
-        popUpTo(navController.graph.findStartDestination().id) {
-            saveState = true
-        }
         // Avoid multiple copies of the same destination when
         // reselecting the same item
         launchSingleTop = true
@@ -31,5 +25,4 @@ fun NavGraphBuilder.habitsNavGraph(navController: NavController) = navigation(
     }
 
     habitsListScreen(navController, navOptions)
-    addHabitScreen(navController)
 }
