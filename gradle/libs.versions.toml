@@ -12,9 +12,7 @@ hilt = "2.51.1"
 navigation = "2.8.4"
 androidxHiltNavigationCompose = "1.2.0"
 appcompat = "1.7.0"
-material = "1.12.0"
 room = "2.6.1"
-identityJvm = "202411.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
