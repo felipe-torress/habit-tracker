@@ -1,7 +1,9 @@
 package com.example.habittrackernew.ui.composables.topbar
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -11,10 +13,12 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults.pinnedScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.habittrackernew.R
@@ -32,13 +36,19 @@ fun TopBar(
     actionButton: @Composable RowScope.(onClick: () -> Unit) -> Unit = { onClick -> AddButton(onClick) },
     onActionButtonClick: () -> Unit = {},
 ) {
-
     TopAppBar(
         title = { Title(title) },
         navigationIcon = { if (hasNavigationIcon) navigationIcon(onNavigationIconClick) },
         actions = { if (hasActionButton) actionButton(onActionButtonClick) },
         scrollBehavior = pinnedScrollBehavior(),
-        modifier = Modifier.background(HabitTrackerColors.backgroundColor )
+        colors = TopAppBarColors(
+            containerColor = HabitTrackerColors.backgroundColor,
+            scrolledContainerColor = HabitTrackerColors.backgroundColor,
+            navigationIconContentColor = HabitTrackerColors.green500,
+            titleContentColor = HabitTrackerColors.textColor,
+            actionIconContentColor = HabitTrackerColors.green500
+        ),
+        modifier = Modifier.background(HabitTrackerColors.backgroundColor)
     )
 }
 
@@ -74,12 +84,13 @@ private fun AddButton(onClick: () -> Unit) {
         colors = buttonColors(
             containerColor = HabitTrackerColors.green500,
             contentColor = HabitTrackerColors.backgroundColor
-        )
+        ),
+        modifier = Modifier.heightIn(48.dp)
     ) {
-        Icon(
+        Image(
             painter = painterResource(R.drawable.ic_plus_24dp),
             contentDescription = null,
-            tint = HabitTrackerColors.backgroundColor,
+            colorFilter = ColorFilter.tint(HabitTrackerColors.backgroundColor),
             modifier = Modifier.size(24.dp)
         )
     }
