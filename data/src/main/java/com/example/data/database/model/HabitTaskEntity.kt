@@ -4,11 +4,11 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import com.android.identity.util.UUID
 import com.example.data.model.HabitTask
 import java.time.DayOfWeek
 import java.time.LocalTime
 import java.time.ZonedDateTime
+import java.util.UUID
 
 /**
  * Defines a Habit Task
