@@ -28,9 +28,9 @@ fun HabitTrackerNavHost(
         exitTransition = { scaleOut(animationSpec = tween(300)) },
         modifier = modifier
     ) {
-        homeNavGraph(navController)
+        homeNavGraph()
         habitsNavGraph(navController)
-        progressNavGraph(navController)
-        profileNavGraph(navController)
+        progressNavGraph()
+        profileNavGraph()
     }
 }
