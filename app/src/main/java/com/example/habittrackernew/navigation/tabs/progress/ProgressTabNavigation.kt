@@ -11,7 +11,7 @@ const val PROGRESS_TAB_ROUTE = "progress_tab_route"
 
 fun NavController.navigateToProgressTab(navOptions: NavOptions) = navigate(PROGRESS_TAB_ROUTE, navOptions)
 
-fun NavGraphBuilder.progressNavGraph(navController: NavController) = navigation(
+fun NavGraphBuilder.progressNavGraph() = navigation(
     startDestination = PROGRESS_ROUTE,
     route = PROGRESS_TAB_ROUTE
 ) {
