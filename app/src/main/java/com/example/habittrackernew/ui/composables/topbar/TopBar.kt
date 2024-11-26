@@ -29,8 +29,8 @@ import com.example.habittrackernew.ui.theme.HabitTrackerTypography
 @Composable
 fun TopBar(
     title: String,
-    hasNavigationIcon: Boolean,
-    hasActionButton: Boolean,
+    hasNavigationIcon: Boolean = false,
+    hasActionButton: Boolean = false,
     navigationIcon: @Composable (onClick: () -> Unit) -> Unit = { onClick -> CollapseIcon(onClick) },
     onNavigationIconClick: () -> Unit = {},
     actionButton: @Composable RowScope.(onClick: () -> Unit) -> Unit = { onClick -> AddButton(onClick) },

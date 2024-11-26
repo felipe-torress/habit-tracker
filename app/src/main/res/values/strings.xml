@@ -3,6 +3,7 @@
 
     <!--region Home Tab -->
     <string name="home_tab_title">Home</string>
+    <string name="home_screen_toolbar_title">Olá, %s</string>
     <!--endregion-->
 
     <!--region Habits Tab -->
@@ -11,6 +12,7 @@
 
     <!--region Progress Tab -->
     <string name="progress_tab_title">Progresso</string>
+    <string name="progress_screen_toolbar_title">Seu Progresso</string>
     <!--endregion-->
 
     <!--region Profile Tab -->
