@@ -124,20 +124,6 @@ fun RowScope.HabitTrackerNavigationBarItem(
     )
 }
 
-/**
- * Habit Tracker navigation default values.
- */
-object HabitTrackerNavigationDefaults {
-    @Composable
-    fun navigationContentColor() = MaterialTheme.colorScheme.onSurfaceVariant
-
-    @Composable
-    fun navigationSelectedItemColor() = MaterialTheme.colorScheme.onPrimaryContainer
-
-    @Composable
-    fun navigationIndicatorColor() = MaterialTheme.colorScheme.primaryContainer
-}
-
 //region --- Previews ---
 @Preview
 @Composable
