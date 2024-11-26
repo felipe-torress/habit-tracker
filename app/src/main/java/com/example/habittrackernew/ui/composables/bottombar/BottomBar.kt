@@ -119,7 +119,7 @@ fun RowScope.HabitTrackerNavigationBarItem(
             unselectedIconColor = HabitTrackerColors.darkGrey500,
             selectedTextColor = HabitTrackerColors.darkGrey500,
             unselectedTextColor = HabitTrackerColors.darkGrey500,
-            indicatorColor = HabitTrackerColors.softBlue100,
+            indicatorColor = HabitTrackerColors.green100,
         ),
     )
 }
