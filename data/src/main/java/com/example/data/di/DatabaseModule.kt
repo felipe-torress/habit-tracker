@@ -1,7 +1,8 @@
-package com.example.data.database
+package com.example.data.di
 
 import android.content.Context
 import androidx.room.Room
+import com.example.data.database.HabitTrackerDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

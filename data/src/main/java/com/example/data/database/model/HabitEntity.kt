@@ -3,7 +3,6 @@ package com.example.data.database.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.data.model.Habit
 import com.example.data.model.HabitColor
 import java.time.ZonedDateTime
 import java.util.UUID
@@ -21,14 +20,4 @@ data class HabitEntity(
     val createdAt: ZonedDateTime,
     @ColumnInfo(name = "updated_at")
     val updatedAt: ZonedDateTime,
-)
-
-fun HabitEntity.asHabit() = Habit(
-    id = id,
-    name = name,
-    createdAt = createdAt,
-    updatedAt = updatedAt,
-    color = color,
-    tasks = emptyList(),
-    goals = emptyList(),
 )

@@ -1,5 +1,6 @@
-package com.example.data.database
+package com.example.data.di
 
+import com.example.data.database.HabitTrackerDatabase
 import com.example.data.database.dao.GoalDao
 import com.example.data.database.dao.HabitDao
 import com.example.data.database.dao.HabitTaskDao

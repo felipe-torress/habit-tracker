@@ -41,17 +41,3 @@ data class GoalEntity(
     @ColumnInfo(name = "updated_at")
     val updatedAt: ZonedDateTime,
 )
-
-fun GoalEntity.asGoal() = Goal(
-    id = id,
-    habitId = habitId,
-    name = name,
-    weeks = weeks,
-    currentCompletions = currentCompletions,
-    requiredCompletions = requiredCompletions,
-    reward = reward,
-    startDate = startDate,
-    createdAt = createdAt,
-    updatedAt = updatedAt,
-    associatedTask = emptyList()
-)

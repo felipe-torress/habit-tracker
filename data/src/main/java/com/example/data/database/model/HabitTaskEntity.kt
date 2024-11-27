@@ -4,7 +4,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import com.example.data.model.HabitTask
 import java.time.DayOfWeek
 import java.time.LocalTime
 import java.time.ZonedDateTime
@@ -41,16 +40,4 @@ data class HabitTaskEntity(
     val createdAt: ZonedDateTime,
     @ColumnInfo(name = "updated_at")
     val updatedAt: ZonedDateTime,
-)
-
-fun HabitTaskEntity.asHabitTask() = HabitTask(
-    id = id,
-    habitId = habitId,
-    name = name,
-    time = time,
-    currentWeeklyCompletions = currentWeeklyCompletions,
-    requiredWeeklyCompletions = requiredWeeklyCompletions,
-    daysOfWeek = daysOfWeek,
-    createdAt = createdAt,
-    updatedAt = updatedAt,
 )
