@@ -5,7 +5,6 @@ import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
 internal class ZonedDateTimeConverter {
-
     private val formatter: DateTimeFormatter = DateTimeFormatter.ISO_ZONED_DATE_TIME
 
     @TypeConverter

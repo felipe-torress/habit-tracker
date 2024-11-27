@@ -4,7 +4,6 @@ import com.example.data.model.Habit
 import kotlinx.coroutines.flow.Flow
 
 interface HabitsRepository {
-
     /**
      * Creates a new [Habit]
      */

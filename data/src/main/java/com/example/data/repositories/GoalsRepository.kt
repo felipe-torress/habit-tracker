@@ -4,7 +4,6 @@ import com.example.data.model.Goal
 import kotlinx.coroutines.flow.Flow
 
 interface GoalsRepository {
-
     /**
      * Creates a new [Goal]
      */

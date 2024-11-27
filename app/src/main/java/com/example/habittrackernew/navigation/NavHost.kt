@@ -13,7 +13,6 @@ import com.example.habittrackernew.navigation.tabs.profile.profileNavGraph
 import com.example.habittrackernew.navigation.tabs.progress.progressNavGraph
 import com.example.habittrackernew.ui.AppState
 
-
 @Composable
 fun HabitTrackerNavHost(
     modifier: Modifier = Modifier,
@@ -26,7 +25,7 @@ fun HabitTrackerNavHost(
         startDestination = startDestination,
         enterTransition = { scaleIn(animationSpec = tween(300)) },
         exitTransition = { scaleOut(animationSpec = tween(300)) },
-        modifier = modifier
+        modifier = modifier,
     ) {
         homeNavGraph()
         habitsNavGraph(navController)

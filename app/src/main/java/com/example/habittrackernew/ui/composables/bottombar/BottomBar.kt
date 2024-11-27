@@ -22,13 +22,12 @@ import com.example.habittrackernew.ui.isTopLevelDestinationInHierarchy
 import com.example.habittrackernew.ui.theme.HabitTrackerColors
 import com.example.habittrackernew.ui.theme.HabitTrackerTypography
 
-
 @Composable
 fun HabitTrackerBottomBar(
     destinations: List<TopLevelDestination>,
     onNavigateToDestination: (TopLevelDestination) -> Unit,
     currentDestination: NavDestination?,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     HabitTrackerNavigationBar(modifier = modifier) {
         destinations.forEach { destination ->
@@ -42,7 +41,7 @@ fun HabitTrackerBottomBar(
                         painter = painterResource(destination.iconResId),
                         contentDescription = null,
                         colorFilter = ColorFilter.tint(HabitTrackerColors.darkGrey500),
-                        modifier = Modifier.size(24.dp)
+                        modifier = Modifier.size(24.dp),
                     )
                 },
                 label = {
@@ -50,14 +49,13 @@ fun HabitTrackerBottomBar(
                         text = stringResource(destination.titleResId),
                         style = HabitTrackerTypography.bodySmall,
                         fontWeight = if (selected) FontWeight.Bold else FontWeight.Normal,
-                        color = HabitTrackerColors.darkGrey500
+                        color = HabitTrackerColors.darkGrey500,
                     )
-                }
+                },
             )
         }
     }
 }
-
 
 /**
  * Habit Tracker navigation bar with content slot. Wraps Material 3 [NavigationBar].
@@ -113,13 +111,14 @@ fun RowScope.HabitTrackerNavigationBarItem(
         label = label,
         icon = icon,
         alwaysShowLabel = alwaysShowLabel,
-        colors = NavigationBarItemDefaults.colors(
-            selectedIconColor = HabitTrackerColors.darkGrey500,
-            unselectedIconColor = HabitTrackerColors.darkGrey500,
-            selectedTextColor = HabitTrackerColors.darkGrey500,
-            unselectedTextColor = HabitTrackerColors.darkGrey500,
-            indicatorColor = HabitTrackerColors.green100,
-        ),
+        colors =
+            NavigationBarItemDefaults.colors(
+                selectedIconColor = HabitTrackerColors.darkGrey500,
+                unselectedIconColor = HabitTrackerColors.darkGrey500,
+                selectedTextColor = HabitTrackerColors.darkGrey500,
+                unselectedTextColor = HabitTrackerColors.darkGrey500,
+                indicatorColor = HabitTrackerColors.green100,
+            ),
     )
 }
 

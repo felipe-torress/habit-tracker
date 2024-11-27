@@ -4,7 +4,6 @@ import androidx.room.TypeConverter
 import java.time.DayOfWeek
 
 internal class DayOfWeekListConverter {
-
     @TypeConverter
     fun fromDayOfWeekList(dayOfWeekList: List<DayOfWeek>?): String? {
         return dayOfWeekList?.joinToString(",") { it.name }

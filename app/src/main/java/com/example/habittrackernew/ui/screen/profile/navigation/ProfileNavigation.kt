@@ -6,6 +6,7 @@ import com.example.habittrackernew.ui.screen.profile.ProfileRoute
 
 const val PROFILE_ROUTE = "profile_route"
 
-fun NavGraphBuilder.profileScreen() = composable(route = PROFILE_ROUTE) {
-    ProfileRoute()
-}
+fun NavGraphBuilder.profileScreen() =
+    composable(route = PROFILE_ROUTE) {
+        ProfileRoute()
+    }

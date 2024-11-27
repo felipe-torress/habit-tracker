@@ -19,12 +19,12 @@ import com.example.habittrackernew.ui.composables.topbar.TopBar
 @Composable
 fun HabitsListRoute(
     viewModel: HabitsListViewModel = hiltViewModel(),
-    onAddHabitClick: () -> Unit
+    onAddHabitClick: () -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     HabitsListScreen(
         uiState = uiState,
-        onAddHabitClick = onAddHabitClick
+        onAddHabitClick = onAddHabitClick,
     )
 }
 
@@ -39,16 +39,17 @@ fun HabitsListScreen(
                 title = stringResource(id = R.string.habits_tab_title),
                 hasNavigationIcon = false,
                 hasActionButton = true,
-                onActionButtonClick = onAddHabitClick
+                onActionButtonClick = onAddHabitClick,
             )
-        }
+        },
     ) { paddingValues ->
         Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .padding(paddingValues)
-                .fillMaxSize()
+            modifier =
+                Modifier
+                    .padding(paddingValues)
+                    .fillMaxSize(),
         ) {
             Text(stringResource(id = R.string.habits_tab_title))
         }

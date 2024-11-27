@@ -13,17 +13,11 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 internal object DaosModule {
     @Provides
-    fun providesGoalDao(
-        database: HabitTrackerDatabase
-    ): GoalDao = database.goalDao()
+    fun providesGoalDao(database: HabitTrackerDatabase): GoalDao = database.goalDao()
 
     @Provides
-    fun providesHabitDao(
-        database: HabitTrackerDatabase
-    ): HabitDao = database.habitDao()
+    fun providesHabitDao(database: HabitTrackerDatabase): HabitDao = database.habitDao()
 
     @Provides
-    fun providesHabitTaskDao(
-        database: HabitTrackerDatabase
-    ): HabitTaskDao = database.habitTaskDao()
+    fun providesHabitTaskDao(database: HabitTrackerDatabase): HabitTaskDao = database.habitTaskDao()
 }

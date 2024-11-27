@@ -3,7 +3,6 @@ package com.example.habittrackernew.ui.theme
 import androidx.compose.ui.graphics.Color
 
 object HabitTrackerColors {
-
     // Custom Colors
     val backgroundColor = Color(0xFFFAFCFF)
     val textColor = Color(0xFF1E1E1E)

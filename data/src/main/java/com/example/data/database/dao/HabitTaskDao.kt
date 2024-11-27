@@ -7,13 +7,11 @@ import androidx.room.Query
 import com.example.data.database.model.HabitTaskEntity
 import kotlinx.coroutines.flow.Flow
 
-
 /**
  * DAO for [HabitTask] and [HabitTaskEntity] access
  */
 @Dao
 interface HabitTaskDao {
-
     /**
      * Inserts a new Goal
      */
