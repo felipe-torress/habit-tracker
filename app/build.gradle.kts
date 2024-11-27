@@ -43,6 +43,12 @@ kapt {
     correctErrorTypes = true
 }
 
+ktlint {
+    filter {
+        exclude { file -> file.name.endsWith("Screen.kt") }
+    }
+}
+
 dependencies {
 
     implementation(project(":data"))

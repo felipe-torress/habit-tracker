@@ -13,3 +13,10 @@ tasks.register("ktlintCheck") {
         ":data:ktlintCheck"
     )
 }
+
+tasks.register("ktlintFormat") {
+    dependsOn(
+        ":app:ktlintFormat",
+        ":data:ktlintFormat"
+    )
+}
