@@ -27,5 +27,5 @@ enum class TopLevelDestination(
     PROFILE(
         titleResId = R.string.profile_tab_title,
         iconResId = R.drawable.ic_profile_24dp,
-    )
+    ),
 }

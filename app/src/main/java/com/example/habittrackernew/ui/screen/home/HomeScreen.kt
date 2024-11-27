@@ -25,14 +25,15 @@ fun HomeScreen() {
             TopBar(
                 title = stringResource(id = R.string.home_screen_toolbar_title, "Felipe"),
             )
-        }
+        },
     ) { paddingValues ->
         Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .padding(paddingValues)
-                .fillMaxSize()
+            modifier =
+                Modifier
+                    .padding(paddingValues)
+                    .fillMaxSize(),
         ) {
             Text(stringResource(id = R.string.home_tab_title))
         }

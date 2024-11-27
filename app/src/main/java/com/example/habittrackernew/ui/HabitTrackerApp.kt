@@ -21,25 +21,27 @@ import com.example.habittrackernew.ui.theme.HabitTrackerColors
 @Composable
 fun HabitTrackerApp(appState: AppState = rememberAppState()) {
     Scaffold(
-        modifier = Modifier.semantics {
-            testTagsAsResourceId = true
-        },
+        modifier =
+            Modifier.semantics {
+                testTagsAsResourceId = true
+            },
         containerColor = HabitTrackerColors.backgroundColor,
         bottomBar = {
             HabitTrackerBottomBar(
                 destinations = appState.topLevelDestinations,
                 currentDestination = appState.currentDestination,
                 onNavigateToDestination = appState::navigateToTopLevelDestination,
-                modifier = Modifier.testTag("HabitTrackerBottomBar")
+                modifier = Modifier.testTag("HabitTrackerBottomBar"),
             )
-        }
+        },
     ) { paddingValues ->
         HabitTrackerNavHost(
             appState = appState,
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-                .consumeWindowInsets(paddingValues)
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues)
+                    .consumeWindowInsets(paddingValues),
         )
     }
 }

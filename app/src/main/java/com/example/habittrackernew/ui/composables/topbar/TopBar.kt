@@ -31,9 +31,13 @@ fun TopBar(
     title: String,
     hasNavigationIcon: Boolean = false,
     hasActionButton: Boolean = false,
-    navigationIcon: @Composable (onClick: () -> Unit) -> Unit = { onClick -> CollapseIcon(onClick) },
+    navigationIcon: @Composable (
+        onClick: () -> Unit,
+    ) -> Unit = { onClick -> CollapseIcon(onClick) },
     onNavigationIconClick: () -> Unit = {},
-    actionButton: @Composable RowScope.(onClick: () -> Unit) -> Unit = { onClick -> AddButton(onClick) },
+    actionButton: @Composable RowScope.(
+        onClick: () -> Unit,
+    ) -> Unit = { onClick -> AddButton(onClick) },
     onActionButtonClick: () -> Unit = {},
 ) {
     TopAppBar(
@@ -41,14 +45,15 @@ fun TopBar(
         navigationIcon = { if (hasNavigationIcon) navigationIcon(onNavigationIconClick) },
         actions = { if (hasActionButton) actionButton(onActionButtonClick) },
         scrollBehavior = pinnedScrollBehavior(),
-        colors = TopAppBarColors(
-            containerColor = HabitTrackerColors.backgroundColor,
-            scrolledContainerColor = HabitTrackerColors.backgroundColor,
-            navigationIconContentColor = HabitTrackerColors.green500,
-            titleContentColor = HabitTrackerColors.textColor,
-            actionIconContentColor = HabitTrackerColors.green500
-        ),
-        modifier = Modifier.background(HabitTrackerColors.backgroundColor)
+        colors =
+            TopAppBarColors(
+                containerColor = HabitTrackerColors.backgroundColor,
+                scrolledContainerColor = HabitTrackerColors.backgroundColor,
+                navigationIconContentColor = HabitTrackerColors.green500,
+                titleContentColor = HabitTrackerColors.textColor,
+                actionIconContentColor = HabitTrackerColors.green500,
+            ),
+        modifier = Modifier.background(HabitTrackerColors.backgroundColor),
     )
 }
 
@@ -57,21 +62,21 @@ private fun Title(title: String) {
     Text(
         text = title,
         style = HabitTrackerTypography.headline4,
-        color = HabitTrackerColors.textColor
+        color = HabitTrackerColors.textColor,
     )
 }
 
 @Composable
 private fun CollapseIcon(
     onClick: () -> Unit,
-    color: Color = HabitTrackerColors.blue800
+    color: Color = HabitTrackerColors.blue800,
 ) {
     IconButton(onClick = onClick) {
         Icon(
             painter = painterResource(R.drawable.ic_minimize_24dp),
             contentDescription = "Collapse Icon",
             tint = color,
-            modifier = Modifier.size(24.dp)
+            modifier = Modifier.size(24.dp),
         )
     }
 }
@@ -81,17 +86,18 @@ private fun AddButton(onClick: () -> Unit) {
     Button(
         onClick = onClick,
         shape = RoundedCornerShape(16.dp),
-        colors = buttonColors(
-            containerColor = HabitTrackerColors.green500,
-            contentColor = HabitTrackerColors.backgroundColor
-        ),
-        modifier = Modifier.heightIn(48.dp)
+        colors =
+            buttonColors(
+                containerColor = HabitTrackerColors.green500,
+                contentColor = HabitTrackerColors.backgroundColor,
+            ),
+        modifier = Modifier.heightIn(48.dp),
     ) {
         Image(
             painter = painterResource(R.drawable.ic_plus_24dp),
             contentDescription = null,
             colorFilter = ColorFilter.tint(HabitTrackerColors.backgroundColor),
-            modifier = Modifier.size(24.dp)
+            modifier = Modifier.size(24.dp),
         )
     }
 }

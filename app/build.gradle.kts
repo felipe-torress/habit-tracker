@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.dagger.hilt)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.ktlint)
     id("kotlin-kapt")
 }
 
@@ -23,7 +24,10 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro",
+            )
         }
     }
     compileOptions {
@@ -40,6 +44,12 @@ android {
 
 kapt {
     correctErrorTypes = true
+}
+
+ktlint {
+    filter {
+        exclude { file -> file.name.endsWith("Screen.kt") }
+    }
 }
 
 dependencies {

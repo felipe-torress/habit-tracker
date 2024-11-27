@@ -6,3 +6,17 @@ plugins {
     alias(libs.plugins.dagger.hilt) apply false
     alias(libs.plugins.android.library) apply false
 }
+
+tasks.register("ktlintCheck") {
+    dependsOn(
+        ":app:ktlintCheck",
+        ":data:ktlintCheck"
+    )
+}
+
+tasks.register("ktlintFormat") {
+    dependsOn(
+        ":app:ktlintFormat",
+        ":data:ktlintFormat"
+    )
+}

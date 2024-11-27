@@ -4,7 +4,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import com.example.data.model.Goal
 import java.time.ZonedDateTime
 import java.util.UUID
 
@@ -19,9 +18,9 @@ import java.util.UUID
             entity = HabitEntity::class,
             parentColumns = ["id"],
             childColumns = ["habit_id"],
-            onDelete = ForeignKey.CASCADE
-        )
-    ]
+            onDelete = ForeignKey.CASCADE,
+        ),
+    ],
 )
 data class GoalEntity(
     @PrimaryKey val id: String = UUID.randomUUID().toString(),

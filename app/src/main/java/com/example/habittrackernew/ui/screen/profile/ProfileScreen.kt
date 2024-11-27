@@ -25,14 +25,15 @@ fun ProfileScreen() {
             TopBar(
                 title = stringResource(id = R.string.profile_tab_title),
             )
-        }
+        },
     ) { paddingValues ->
         Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .padding(paddingValues)
-                .fillMaxSize()
+            modifier =
+                Modifier
+                    .padding(paddingValues)
+                    .fillMaxSize(),
         ) {
             Text(stringResource(id = R.string.profile_tab_title))
         }

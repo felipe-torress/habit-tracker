@@ -23,7 +23,7 @@ import com.example.data.database.util.ZonedDateTimeConverter
         HabitEntity::class,
     ],
     version = 1,
-    exportSchema = true
+    exportSchema = true,
 )
 @TypeConverters(
     ZonedDateTimeConverter::class,
@@ -33,6 +33,8 @@ import com.example.data.database.util.ZonedDateTimeConverter
 )
 internal abstract class HabitTrackerDatabase : RoomDatabase() {
     abstract fun goalDao(): GoalDao
+
     abstract fun habitDao(): HabitDao
+
     abstract fun habitTaskDao(): HabitTaskDao
 }

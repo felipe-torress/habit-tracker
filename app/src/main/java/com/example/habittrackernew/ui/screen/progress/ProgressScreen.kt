@@ -25,14 +25,15 @@ fun ProgressScreen() {
             TopBar(
                 title = stringResource(id = R.string.progress_screen_toolbar_title),
             )
-        }
+        },
     ) { paddingValues ->
         Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .padding(paddingValues)
-                .fillMaxSize()
+            modifier =
+                Modifier
+                    .padding(paddingValues)
+                    .fillMaxSize(),
         ) {
             Text(stringResource(id = R.string.progress_tab_title))
         }

@@ -20,9 +20,9 @@ import java.util.UUID
             entity = HabitEntity::class,
             parentColumns = ["id"],
             childColumns = ["habit_id"],
-            onDelete = ForeignKey.CASCADE
-        )
-    ]
+            onDelete = ForeignKey.CASCADE,
+        ),
+    ],
 )
 data class HabitTaskEntity(
     @PrimaryKey val id: String = UUID.randomUUID().toString(),

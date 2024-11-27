@@ -9,11 +9,16 @@ import com.example.habittrackernew.ui.screen.progress.navigation.progressScreen
 
 const val PROGRESS_TAB_ROUTE = "progress_tab_route"
 
-fun NavController.navigateToProgressTab(navOptions: NavOptions) = navigate(PROGRESS_TAB_ROUTE, navOptions)
+fun NavController.navigateToProgressTab(navOptions: NavOptions) =
+    navigate(
+        PROGRESS_TAB_ROUTE,
+        navOptions,
+    )
 
-fun NavGraphBuilder.progressNavGraph() = navigation(
-    startDestination = PROGRESS_ROUTE,
-    route = PROGRESS_TAB_ROUTE
-) {
-    progressScreen()
-}
+fun NavGraphBuilder.progressNavGraph() =
+    navigation(
+        startDestination = PROGRESS_ROUTE,
+        route = PROGRESS_TAB_ROUTE,
+    ) {
+        progressScreen()
+    }

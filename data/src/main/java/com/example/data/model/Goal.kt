@@ -13,5 +13,5 @@ data class Goal(
     val startDate: ZonedDateTime,
     val createdAt: ZonedDateTime,
     val updatedAt: ZonedDateTime,
-    val associatedTask: List<HabitTask>
+    val associatedTask: List<HabitTask>,
 )

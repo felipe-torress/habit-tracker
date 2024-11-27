@@ -14,7 +14,8 @@ val colorScheme = lightColorScheme(
 )
 
 @Composable
-fun HabitTrackerTheme(content: @Composable () -> Unit) = MaterialTheme(
-    colorScheme = colorScheme,
-    content = content
-)
+fun HabitTrackerTheme(content: @Composable () -> Unit) =
+    MaterialTheme(
+        colorScheme = colorScheme,
+        content = content,
+    )

@@ -9,13 +9,11 @@ import com.example.data.database.model.HabitEntity
 import com.example.data.database.model.PopulatedHabit
 import kotlinx.coroutines.flow.Flow
 
-
 /**
  * DAO for [Habit] and [HabitEntity] access
  */
 @Dao
 interface HabitDao {
-
     /**
      * Inserts a new Habit
      */

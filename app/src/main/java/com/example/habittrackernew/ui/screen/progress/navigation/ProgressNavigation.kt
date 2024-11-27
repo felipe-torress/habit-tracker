@@ -6,6 +6,7 @@ import com.example.habittrackernew.ui.screen.progress.ProgressRoute
 
 const val PROGRESS_ROUTE = "progress_route"
 
-fun NavGraphBuilder.progressScreen() = composable(route = PROGRESS_ROUTE) {
-    ProgressRoute()
-}
+fun NavGraphBuilder.progressScreen() =
+    composable(route = PROGRESS_ROUTE) {
+        ProgressRoute()
+    }

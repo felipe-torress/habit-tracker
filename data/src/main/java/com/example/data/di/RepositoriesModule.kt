@@ -13,20 +13,13 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class DataModule {
+abstract class RepositoriesModule {
+    @Binds
+    internal abstract fun bindsHabitsRepository(habitsRepository: LocalHabitsRepository): HabitsRepository
 
     @Binds
-    internal abstract fun bindsHabitsRepository(
-        habitsRepository: LocalHabitsRepository
-    ): HabitsRepository
+    internal abstract fun bindsGoalsRepository(goalsRepository: LocalGoalsRepository): GoalsRepository
 
     @Binds
-    internal abstract fun bindsGoalsRepository(
-        goalsRepository: LocalGoalsRepository
-    ): GoalsRepository
-
-    @Binds
-    internal abstract fun bindsHabitTasksRepository(
-        habitTasksRepository: LocalHabitTasksRepository
-    ): HabitTasksRepository
+    internal abstract fun bindsHabitTasksRepository(habitTasksRepository: LocalHabitTasksRepository): HabitTasksRepository
 }

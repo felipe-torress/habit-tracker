@@ -11,9 +11,10 @@ const val HOME_TAB_ROUTE = "home_tab_route"
 
 fun NavController.navigateToHomeTab(navOptions: NavOptions) = navigate(HOME_TAB_ROUTE, navOptions)
 
-fun NavGraphBuilder.homeNavGraph() = navigation(
-    startDestination = HOME_ROUTE,
-    route = HOME_TAB_ROUTE
-) {
-    homeScreen()
-}
+fun NavGraphBuilder.homeNavGraph() =
+    navigation(
+        startDestination = HOME_ROUTE,
+        route = HOME_TAB_ROUTE,
+    ) {
+        homeScreen()
+    }
