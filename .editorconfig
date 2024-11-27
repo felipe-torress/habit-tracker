@@ -1,7 +1,7 @@
 [*.{kt,kts}]
 indent_size = 4
 indent_style = space
-max_line_length = 200
+max_line_length = 125
 insert_final_newline = true
 
 # Avoid line-breaks for multi-line expressions
