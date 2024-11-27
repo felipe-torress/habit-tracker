@@ -4,6 +4,7 @@ package com.example.data.database.model
 import androidx.room.Embedded
 import androidx.room.Junction
 import androidx.room.Relation
+import com.example.data.mappers.asHabitTask
 import com.example.data.model.Goal
 
 /**

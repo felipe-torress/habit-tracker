@@ -3,6 +3,8 @@ package com.example.data.database.model
 
 import androidx.room.Embedded
 import androidx.room.Relation
+import com.example.data.mappers.asGoal
+import com.example.data.mappers.asHabitTask
 import com.example.data.model.Habit
 
 /**
