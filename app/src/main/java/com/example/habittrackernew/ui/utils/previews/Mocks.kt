@@ -1,6 +1,6 @@
 package com.example.habittrackernew.ui.utils.previews
 
-import com.example.habittrackernew.ui.screen.habits.model.HabitTaskUIData
+import com.example.habittrackernew.ui.screens.habits.model.HabitTaskUIData
 import java.util.UUID
 
 object Mocks {

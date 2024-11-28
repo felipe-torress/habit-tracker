@@ -4,8 +4,8 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.navigation
-import com.example.habittrackernew.ui.screen.home.navigation.HOME_ROUTE
-import com.example.habittrackernew.ui.screen.home.navigation.homeScreen
+import com.example.habittrackernew.ui.screens.home.navigation.HOME_ROUTE
+import com.example.habittrackernew.ui.screens.home.navigation.homeScreen
 
 const val HOME_TAB_ROUTE = "home_tab_route"
 

@@ -1,4 +1,4 @@
-package com.example.habittrackernew.ui.screen.habits
+package com.example.habittrackernew.ui.screens.home
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -7,39 +7,23 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.habittrackernew.R
 import com.example.habittrackernew.ui.composables.topbar.TopBar
 
 @Composable
-fun HabitsListRoute(
-    viewModel: HabitsListViewModel = hiltViewModel(),
-    onAddHabitClick: () -> Unit,
-) {
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    HabitsListScreen(
-        uiState = uiState,
-        onAddHabitClick = onAddHabitClick,
-    )
+fun HomeRoute() {
+    HomeScreen()
 }
 
 @Composable
-fun HabitsListScreen(
-    uiState: HabitsListUIState,
-    onAddHabitClick: () -> Unit,
-) {
+fun HomeScreen() {
     Scaffold(
         topBar = {
             TopBar(
-                title = stringResource(id = R.string.habits_tab_title),
-                hasNavigationIcon = false,
-                hasActionButton = true,
-                onActionButtonClick = onAddHabitClick,
+                title = stringResource(id = R.string.home_screen_toolbar_title, "Felipe"),
             )
         },
     ) { paddingValues ->
@@ -51,7 +35,7 @@ fun HabitsListScreen(
                     .padding(paddingValues)
                     .fillMaxSize(),
         ) {
-            Text(stringResource(id = R.string.habits_tab_title))
+            Text(stringResource(id = R.string.home_tab_title))
         }
     }
 }

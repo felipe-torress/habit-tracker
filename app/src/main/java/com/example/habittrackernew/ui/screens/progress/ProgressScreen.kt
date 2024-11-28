@@ -1,4 +1,4 @@
-package com.example.habittrackernew.ui.screen.progress
+package com.example.habittrackernew.ui.screens.progress
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

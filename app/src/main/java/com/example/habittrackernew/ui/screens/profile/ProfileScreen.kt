@@ -1,4 +1,4 @@
-package com.example.habittrackernew.ui.screen.home
+package com.example.habittrackernew.ui.screens.profile
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,16 +14,16 @@ import com.example.habittrackernew.R
 import com.example.habittrackernew.ui.composables.topbar.TopBar
 
 @Composable
-fun HomeRoute() {
-    HomeScreen()
+fun ProfileRoute() {
+    ProfileScreen()
 }
 
 @Composable
-fun HomeScreen() {
+fun ProfileScreen() {
     Scaffold(
         topBar = {
             TopBar(
-                title = stringResource(id = R.string.home_screen_toolbar_title, "Felipe"),
+                title = stringResource(id = R.string.profile_tab_title),
             )
         },
     ) { paddingValues ->
@@ -35,7 +35,7 @@ fun HomeScreen() {
                     .padding(paddingValues)
                     .fillMaxSize(),
         ) {
-            Text(stringResource(id = R.string.home_tab_title))
+            Text(stringResource(id = R.string.profile_tab_title))
         }
     }
 }

@@ -5,8 +5,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.navigation
 import androidx.navigation.navOptions
-import com.example.habittrackernew.ui.screen.habits.navigation.HABITS_LIST_ROUTE
-import com.example.habittrackernew.ui.screen.habits.navigation.habitsListScreen
+import com.example.habittrackernew.ui.screens.habits.navigation.HABITS_LIST_ROUTE
+import com.example.habittrackernew.ui.screens.habits.navigation.habitsListScreen
 
 const val HABITS_TAB_ROUTE = "habits_tab_route"
 

@@ -1,4 +1,4 @@
-package com.example.habittrackernew.ui.screen.habits
+package com.example.habittrackernew.ui.screens.habits
 
 interface HabitsListUIState {
     data object Loading : HabitsListUIState

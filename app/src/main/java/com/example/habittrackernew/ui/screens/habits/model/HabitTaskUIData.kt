@@ -1,4 +1,4 @@
-package com.example.habittrackernew.ui.screen.habits.model
+package com.example.habittrackernew.ui.screens.habits.model
 
 import java.time.DayOfWeek
 import java.time.LocalTime

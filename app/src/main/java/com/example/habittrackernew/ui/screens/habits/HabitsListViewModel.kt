@@ -1,4 +1,4 @@
-package com.example.habittrackernew.ui.screen.habits
+package com.example.habittrackernew.ui.screens.habits
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel

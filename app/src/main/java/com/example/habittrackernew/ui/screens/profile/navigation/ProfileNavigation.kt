@@ -1,8 +1,8 @@
-package com.example.habittrackernew.ui.screen.profile.navigation
+package com.example.habittrackernew.ui.screens.profile.navigation
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.example.habittrackernew.ui.screen.profile.ProfileRoute
+import com.example.habittrackernew.ui.screens.profile.ProfileRoute
 
 const val PROFILE_ROUTE = "profile_route"
 
