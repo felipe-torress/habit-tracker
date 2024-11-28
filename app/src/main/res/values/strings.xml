@@ -8,6 +8,7 @@
 
     <!--region Habits Tab -->
     <string name="habits_tab_title">Hábitos</string>
+    <string name="habit_card_tasks_header_title">Tarefa</string>
     <!--endregion-->
 
     <!--region Progress Tab -->
