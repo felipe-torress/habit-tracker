@@ -218,14 +218,12 @@ private class HabitCardPreviewParameterProvider : PreviewParameterProvider<Habit
 private fun HabitCardPreview(
     @PreviewParameter(HabitCardPreviewParameterProvider::class) previewData: HabitCardPreviewData,
 ) {
-    Box(modifier = Modifier.background(HabitTrackerColors.backgroundColor)) {
-        HabitCard(
-            title = previewData.title,
-            daysOfWeek = previewData.daysOfWeek,
-            tasks = previewData.tasks,
-            onClick = {},
-            testTagState = TestTagState(""),
-        )
-    }
+    HabitCard(
+        title = previewData.title,
+        daysOfWeek = previewData.daysOfWeek,
+        tasks = previewData.tasks,
+        onClick = {},
+        testTagState = TestTagState(""),
+    )
 }
 //endregion
