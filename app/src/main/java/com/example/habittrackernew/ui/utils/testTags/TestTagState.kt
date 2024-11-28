@@ -8,6 +8,9 @@ data class TestTagState(
     val item: String = "",
     val index: String = "",
 ) {
+    fun origin(text: String) = this.copy(origin = text)
+    fun appendToOrigin(text: String) = this.copy(origin = this.origin + text)
+
     fun type(text: String) = this.copy(type = text)
     fun appendToType(text: String) = this.copy(type = this.type + text)
 
@@ -20,6 +23,6 @@ data class TestTagState(
     fun item(text: String) = this.copy(item = text)
     fun appendToItem(text: String) = this.copy(item = this.item + text)
 
-    fun index(text: String) = this.copy(index = text)
-    fun appendToIndex(text: String) = this.copy(index = this.index + text)
+    fun index(index: Int) = this.copy(index = "$index")
+    fun appendToIndex(index: Int) = this.copy(index = "${this.index}.$index")
 }
