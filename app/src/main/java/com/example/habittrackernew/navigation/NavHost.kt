@@ -6,11 +6,11 @@ import androidx.compose.animation.scaleOut
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
-import com.example.habittrackernew.navigation.tabs.habits.HABITS_TAB_ROUTE
-import com.example.habittrackernew.navigation.tabs.habits.habitsNavGraph
-import com.example.habittrackernew.navigation.tabs.home.homeNavGraph
-import com.example.habittrackernew.navigation.tabs.profile.profileNavGraph
-import com.example.habittrackernew.navigation.tabs.progress.progressNavGraph
+import com.example.habittrackernew.navigation.tabs.HABITS_TAB_ROUTE
+import com.example.habittrackernew.navigation.tabs.habitsNavGraph
+import com.example.habittrackernew.navigation.tabs.homeNavGraph
+import com.example.habittrackernew.navigation.tabs.profileNavGraph
+import com.example.habittrackernew.navigation.tabs.progressNavGraph
 import com.example.habittrackernew.ui.AppState
 
 @Composable

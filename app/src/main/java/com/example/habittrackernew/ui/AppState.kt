@@ -10,14 +10,14 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.example.habittrackernew.navigation.TopLevelDestination
-import com.example.habittrackernew.navigation.tabs.habits.HABITS_TAB_ROUTE
-import com.example.habittrackernew.navigation.tabs.habits.navigateToHabitsTab
-import com.example.habittrackernew.navigation.tabs.home.HOME_TAB_ROUTE
-import com.example.habittrackernew.navigation.tabs.home.navigateToHomeTab
-import com.example.habittrackernew.navigation.tabs.profile.PROFILE_TAB_ROUTE
-import com.example.habittrackernew.navigation.tabs.profile.navigateToProfileTab
-import com.example.habittrackernew.navigation.tabs.progress.PROGRESS_TAB_ROUTE
-import com.example.habittrackernew.navigation.tabs.progress.navigateToProgressTab
+import com.example.habittrackernew.navigation.tabs.HABITS_TAB_ROUTE
+import com.example.habittrackernew.navigation.tabs.navigateToHabitsTab
+import com.example.habittrackernew.navigation.tabs.HOME_TAB_ROUTE
+import com.example.habittrackernew.navigation.tabs.navigateToHomeTab
+import com.example.habittrackernew.navigation.tabs.PROFILE_TAB_ROUTE
+import com.example.habittrackernew.navigation.tabs.navigateToProfileTab
+import com.example.habittrackernew.navigation.tabs.PROGRESS_TAB_ROUTE
+import com.example.habittrackernew.navigation.tabs.navigateToProgressTab
 
 @Composable
 fun rememberAppState(navController: NavHostController = rememberNavController()): AppState =

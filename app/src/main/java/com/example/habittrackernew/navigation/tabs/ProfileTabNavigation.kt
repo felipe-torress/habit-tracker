@@ -1,4 +1,4 @@
-package com.example.habittrackernew.navigation.tabs.profile
+package com.example.habittrackernew.navigation.tabs
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
