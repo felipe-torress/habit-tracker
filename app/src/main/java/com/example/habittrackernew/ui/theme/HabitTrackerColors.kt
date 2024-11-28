@@ -9,6 +9,7 @@ object HabitTrackerColors {
     val softGreen = Color(0xFFCFF1EC)
     val softPurple = Color(0xFFF2D2F3)
     val softBlue = Color(0xFFDBEFFF)
+    val softBlue2 = Color(0xFFCAE8FF)
 
     // Dark Grey
     val darkGrey50 = Color(0xFFE9E9E9)
