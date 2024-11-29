@@ -2,7 +2,7 @@ package com.example.habittrackernew.ui.screens.habits.list
 
 import com.example.habittrackernew.ui.screens.habits.model.HabitUIData
 
-interface HabitsListUIState {
+sealed interface HabitsListUIState {
     data object Loading : HabitsListUIState
     data class Success(val habits: List<HabitUIData>) : HabitsListUIState
 }
