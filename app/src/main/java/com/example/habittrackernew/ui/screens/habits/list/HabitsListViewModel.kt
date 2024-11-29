@@ -1,4 +1,4 @@
-package com.example.habittrackernew.ui.screens.habits
+package com.example.habittrackernew.ui.screens.habits.list
 
 import androidx.lifecycle.ViewModel
 import com.example.habittrackernew.ui.utils.previews.Mocks

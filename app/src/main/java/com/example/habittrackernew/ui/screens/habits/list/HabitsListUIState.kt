@@ -1,4 +1,4 @@
-package com.example.habittrackernew.ui.screens.habits
+package com.example.habittrackernew.ui.screens.habits.list
 
 import com.example.habittrackernew.ui.screens.habits.model.HabitUIData
 

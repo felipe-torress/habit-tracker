@@ -1,10 +1,10 @@
-package com.example.habittrackernew.ui.screens.habits.navigation
+package com.example.habittrackernew.ui.screens.habits.list.navigation
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import com.example.habittrackernew.ui.screens.habits.HabitsListRoute
+import com.example.habittrackernew.ui.screens.habits.list.HabitsListRoute
 import kotlinx.serialization.Serializable
 
 fun NavGraphBuilder.habitsListScreen(

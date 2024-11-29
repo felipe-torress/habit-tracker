@@ -5,8 +5,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.navigation
 import androidx.navigation.navOptions
-import com.example.habittrackernew.ui.screens.habits.navigation.HabitList
-import com.example.habittrackernew.ui.screens.habits.navigation.habitsListScreen
+import com.example.habittrackernew.ui.screens.habits.list.navigation.HabitList
+import com.example.habittrackernew.ui.screens.habits.list.navigation.habitsListScreen
 
 fun NavController.navigateToHabitsTab(navOptions: NavOptions) =
     navigate(
