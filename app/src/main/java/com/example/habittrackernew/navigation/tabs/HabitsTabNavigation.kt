@@ -5,22 +5,17 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.navigation
 import androidx.navigation.navOptions
-import com.example.habittrackernew.ui.screens.habits.navigation.HABITS_LIST_ROUTE
+import com.example.habittrackernew.ui.screens.habits.navigation.HabitList
 import com.example.habittrackernew.ui.screens.habits.navigation.habitsListScreen
-
-const val HABITS_TAB_ROUTE = "habits_tab_route"
 
 fun NavController.navigateToHabitsTab(navOptions: NavOptions) =
     navigate(
-        HABITS_TAB_ROUTE,
-        navOptions,
+        route = TopLevelRoutes.HabitsTab,
+        navOptions = navOptions,
     )
 
 fun NavGraphBuilder.habitsNavGraph(navController: NavController) =
-    navigation(
-        startDestination = HABITS_LIST_ROUTE,
-        route = HABITS_TAB_ROUTE,
-    ) {
+    navigation<TopLevelRoutes.HabitsTab>(startDestination = HabitList) {
         val navOptions =
             navOptions {
                 // Avoid multiple copies of the same destination when

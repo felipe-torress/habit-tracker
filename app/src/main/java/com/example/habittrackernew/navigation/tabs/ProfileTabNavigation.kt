@@ -4,21 +4,16 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.navigation
-import com.example.habittrackernew.ui.screens.profile.navigation.PROFILE_ROUTE
+import com.example.habittrackernew.ui.screens.profile.navigation.Profile
 import com.example.habittrackernew.ui.screens.profile.navigation.profileScreen
-
-const val PROFILE_TAB_ROUTE = "profile_tab_route"
 
 fun NavController.navigateToProfileTab(navOptions: NavOptions) =
     navigate(
-        PROFILE_TAB_ROUTE,
-        navOptions,
+        route = TopLevelRoutes.ProfileTab,
+        navOptions = navOptions,
     )
 
 fun NavGraphBuilder.profileNavGraph() =
-    navigation(
-        startDestination = PROFILE_ROUTE,
-        route = PROFILE_TAB_ROUTE,
-    ) {
+    navigation<TopLevelRoutes.ProfileTab>(startDestination = Profile) {
         profileScreen()
     }

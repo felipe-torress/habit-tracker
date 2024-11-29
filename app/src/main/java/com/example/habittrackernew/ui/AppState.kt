@@ -10,13 +10,9 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.example.habittrackernew.navigation.TopLevelDestination
-import com.example.habittrackernew.navigation.tabs.HABITS_TAB_ROUTE
 import com.example.habittrackernew.navigation.tabs.navigateToHabitsTab
-import com.example.habittrackernew.navigation.tabs.HOME_TAB_ROUTE
 import com.example.habittrackernew.navigation.tabs.navigateToHomeTab
-import com.example.habittrackernew.navigation.tabs.PROFILE_TAB_ROUTE
 import com.example.habittrackernew.navigation.tabs.navigateToProfileTab
-import com.example.habittrackernew.navigation.tabs.PROGRESS_TAB_ROUTE
 import com.example.habittrackernew.navigation.tabs.navigateToProgressTab
 
 @Composable
@@ -29,16 +25,6 @@ class AppState(val navController: NavHostController) {
         @Composable get() =
             navController
                 .currentBackStackEntryAsState().value?.destination
-
-    val currentTopLevelDestination: TopLevelDestination?
-        @Composable get() =
-            when (currentDestination?.route) {
-                HOME_TAB_ROUTE -> TopLevelDestination.HOME
-                PROFILE_TAB_ROUTE -> TopLevelDestination.PROFILE
-                PROGRESS_TAB_ROUTE -> TopLevelDestination.PROGRESS
-                HABITS_TAB_ROUTE -> TopLevelDestination.HABITS
-                else -> null
-            }
 
     /**
      * Map of top level destinations to be used in the TopBar, BottomBar and NavRail. The key is the

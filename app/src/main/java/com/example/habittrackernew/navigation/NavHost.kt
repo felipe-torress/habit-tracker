@@ -6,7 +6,7 @@ import androidx.compose.animation.scaleOut
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
-import com.example.habittrackernew.navigation.tabs.HABITS_TAB_ROUTE
+import com.example.habittrackernew.navigation.tabs.TopLevelRoutes
 import com.example.habittrackernew.navigation.tabs.habitsNavGraph
 import com.example.habittrackernew.navigation.tabs.homeNavGraph
 import com.example.habittrackernew.navigation.tabs.profileNavGraph
@@ -17,7 +17,7 @@ import com.example.habittrackernew.ui.AppState
 fun HabitTrackerNavHost(
     modifier: Modifier = Modifier,
     appState: AppState,
-    startDestination: String = HABITS_TAB_ROUTE,
+    startDestination: TopLevelRoutes = TopLevelRoutes.HabitsTab,
 ) {
     val navController = appState.navController
     NavHost(
