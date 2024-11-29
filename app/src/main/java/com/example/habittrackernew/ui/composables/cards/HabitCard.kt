@@ -31,8 +31,8 @@ import com.example.habittrackernew.ui.utils.compose.rememberInteractionsSource
 import com.example.habittrackernew.ui.utils.previews.MockConstants
 import com.example.habittrackernew.ui.utils.previews.Mocks
 import com.example.habittrackernew.ui.utils.testTags.TestTagState
-import com.example.habittrackernew.ui.utils.toDaysOfWeekText
-import com.example.habittrackernew.ui.utils.toLocalizedTime
+import com.example.habittrackernew.ui.utils.datetime.toDaysOfWeekText
+import com.example.habittrackernew.ui.utils.datetime.toLocalizedTime
 import java.time.DayOfWeek
 import java.time.LocalTime
 
