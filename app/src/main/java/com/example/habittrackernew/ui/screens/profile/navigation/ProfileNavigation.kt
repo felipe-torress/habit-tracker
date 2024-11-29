@@ -3,10 +3,12 @@ package com.example.habittrackernew.ui.screens.profile.navigation
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.example.habittrackernew.ui.screens.profile.ProfileRoute
-
-const val PROFILE_ROUTE = "profile_route"
+import kotlinx.serialization.Serializable
 
 fun NavGraphBuilder.profileScreen() =
-    composable(route = PROFILE_ROUTE) {
+    composable<Profile> {
         ProfileRoute()
     }
+
+@Serializable
+object Profile
