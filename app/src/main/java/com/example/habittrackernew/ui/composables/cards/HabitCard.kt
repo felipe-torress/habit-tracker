@@ -148,7 +148,7 @@ fun Content(
             text = stringResource(R.string.habit_card_tasks_header_title),
             style = HabitTrackerTypography.bodyLarge,
             fontWeight = FontWeight.Bold,
-            color = HabitTrackerColors.blue500,
+            color = HabitTrackerColors.blue700,
         )
 
         tasks.forEachIndexed { index, task ->
