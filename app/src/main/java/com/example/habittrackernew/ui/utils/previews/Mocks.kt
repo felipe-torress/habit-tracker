@@ -1,6 +1,7 @@
 package com.example.habittrackernew.ui.utils.previews
 
 import com.example.habittrackernew.ui.screens.habits.model.HabitTaskUIData
+import com.example.habittrackernew.ui.screens.habits.model.HabitUIData
 import java.util.UUID
 
 object Mocks {
@@ -22,6 +23,19 @@ object Mocks {
     val habitTaskUIData_3 = habitTaskUIData_1.copy(
         name = MockConstants.habitTask_title_3,
         time = MockConstants.localTime_18_30_AM,
+    )
+    //endregion
+
+    //region --- HabitUIData ---
+    val habitUIData_1 = HabitUIData(
+        id = UUID.randomUUID().toString(),
+        name = MockConstants.habit_title_1,
+        daysOfWeek = MockConstants.daysOfWeek_1,
+        tasks = listOf(
+            habitTaskUIData_1,
+            habitTaskUIData_2,
+            habitTaskUIData_3
+        )
     )
     //endregion
 }
