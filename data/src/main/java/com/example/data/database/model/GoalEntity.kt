@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey
 import java.time.ZonedDateTime
 import java.util.UUID
 
+// TODO: Add indexes to all foreign keys
 /**
  * Defines a Habit Goal.
  * It has a many to many relationship with [HabitTaskEntity]

@@ -63,6 +63,13 @@ object HabitTrackerTypography {
             fontSize = 18.sp,
         )
 
+    val button =
+        TextStyle(
+            fontFamily = satoshiFamily,
+            fontWeight = FontWeight.Bold,
+            fontSize = 18.sp,
+        )
+
     val bodyLarge =
         TextStyle(
             fontFamily = satoshiFamily,

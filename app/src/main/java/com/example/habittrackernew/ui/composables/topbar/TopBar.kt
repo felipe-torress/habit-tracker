@@ -31,28 +31,30 @@ fun TopBar(
     title: String,
     hasNavigationIcon: Boolean = false,
     hasActionButton: Boolean = false,
-    navigationIcon: @Composable (
-        onClick: () -> Unit,
-    ) -> Unit = { onClick -> CollapseIcon(onClick) },
+    navigationIcon: @Composable (onClick: () -> Unit, color: Color) -> Unit = { onClick, color ->
+        CollapseIcon(
+            onClick = onClick,
+            color = color
+        )
+    },
+    actionButton: @Composable RowScope.(onClick: () -> Unit) -> Unit = { onClick -> AddButton(onClick) },
     onNavigationIconClick: () -> Unit = {},
-    actionButton: @Composable RowScope.(
-        onClick: () -> Unit,
-    ) -> Unit = { onClick -> AddButton(onClick) },
     onActionButtonClick: () -> Unit = {},
+    navigationIconColor: Color = HabitTrackerColors.blue800,
 ) {
     TopAppBar(
         title = { Title(title) },
-        navigationIcon = { if (hasNavigationIcon) navigationIcon(onNavigationIconClick) },
+        navigationIcon = { if (hasNavigationIcon) navigationIcon(onNavigationIconClick, navigationIconColor) },
         actions = { if (hasActionButton) actionButton(onActionButtonClick) },
         scrollBehavior = pinnedScrollBehavior(),
         colors =
-            TopAppBarColors(
-                containerColor = HabitTrackerColors.backgroundColor,
-                scrolledContainerColor = HabitTrackerColors.backgroundColor,
-                navigationIconContentColor = HabitTrackerColors.green500,
-                titleContentColor = HabitTrackerColors.textColor,
-                actionIconContentColor = HabitTrackerColors.green500,
-            ),
+        TopAppBarColors(
+            containerColor = HabitTrackerColors.backgroundColor,
+            scrolledContainerColor = HabitTrackerColors.backgroundColor,
+            navigationIconContentColor = HabitTrackerColors.green500,
+            titleContentColor = HabitTrackerColors.textColor,
+            actionIconContentColor = HabitTrackerColors.green500,
+        ),
         modifier = Modifier.background(HabitTrackerColors.backgroundColor),
     )
 }
@@ -87,10 +89,10 @@ private fun AddButton(onClick: () -> Unit) {
         onClick = onClick,
         shape = RoundedCornerShape(16.dp),
         colors =
-            buttonColors(
-                containerColor = HabitTrackerColors.green500,
-                contentColor = HabitTrackerColors.backgroundColor,
-            ),
+        buttonColors(
+            containerColor = HabitTrackerColors.green500,
+            contentColor = HabitTrackerColors.backgroundColor,
+        ),
         modifier = Modifier.heightIn(48.dp),
     ) {
         Image(

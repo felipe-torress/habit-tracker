@@ -9,6 +9,7 @@ import java.time.LocalTime
 import java.time.ZonedDateTime
 import java.util.UUID
 
+// TODO: Add indexes to all foreign keys
 /**
  * Defines a Habit Task
  * It has a many to many relationship with [GoalEntity]

@@ -27,5 +27,5 @@ fun NavGraphBuilder.habitsNavGraph(navController: NavController) =
             }
 
         habitsListScreen(navController, navOptions)
-        addHabitScreen()
+        addHabitScreen(navController)
     }

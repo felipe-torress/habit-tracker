@@ -14,15 +14,16 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import com.example.habittrackernew.R
 import com.example.habittrackernew.ui.theme.HabitTrackerColors
 import com.example.habittrackernew.ui.theme.HabitTrackerTypography
+import com.example.habittrackernew.ui.utils.previews.DefaultBackgroundPreview
 
 @Composable
 fun HabitTrackerTextField(
@@ -68,6 +69,12 @@ fun HabitTrackerTextField(
                 focusedLabelColor = HabitTrackerColors.green900,
                 unfocusedLabelColor = HabitTrackerColors.green900,
                 disabledLabelColor = HabitTrackerColors.green900,
+
+                // indicator color
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+                disabledIndicatorColor = Color.Transparent,
+                errorIndicatorColor = Color.Transparent,
             )
         )
     }
@@ -128,7 +135,7 @@ private class HabitTrackerTextFieldPreviewProvider : PreviewParameterProvider<Ha
     )
 }
 
-@Preview
+@DefaultBackgroundPreview
 @Composable
 private fun HabitTrackerTextFieldPreview(@PreviewParameter(HabitTrackerTextFieldPreviewProvider::class) previewData: HabitTrackerTextFieldPreviewData) {
     HabitTrackerTextField(

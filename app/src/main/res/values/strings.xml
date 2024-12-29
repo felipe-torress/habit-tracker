@@ -7,9 +7,24 @@
     <!--endregion-->
 
     <!--region Habits Tab -->
+
     <string name="habits_tab_title">Hábitos</string>
     <string name="habit_card_tasks_header_title">Tarefa</string>
+
+    <!--region Add Habit Screen -->
+    <string name="add_habit_screen_toolbar_title">Adicionar Hábito</string>
+    <string name="add_habit_screen_habit_text_field_label">Hábito</string>
+    <string name="add_habit_screen_habit_text_field_placeholder">Digite o nome do hábito</string>
+    <string name="add_habit_screen_color_picker_section_title">Cor do Hábito</string>
+    <string name="add_habit_screen_add_task_section_title">Tarefas</string>
+    <string name="add_habit_screen_add_task_section_description">Crie pequenas tarefas associadas a este hábito. Dessa maneira, você será capaz de gerenciar tarefas mais facilmente, e ter uma melhor percepção de avanço</string>
+    <string name="add_habit_screen_add_task_button_title">Adicionar Tarefa</string>
+    <string name="add_habit_screen_add_habit_button_title">Adicionar Hábito</string>
+    <string name="add_habit_screen_ready_to_start_section_title">Pronto para começar?</string>
     <!--endregion-->
+
+    <!--endregion-->
+
 
     <!--region Progress Tab -->
     <string name="progress_tab_title">Progresso</string>

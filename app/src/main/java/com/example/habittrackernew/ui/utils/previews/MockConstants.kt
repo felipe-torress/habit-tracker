@@ -38,6 +38,9 @@ object MockConstants {
 
     //region --- Strings ---
 
+    // Add Habit
+    val add_habit_button_title: String = "Adicione Hábito"
+
     // Habit
     val habit_title_1: String = "Execitar Regularmente"
 
