@@ -11,6 +11,8 @@
     <string name="habits_tab_title">Hábitos</string>
     <string name="habit_card_tasks_header_title">Tarefa</string>
 
+    <string name="habit_list_screen_no_habits_placeholder_title">Parece que você ainda não tem hábitos :(</string>
+
     <!--region Add Habit Screen -->
     <string name="add_habit_screen_toolbar_title">Adicionar Hábito</string>
     <string name="add_habit_screen_habit_text_field_label">Hábito</string>
@@ -24,7 +26,6 @@
     <!--endregion-->
 
     <!--endregion-->
-
 
     <!--region Progress Tab -->
     <string name="progress_tab_title">Progresso</string>
