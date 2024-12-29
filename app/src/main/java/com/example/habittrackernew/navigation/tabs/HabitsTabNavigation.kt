@@ -5,7 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.navigation
 import androidx.navigation.navOptions
-import com.example.habittrackernew.ui.screens.habits.add.navigation.addHabitScreen
+import com.example.habittrackernew.ui.screens.habits.add.habit.navigation.addHabitScreen
 import com.example.habittrackernew.ui.screens.habits.list.navigation.HabitList
 import com.example.habittrackernew.ui.screens.habits.list.navigation.habitsListScreen
 

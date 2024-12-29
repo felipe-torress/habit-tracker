@@ -1,4 +1,4 @@
-package com.example.habittrackernew.ui.screens.habits.add
+package com.example.habittrackernew.ui.screens.habits.add.habit
 
 import com.example.data.model.HabitColor
 import com.example.habittrackernew.ui.screens.habits.model.HabitTaskUIData

@@ -1,4 +1,4 @@
-package com.example.habittrackernew.ui.screens.habits.add
+package com.example.habittrackernew.ui.screens.habits.add.habit
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

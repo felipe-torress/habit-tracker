@@ -1,4 +1,4 @@
-package com.example.habittrackernew.ui.screens.habits.add.sections
+package com.example.habittrackernew.ui.screens.habits.add.habit.sections
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,8 +9,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.habittrackernew.R
 import com.example.habittrackernew.ui.composables.buttons.SecondaryButton
-import com.example.habittrackernew.ui.screens.habits.add.composables.AddHabitSection
-import com.example.habittrackernew.ui.screens.habits.add.composables.HabitTaskCard
+import com.example.habittrackernew.ui.screens.habits.add.habit.composables.AddHabitSection
+import com.example.habittrackernew.ui.screens.habits.add.habit.composables.HabitTaskCard
 import com.example.habittrackernew.ui.screens.habits.model.HabitTaskUIData
 import com.example.habittrackernew.ui.utils.testTags.TestTagState
 

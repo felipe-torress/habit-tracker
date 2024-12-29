@@ -1,4 +1,4 @@
-package com.example.habittrackernew.ui.screens.habits.add.composables
+package com.example.habittrackernew.ui.screens.habits.add.habit.composables
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background

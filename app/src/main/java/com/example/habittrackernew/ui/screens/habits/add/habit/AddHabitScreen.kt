@@ -1,4 +1,4 @@
-package com.example.habittrackernew.ui.screens.habits.add
+package com.example.habittrackernew.ui.screens.habits.add.habit
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -21,9 +21,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.habittrackernew.R
 import com.example.habittrackernew.ui.composables.input.HabitTrackerTextField
 import com.example.habittrackernew.ui.composables.topbar.TopBar
-import com.example.habittrackernew.ui.screens.habits.add.sections.ColorPickerSection
-import com.example.habittrackernew.ui.screens.habits.add.sections.ReadyToStartSection
-import com.example.habittrackernew.ui.screens.habits.add.sections.TasksSection
+import com.example.habittrackernew.ui.screens.habits.add.habit.sections.ColorPickerSection
+import com.example.habittrackernew.ui.screens.habits.add.habit.sections.ReadyToStartSection
+import com.example.habittrackernew.ui.screens.habits.add.habit.sections.TasksSection
 import com.example.habittrackernew.ui.screens.habits.model.ColorUI
 import com.example.habittrackernew.ui.screens.habits.model.HabitTaskUIData
 import com.example.habittrackernew.ui.theme.HabitTrackerColors

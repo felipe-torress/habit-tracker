@@ -1,11 +1,11 @@
-package com.example.habittrackernew.ui.screens.habits.add.sections
+package com.example.habittrackernew.ui.screens.habits.add.habit.sections
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.example.habittrackernew.R
 import com.example.habittrackernew.ui.composables.colorpicker.ColorPicker
-import com.example.habittrackernew.ui.screens.habits.add.composables.AddHabitSection
+import com.example.habittrackernew.ui.screens.habits.add.habit.composables.AddHabitSection
 import com.example.habittrackernew.ui.screens.habits.model.ColorUI
 import com.example.habittrackernew.ui.utils.testTags.TestTagState
 
