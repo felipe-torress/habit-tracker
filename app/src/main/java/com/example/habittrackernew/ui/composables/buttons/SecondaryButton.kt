@@ -27,10 +27,8 @@ fun SecondaryButton(
         colors = ButtonDefaults.buttonColors(
             containerColor = HabitTrackerColors.green100,
             contentColor = HabitTrackerColors.green900,
-            // TODO: Change to disabled color
-            disabledContainerColor = HabitTrackerColors.green100,
-            // TODO: Change to disabled color
-            disabledContentColor = HabitTrackerColors.green900,
+            disabledContainerColor = HabitTrackerColors.darkGrey50,
+            disabledContentColor = HabitTrackerColors.darkGrey100,
         ),
         modifier = modifier,
     )

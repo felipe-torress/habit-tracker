@@ -27,9 +27,7 @@ fun PrimaryButton(
         colors = ButtonDefaults.buttonColors(
             containerColor = HabitTrackerColors.green700,
             contentColor = HabitTrackerColors.green50,
-            // TODO: Change to disabled color
             disabledContainerColor = HabitTrackerColors.darkGrey50,
-            // TODO: Change to disabled color
             disabledContentColor = HabitTrackerColors.darkGrey300,
         ),
         modifier = modifier,
