@@ -114,7 +114,7 @@ private fun Label(
         Icon(
             painter = painterResource(iconResId),
             contentDescription = null,
-            tint = HabitTrackerColors.green900,
+            tint = HabitTrackerColors.green7trext00,
             modifier = Modifier
                 .size(16.dp)
                 .testTag("${testTagState.origin}LabelIcon"),
@@ -123,7 +123,7 @@ private fun Label(
         Text(
             text = label,
             style = HabitTrackerTypography.bodyLarge,
-            color = HabitTrackerColors.green900,
+            color = HabitTrackerColors.green700,
             modifier = Modifier.testTag("${testTagState.origin}LabelText"),
         )
     }
