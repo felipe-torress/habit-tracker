@@ -1,5 +1,6 @@
 package com.example.habittrackernew.ui.utils.previews
 
+import com.example.habittrackernew.ui.screens.habits.model.ColorUI
 import com.example.habittrackernew.ui.screens.habits.model.HabitTaskUIData
 import com.example.habittrackernew.ui.screens.habits.model.HabitUIData
 import java.util.UUID
@@ -36,6 +37,7 @@ object Mocks {
             habitTaskUIData_2,
             habitTaskUIData_3,
         ),
+        color = ColorUI.BLUE
     )
     //endregion
 }

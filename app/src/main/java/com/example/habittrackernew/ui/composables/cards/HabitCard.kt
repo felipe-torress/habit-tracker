@@ -15,16 +15,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import com.example.habittrackernew.R
+import com.example.habittrackernew.ui.screens.habits.model.ColorUI
 import com.example.habittrackernew.ui.screens.habits.model.HabitTaskUIData
 import com.example.habittrackernew.ui.theme.HabitTrackerColors
 import com.example.habittrackernew.ui.theme.HabitTrackerTypography
@@ -42,6 +43,7 @@ fun HabitCard(
     title: String,
     daysOfWeek: List<DayOfWeek>,
     tasks: List<HabitTaskUIData>,
+    color: ColorUI,
     onClick: () -> Unit,
     testTagState: TestTagState,
     modifier: Modifier = Modifier,
@@ -49,20 +51,24 @@ fun HabitCard(
     val localTestTag = "${testTagState.origin}HabitCard${testTagState.index}"
     val localTestTagState = TestTagState(localTestTag)
 
+    val colors: HabitCardColors = getCardColors(color)
+
     Column(
         modifier = modifier
             .clip(RoundedCornerShape(16.dp))
-            .background(HabitTrackerColors.softBlue)
+            .background(colors.background)
             .testTag(localTestTag),
     ) {
         Header(
             title = title,
             daysOfWeek = daysOfWeek,
             onClick = onClick,
+            colors = colors,
             testTagState = localTestTagState,
         )
         Content(
             tasks = tasks,
+            colors = colors,
             testTagState = localTestTagState,
         )
     }
@@ -73,6 +79,7 @@ private fun Header(
     title: String,
     daysOfWeek: List<DayOfWeek>,
     onClick: () -> Unit,
+    colors: HabitCardColors,
     testTagState: TestTagState,
     modifier: Modifier = Modifier,
 ) {
@@ -81,10 +88,10 @@ private fun Header(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
             .clip(RoundedCornerShape(16.dp))
-            .background(HabitTrackerColors.softBlue2)
+            .background(colors.header)
             .clickable(
                 interactionSource = rememberInteractionsSource(),
-                indication = ripple(color = HabitTrackerColors.blue500),
+                indication = ripple(color = colors.ripple),
             ) { onClick() }
             .padding(16.dp),
     ) {
@@ -96,20 +103,25 @@ private fun Header(
                 modifier = Modifier.testTag("${testTagState.origin}Title"),
             )
 
-            RepeatInfo(daysOfWeek, testTagState)
+            RepeatInfo(
+                daysOfWeek = daysOfWeek,
+                colors = colors,
+                testTagState = testTagState,
+            )
         }
 
         Icon(
             painter = painterResource(R.drawable.ic_maximize_24dp),
             contentDescription = null,
-            tint = HabitTrackerColors.blue700,
+            tint = colors.icon,
         )
     }
 }
 
 @Composable
-fun RepeatInfo(
+private fun RepeatInfo(
     daysOfWeek: List<DayOfWeek>,
+    colors: HabitCardColors,
     testTagState: TestTagState,
     modifier: Modifier = Modifier,
 ) {
@@ -121,7 +133,7 @@ fun RepeatInfo(
         Icon(
             painter = painterResource(R.drawable.ic_repeat_16dp),
             contentDescription = null,
-            tint = HabitTrackerColors.blue700,
+            tint = colors.icon,
         )
         Text(
             text = daysOfWeek.toDaysOfWeekText(),
@@ -134,8 +146,9 @@ fun RepeatInfo(
 }
 
 @Composable
-fun Content(
+private fun Content(
     tasks: List<HabitTaskUIData>,
+    colors: HabitCardColors,
     testTagState: TestTagState,
     modifier: Modifier = Modifier,
 ) {
@@ -149,7 +162,7 @@ fun Content(
             text = pluralStringResource(R.plurals.habit_card_tasks_header_title, tasks.size),
             style = HabitTrackerTypography.bodyLarge,
             fontWeight = FontWeight.Bold,
-            color = HabitTrackerColors.blue700,
+            color = colors.icon,
         )
 
         tasks.forEachIndexed { index, task ->
@@ -196,6 +209,44 @@ fun TaskItem(
     }
 }
 
+//region --- Helper Methods ---
+private data class HabitCardColors(
+    val background: Color,
+    val header: Color,
+    val ripple: Color,
+    val icon: Color,
+    val sectionTitle: Color,
+)
+
+private fun getCardColors(color: ColorUI): HabitCardColors {
+    return when (color) {
+        ColorUI.GREEN -> HabitCardColors(
+            background = HabitTrackerColors.green50,
+            header = HabitTrackerColors.softGreen,
+            ripple = HabitTrackerColors.green500,
+            icon = HabitTrackerColors.green700,
+            sectionTitle = HabitTrackerColors.green700,
+        )
+
+        ColorUI.BLUE -> HabitCardColors(
+            background = HabitTrackerColors.blue50,
+            header = HabitTrackerColors.softBlue,
+            ripple = HabitTrackerColors.blue500,
+            icon = HabitTrackerColors.blue700,
+            sectionTitle = HabitTrackerColors.blue700,
+        )
+
+        ColorUI.PURPLE -> HabitCardColors(
+            background = HabitTrackerColors.purple50,
+            header = HabitTrackerColors.softPurple,
+            ripple = HabitTrackerColors.purple500,
+            icon = HabitTrackerColors.purple700,
+            sectionTitle = HabitTrackerColors.purple700,
+        )
+    }
+}
+//endregion
+
 //region --- Previews ---
 private data class HabitCardPreviewData(
     val title: String = MockConstants.habit_title_1,
@@ -205,11 +256,19 @@ private data class HabitCardPreviewData(
         Mocks.habitTaskUIData_2,
         Mocks.habitTaskUIData_3,
     ),
+    val color: ColorUI = ColorUI.BLUE,
 )
 
 private class HabitCardPreviewParameterProvider : PreviewParameterProvider<HabitCardPreviewData> {
     override val values = sequenceOf(
+        // Blue
         HabitCardPreviewData(),
+
+        // Purple
+        HabitCardPreviewData(color = ColorUI.PURPLE),
+
+        // Green
+        HabitCardPreviewData(color = ColorUI.GREEN),
     )
 }
 
@@ -222,6 +281,7 @@ private fun HabitCardPreview(
         title = previewData.title,
         daysOfWeek = previewData.daysOfWeek,
         tasks = previewData.tasks,
+        color = previewData.color,
         onClick = {},
         testTagState = TestTagState(""),
     )

@@ -10,6 +10,7 @@ data class HabitUIData(
     val name: String,
     val daysOfWeek: List<DayOfWeek>,
     val tasks: List<HabitTaskUIData>,
+    val color: ColorUI,
 )
 
 fun Habit.toHabitUIData(): HabitUIData {
@@ -18,5 +19,6 @@ fun Habit.toHabitUIData(): HabitUIData {
         name = name,
         daysOfWeek = tasks.getDaysOfWeek(),
         tasks = tasks.map(HabitTask::toHabitTaskUIData),
+        color = color.toColorUI()
     )
 }

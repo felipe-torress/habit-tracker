@@ -138,6 +138,7 @@ private fun HabitsList(
                 title = habit.name,
                 daysOfWeek = habit.daysOfWeek,
                 tasks = habit.tasks,
+                color = habit.color,
                 onClick = { onHabitCardClick(habit.id) },
                 testTagState = testTagState.index(index)
             )
