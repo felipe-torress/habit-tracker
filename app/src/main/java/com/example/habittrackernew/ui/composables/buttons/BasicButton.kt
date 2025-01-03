@@ -48,7 +48,7 @@ fun BasicButton(
                 contentDescription = null,
                 modifier = Modifier
                     .padding(end = 4.dp)
-                    .size(24.dp)
+                    .size(24.dp),
             )
         }
 
@@ -76,21 +76,22 @@ private class BasicButtonPreviewParameterProvider : PreviewParameterProvider<Bas
     override val values = sequenceOf(
         // Button with no icon - enabled
         BasicButtonPreviewData(),
-
         // Button with icon - enabled
-        BasicButtonPreviewData(iconResId = R.drawable.ic_habits_24dp)
+        BasicButtonPreviewData(iconResId = R.drawable.ic_habits_24dp),
     )
 }
 
 @Preview
 @Composable
-private fun BasicButtonPreview(@PreviewParameter(BasicButtonPreviewParameterProvider::class) previewData: BasicButtonPreviewData) {
+private fun BasicButtonPreview(
+    @PreviewParameter(BasicButtonPreviewParameterProvider::class) previewData: BasicButtonPreviewData,
+) {
     BasicButton(
         onClick = {},
         text = previewData.text,
         colors = previewData.colors,
         iconResId = previewData.iconResId,
-        enabled = previewData.enabled
+        enabled = previewData.enabled,
     )
 }
 //endregion

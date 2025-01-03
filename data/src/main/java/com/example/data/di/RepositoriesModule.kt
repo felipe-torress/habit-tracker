@@ -31,5 +31,7 @@ abstract class RepositoriesModule {
 
     @Binds
     @Singleton
-    internal abstract fun bindsTemporaryHabitRepository(implementation: TemporaryHabitRepositoryImpl): TemporaryHabitRepository
+    internal abstract fun bindsTemporaryHabitRepository(
+        implementation: TemporaryHabitRepositoryImpl,
+    ): TemporaryHabitRepository
 }

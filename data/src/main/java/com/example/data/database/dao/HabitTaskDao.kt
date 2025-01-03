@@ -12,7 +12,6 @@ import kotlinx.coroutines.flow.Flow
  */
 @Dao
 interface HabitTaskDao {
-
     /**
      * Inserts a list of Tasks
      */

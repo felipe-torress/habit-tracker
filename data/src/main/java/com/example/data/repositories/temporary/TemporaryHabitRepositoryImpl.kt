@@ -32,7 +32,7 @@ interface TemporaryHabitRepository {
 }
 
 class TemporaryHabitRepositoryImpl @Inject constructor(
-    private val habitsRepository: HabitsRepository
+    private val habitsRepository: HabitsRepository,
 ) : TemporaryHabitRepository {
     private val _temporaryTasks = MutableStateFlow<List<HabitTask>>(emptyList())
     override val temporaryTasks: StateFlow<List<HabitTask>> get() = _temporaryTasks.asStateFlow()
@@ -70,7 +70,7 @@ class TemporaryHabitRepositoryImpl @Inject constructor(
             task.copy(
                 habitId = habitId,
                 createdAt = createdAt,
-                updatedAt = createdAt
+                updatedAt = createdAt,
             )
         }
 

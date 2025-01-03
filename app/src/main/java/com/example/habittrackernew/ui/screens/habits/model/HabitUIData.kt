@@ -15,7 +15,8 @@ fun Habit.toHabitUIData(): HabitUIData {
     return HabitUIData(
         id = id,
         name = name,
-        daysOfWeek = emptyList(), // TODO: Add days of week to Habit
+        // TODO: Add days of week to Habit
+        daysOfWeek = emptyList(),
         tasks = tasks.map(HabitTask::toHabitTaskUIData),
     )
 }

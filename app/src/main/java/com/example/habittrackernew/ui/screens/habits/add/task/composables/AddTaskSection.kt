@@ -18,7 +18,7 @@ fun AddTaskSection(
     title: String,
     testTagState: TestTagState,
     modifier: Modifier = Modifier,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -26,7 +26,7 @@ fun AddTaskSection(
     ) {
         Header(
             title = title,
-            testTagState = testTagState
+            testTagState = testTagState,
         )
 
         content()
@@ -37,11 +37,11 @@ fun AddTaskSection(
 private fun Header(
     title: String,
     testTagState: TestTagState,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier.fillMaxWidth(),
     ) {
         Text(
             text = title,
@@ -49,7 +49,7 @@ private fun Header(
             color = HabitTrackerColors.green700,
             modifier = Modifier
                 .fillMaxWidth()
-                .testTag("${testTagState.origin}${testTagState.section}Title")
+                .testTag("${testTagState.origin}${testTagState.section}Title"),
         )
     }
 }

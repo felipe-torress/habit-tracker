@@ -14,12 +14,12 @@ fun ColorPickerSection(
     selectedColor: ColorUI?,
     onColorClick: (ColorUI) -> Unit,
     testTagState: TestTagState,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     AddHabitSection(
         title = stringResource(id = R.string.add_habit_screen_color_picker_section_title),
         testTagState = testTagState,
-        modifier = modifier
+        modifier = modifier,
     ) {
         ColorPicker(
             colors = listOf(ColorUI.GREEN, ColorUI.BLUE, ColorUI.PURPLE),

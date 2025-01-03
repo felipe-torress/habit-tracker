@@ -13,12 +13,12 @@ import com.example.habittrackernew.ui.utils.testTags.TestTagState
 fun ReadyToStartSection(
     onAddHabitClick: () -> Unit,
     testTagState: TestTagState,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     AddHabitSection(
         title = stringResource(id = R.string.add_habit_screen_ready_to_start_section_title),
         testTagState = testTagState.section("ReadyToStartSection"),
-        modifier = modifier
+        modifier = modifier,
     ) {
         AddHabitButton(onClick = onAddHabitClick)
     }
@@ -27,13 +27,13 @@ fun ReadyToStartSection(
 @Composable
 private fun AddHabitButton(
     onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     PrimaryButton(
         onClick = onClick,
         text = stringResource(id = R.string.add_habit_screen_add_habit_button_title),
         iconResId = R.drawable.ic_habits_24dp,
-        modifier = modifier
+        modifier = modifier,
     )
 }
 
@@ -43,7 +43,7 @@ private fun AddHabitButton(
 private fun ReadyToStartSectionPreview() {
     ReadyToStartSection(
         onAddHabitClick = {},
-        testTagState = TestTagState("ReadyToStartSection")
+        testTagState = TestTagState("ReadyToStartSection"),
     )
 }
 //endregion

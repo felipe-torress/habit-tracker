@@ -27,8 +27,10 @@ fun PrimaryButton(
         colors = ButtonDefaults.buttonColors(
             containerColor = HabitTrackerColors.green700,
             contentColor = HabitTrackerColors.green50,
-            disabledContainerColor = HabitTrackerColors.darkGrey50, // TODO: Change to disabled color
-            disabledContentColor = HabitTrackerColors.darkGrey300, // TODO: Change to disabled color
+            // TODO: Change to disabled color
+            disabledContainerColor = HabitTrackerColors.darkGrey50,
+            // TODO: Change to disabled color
+            disabledContentColor = HabitTrackerColors.darkGrey300,
         ),
         modifier = modifier,
     )
@@ -45,13 +47,10 @@ private class PrimaryButtonPreviewParameterProvider : PreviewParameterProvider<P
     override val values = sequenceOf(
         // Button with no icon - enabled
         PrimaryButtonPreviewData(),
-
         // Button with icon - enabled
         PrimaryButtonPreviewData(iconResId = R.drawable.ic_habits_24dp),
-
         // Button with no icon - disabled
         PrimaryButtonPreviewData(enabled = false),
-
         // Button with icon - disabled
         PrimaryButtonPreviewData(iconResId = R.drawable.ic_habits_24dp, enabled = false),
     )
@@ -59,12 +58,14 @@ private class PrimaryButtonPreviewParameterProvider : PreviewParameterProvider<P
 
 @Preview
 @Composable
-private fun PrimaryButtonPreview(@PreviewParameter(PrimaryButtonPreviewParameterProvider::class) previewData: PrimaryButtonPreviewData) {
+private fun PrimaryButtonPreview(
+    @PreviewParameter(PrimaryButtonPreviewParameterProvider::class) previewData: PrimaryButtonPreviewData,
+) {
     PrimaryButton(
         onClick = {},
         text = previewData.text,
         iconResId = previewData.iconResId,
-        enabled = previewData.enabled
+        enabled = previewData.enabled,
     )
 }
 //endregion

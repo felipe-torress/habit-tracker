@@ -17,10 +17,10 @@ import com.example.habittrackernew.ui.theme.HabitTrackerColors
 fun Loader(modifier: Modifier = Modifier) {
     Box(
         contentAlignment = Alignment.Center,
-        modifier = modifier.fillMaxSize()
+        modifier = modifier.fillMaxSize(),
     ) {
         CircularProgressIndicator(
-            color = HabitTrackerColors.green500
+            color = HabitTrackerColors.green500,
         )
     }
 }
@@ -54,13 +54,13 @@ fun HabitTrackerPullToRefreshBox(
 private fun BoxScope.PullToRefreshIndicator(
     isRefreshing: Boolean,
     state: PullToRefreshState,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Indicator(
         modifier = modifier.align(Alignment.TopCenter),
         isRefreshing = isRefreshing,
         state = state,
         containerColor = HabitTrackerColors.green100,
-        color = HabitTrackerColors.green900
+        color = HabitTrackerColors.green900,
     )
 }

@@ -7,8 +7,9 @@ import com.example.data.mappers.asHabitTask
 import com.example.data.model.Goal
 
 // TODO: Check improvements: https://stackoverflow.com/questions/58520141/room-relation-returning-only-the-first-item-of-the-table
+
 /**
- * External data layer representation of a fully populated Goal
+ External data layer representation of a fully populated Goal
  */
 data class PopulatedGoal(
     @Embedded

@@ -15,11 +15,12 @@ fun Habit.asHabitEntity() =
         color = color,
     )
 
-fun Habit.asPopulatedHabit() = PopulatedHabit(
-    habit = asHabitEntity(),
-    goals = goals.map(Goal::asGoalEntity),
-    tasks = tasks.map(HabitTask::asHabitTaskEntity),
-)
+fun Habit.asPopulatedHabit() =
+    PopulatedHabit(
+        habit = asHabitEntity(),
+        goals = goals.map(Goal::asGoalEntity),
+        tasks = tasks.map(HabitTask::asHabitTaskEntity),
+    )
 
 fun HabitEntity.asHabit() =
     Habit(

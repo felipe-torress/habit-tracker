@@ -15,7 +15,7 @@ fun NavController.navigateToProgressTab(navOptions: NavOptions) =
 
 fun NavGraphBuilder.progressNavGraph() =
     navigation<TopLevelRoutes.ProgressTab>(
-        startDestination = Progress
+        startDestination = Progress,
     ) {
         progressScreen()
     }

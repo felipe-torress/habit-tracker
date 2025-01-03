@@ -19,9 +19,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AddTaskViewModel @Inject constructor(
-    private val temporaryHabitRepository: TemporaryHabitRepository
+    private val temporaryHabitRepository: TemporaryHabitRepository,
 ) : ViewModel() {
-
     //region --- Private ---
     private val _name = MutableStateFlow("")
     private val _daysOfWeek = MutableStateFlow<List<DayOfWeek>>(emptyList())
@@ -38,13 +37,13 @@ class AddTaskViewModel @Inject constructor(
     val isConfirmEnabled: StateFlow<Boolean> = combine(
         name,
         daysOfWeek,
-        time
+        time,
     ) { name, daysOfWeek, time ->
         name.isNotBlank() && daysOfWeek.isNotEmpty() && time != null
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000L),
-        initialValue = false
+        initialValue = false,
     )
     //endregion
 
@@ -81,12 +80,15 @@ class AddTaskViewModel @Inject constructor(
     fun addTask() {
         viewModelScope.launch {
             time.value?.let { time ->
-                if (name.value.isBlank() || daysOfWeek.value.isEmpty()) return@launch
-                else temporaryHabitRepository.addTask(
-                    name = name.value,
-                    daysOfWeek = daysOfWeek.value,
-                    time = time
-                )
+                if (name.value.isBlank() || daysOfWeek.value.isEmpty()) {
+                    return@launch
+                } else {
+                    temporaryHabitRepository.addTask(
+                        name = name.value,
+                        daysOfWeek = daysOfWeek.value,
+                        time = time,
+                    )
+                }
             }
 
             uiEvent.emit(AddTaskEvent.NavigateBack)

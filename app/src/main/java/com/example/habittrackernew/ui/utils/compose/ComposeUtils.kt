@@ -8,6 +8,10 @@ import androidx.compose.ui.Modifier
 @Composable
 fun rememberInteractionsSource(): MutableInteractionSource = remember { MutableInteractionSource() }
 
-fun Modifier.thenIf(predicate: Boolean, block: Modifier.() -> Modifier): Modifier = this.then(
-    if (predicate) block() else Modifier
-)
+fun Modifier.thenIf(
+    predicate: Boolean,
+    block: Modifier.() -> Modifier,
+): Modifier =
+    this.then(
+        if (predicate) block() else Modifier,
+    )

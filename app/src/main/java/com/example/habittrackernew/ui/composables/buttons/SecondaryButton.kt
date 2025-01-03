@@ -27,8 +27,10 @@ fun SecondaryButton(
         colors = ButtonDefaults.buttonColors(
             containerColor = HabitTrackerColors.green100,
             contentColor = HabitTrackerColors.green900,
-            disabledContainerColor = HabitTrackerColors.green100, // TODO: Change to disabled color
-            disabledContentColor = HabitTrackerColors.green900, // TODO: Change to disabled color
+            // TODO: Change to disabled color
+            disabledContainerColor = HabitTrackerColors.green100,
+            // TODO: Change to disabled color
+            disabledContentColor = HabitTrackerColors.green900,
         ),
         modifier = modifier,
     )
@@ -45,20 +47,21 @@ private class SecondaryButtonPreviewParameterProvider : PreviewParameterProvider
     override val values = sequenceOf(
         // Button with no icon - enabled
         SecondaryButtonPreviewData(),
-
         // Button with icon - enabled
-        SecondaryButtonPreviewData(iconResId = R.drawable.ic_habits_24dp)
+        SecondaryButtonPreviewData(iconResId = R.drawable.ic_habits_24dp),
     )
 }
 
 @DefaultBackgroundPreview
 @Composable
-private fun SecondaryButtonPreview(@PreviewParameter(SecondaryButtonPreviewParameterProvider::class) previewData: SecondaryButtonPreviewData) {
+private fun SecondaryButtonPreview(
+    @PreviewParameter(SecondaryButtonPreviewParameterProvider::class) previewData: SecondaryButtonPreviewData,
+) {
     SecondaryButton(
         onClick = {},
         text = previewData.text,
         iconResId = previewData.iconResId,
-        enabled = previewData.enabled
+        enabled = previewData.enabled,
     )
 }
 //endregion

@@ -30,18 +30,18 @@ import java.time.DayOfWeek
 fun DayOfWeekPicker(
     selectedDaysOfWeek: List<DayOfWeek>,
     onDayOfWeekClick: (DayOfWeek) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     FlowRow(
         verticalArrangement = Arrangement.Center,
         horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.Start),
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier.fillMaxWidth(),
     ) {
         DayOfWeek.entries.forEach { dayOfWeek ->
             DayOfWeekItem(
                 dayOfWeek = dayOfWeek,
                 isSelected = dayOfWeek in selectedDaysOfWeek,
-                onClick = onDayOfWeekClick
+                onClick = onDayOfWeekClick,
             )
         }
     }
@@ -52,7 +52,7 @@ fun DayOfWeekItem(
     dayOfWeek: DayOfWeek,
     isSelected: Boolean,
     onClick: (DayOfWeek) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val (backgroundColor, textColor) = if (isSelected) {
         HabitTrackerColors.green700 to HabitTrackerColors.green50
@@ -67,41 +67,41 @@ fun DayOfWeekItem(
             .size(36.dp)
             .background(backgroundColor)
             .clickable { onClick(dayOfWeek) }
-            .padding(8.dp)
+            .padding(8.dp),
     ) {
         Text(
             text = dayOfWeek.toDayOfWeekInitial(),
             style = HabitTrackerTypography.bodySmall,
             fontWeight = FontWeight.Bold,
-            color = textColor
+            color = textColor,
         )
     }
 }
 
 //region --- Preview ---
 private data class DayOfWeekPickerPreviewData(
-    val selectedDaysOfWeek: List<DayOfWeek> = emptyList()
+    val selectedDaysOfWeek: List<DayOfWeek> = emptyList(),
 )
 
 private class DayOfWeekPickerPreviewParameterProvider : PreviewParameterProvider<DayOfWeekPickerPreviewData> {
     override val values = sequenceOf(
         // No Days of Week Selected
         DayOfWeekPickerPreviewData(),
-
         // Monday Selected
         DayOfWeekPickerPreviewData(selectedDaysOfWeek = listOf(DayOfWeek.MONDAY)),
-
         // All Days of Week Selected
-        DayOfWeekPickerPreviewData(selectedDaysOfWeek = DayOfWeek.entries)
+        DayOfWeekPickerPreviewData(selectedDaysOfWeek = DayOfWeek.entries),
     )
 }
 
 @Preview
 @Composable
-private fun DayOfWeekPickerPreview(@PreviewParameter(DayOfWeekPickerPreviewParameterProvider::class) previewData: DayOfWeekPickerPreviewData) {
+private fun DayOfWeekPickerPreview(
+    @PreviewParameter(DayOfWeekPickerPreviewParameterProvider::class) previewData: DayOfWeekPickerPreviewData,
+) {
     DayOfWeekPicker(
         selectedDaysOfWeek = previewData.selectedDaysOfWeek,
-        onDayOfWeekClick = {}
+        onDayOfWeekClick = {},
     )
 }
 //endregion

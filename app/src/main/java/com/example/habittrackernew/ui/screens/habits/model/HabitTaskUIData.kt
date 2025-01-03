@@ -14,7 +14,11 @@ data class HabitTaskUIData(
     val daysOfWeek: List<DayOfWeek>,
 )
 
-fun HabitTaskUIData.toHabitTask(habitId: String, createdAt: ZonedDateTime, updatedAt: ZonedDateTime): HabitTask {
+fun HabitTaskUIData.toHabitTask(
+    habitId: String,
+    createdAt: ZonedDateTime,
+    updatedAt: ZonedDateTime,
+): HabitTask {
     return HabitTask(
         id = id,
         name = name,

@@ -42,7 +42,7 @@ fun TimeSection(
     if (isTimePickerVisible) {
         TimePickerDialog(
             onCancel = onTimePickerDismiss,
-            onConfirm = onTimePickerConfirm
+            onConfirm = onTimePickerConfirm,
         )
     }
 }
@@ -59,13 +59,13 @@ private fun TimeContainer(
             .clip(RoundedCornerShape(16.dp))
             .clickable(
                 interactionSource = rememberInteractionsSource(),
-                indication = ripple(color = HabitTrackerColors.green500)
+                indication = ripple(color = HabitTrackerColors.green500),
             ) {
                 onClick()
             }
             .fillMaxWidth()
             .background(color = HabitTrackerColors.softGreen)
-            .padding(16.dp)
+            .padding(16.dp),
     ) {
         Label()
         Time(time)
@@ -77,20 +77,20 @@ private fun Label(modifier: Modifier = Modifier) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(2.dp),
-        modifier = modifier
+        modifier = modifier,
     ) {
         Icon(
             painter = painterResource(R.drawable.ic_clock_16dp),
             contentDescription = null,
             tint = HabitTrackerColors.green700,
-            modifier = Modifier.size(16.dp)
+            modifier = Modifier.size(16.dp),
         )
 
         Text(
             text = stringResource(R.string.add_task_screen_time_picker_label),
             style = HabitTrackerTypography.bodyLarge,
             fontWeight = FontWeight.Bold,
-            color = HabitTrackerColors.green700
+            color = HabitTrackerColors.green700,
         )
     }
 }
@@ -98,7 +98,7 @@ private fun Label(modifier: Modifier = Modifier) {
 @Composable
 private fun RowScope.Time(
     time: LocalTime?,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val (text, textColor) = if (time != null) {
         time.toLocalizedTime() to HabitTrackerColors.textColor
@@ -106,12 +106,11 @@ private fun RowScope.Time(
         stringResource(R.string.add_task_screen_time_picker_placeholder) to HabitTrackerColors.green500
     }
 
-
     Text(
         text = text,
         style = HabitTrackerTypography.bodyLarge,
         color = textColor,
         textAlign = TextAlign.Left,
-        modifier = modifier.weight(1f)
+        modifier = modifier.weight(1f),
     )
 }

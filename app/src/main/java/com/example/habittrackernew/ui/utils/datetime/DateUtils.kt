@@ -21,4 +21,7 @@ fun DayOfWeek.toDayOfWeekInitial(): String = this.getDisplayName(TextStyle.NARRO
 
 fun String.capitalize() = replaceFirstChar { it.uppercase() }
 
-fun getLocalTime(hour: Int, minute: Int): LocalTime = LocalTime.of(hour, minute)
+fun getLocalTime(
+    hour: Int,
+    minute: Int,
+): LocalTime = LocalTime.of(hour, minute)

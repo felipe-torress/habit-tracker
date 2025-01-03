@@ -16,7 +16,7 @@ import com.example.habittrackernew.ui.theme.HabitTrackerColors
 @Composable
 fun InputTimePicker(
     state: TimePickerState,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     TimeInput(
         modifier = modifier,
@@ -24,50 +24,47 @@ fun InputTimePicker(
         colors = TimePickerDefaults.colors(
             // container
             containerColor = HabitTrackerColors.softGreen,
-
             // clock dial
             clockDialColor = HabitTrackerColors.softGreen,
             selectorColor = HabitTrackerColors.green700,
-
             // clock dial text (content)
             clockDialSelectedContentColor = HabitTrackerColors.green50,
             clockDialUnselectedContentColor = HabitTrackerColors.textColor,
-
             // period selector
             periodSelectorBorderColor = HabitTrackerColors.green500,
             periodSelectorSelectedContainerColor = HabitTrackerColors.green700,
             periodSelectorUnselectedContainerColor = HabitTrackerColors.green100,
             periodSelectorSelectedContentColor = HabitTrackerColors.green50,
             periodSelectorUnselectedContentColor = HabitTrackerColors.textColor,
-
             // time selector
             timeSelectorSelectedContainerColor = HabitTrackerColors.green700,
             timeSelectorUnselectedContainerColor = HabitTrackerColors.green100,
             timeSelectorSelectedContentColor = HabitTrackerColors.green50,
             timeSelectorUnselectedContentColor = HabitTrackerColors.textColor,
-        )
+        ),
     )
 }
 
 //region --- Preview ---
 private data class InputTimePickerPreviewData(
-    val is24Hour: Boolean = false
+    val is24Hour: Boolean = false,
 )
 
 private class InputTimePickerPreviewParameterProvider : PreviewParameterProvider<InputTimePickerPreviewData> {
     override val values = sequenceOf(
         // 12 hour
         InputTimePickerPreviewData(),
-
         // 24 hour
-        InputTimePickerPreviewData(is24Hour = true)
+        InputTimePickerPreviewData(is24Hour = true),
     )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
-private fun InputTimePickerPreview(@PreviewParameter(InputTimePickerPreviewParameterProvider::class) previewData: InputTimePickerPreviewData) {
+private fun InputTimePickerPreview(
+    @PreviewParameter(InputTimePickerPreviewParameterProvider::class) previewData: InputTimePickerPreviewData,
+) {
     InputTimePicker(state = rememberTimePickerState(is24Hour = previewData.is24Hour))
 }
 //endregion

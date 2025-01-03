@@ -20,14 +20,14 @@ fun ColorPicker(
     onColorClick: (ColorUI) -> Unit,
     selectedColor: ColorUI?,
     testTagState: TestTagState,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterHorizontally),
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
             .fillMaxWidth()
-            .testTag("${testTagState.origin}ColorPicker")
+            .testTag("${testTagState.origin}ColorPicker"),
     ) {
         colors.forEachIndexed { index, color ->
             ColorPickerItem(
@@ -35,7 +35,7 @@ fun ColorPicker(
                 onColorClick = onColorClick,
                 isSelected = color == selectedColor,
                 testTagState = testTagState.index(index),
-                modifier = modifier
+                modifier = modifier,
             )
         }
     }
@@ -44,7 +44,7 @@ fun ColorPicker(
 //region MARK: --- Preview ---
 private data class ColorPickerPreviewData(
     val colors: List<ColorUI> = listOf(ColorUI.GREEN, ColorUI.BLUE, ColorUI.PURPLE),
-    val selectedColor: ColorUI? = null
+    val selectedColor: ColorUI? = null,
 )
 
 private class ColorPickerPreviewProvider : PreviewParameterProvider<ColorPickerPreviewData> {
@@ -55,7 +55,9 @@ private class ColorPickerPreviewProvider : PreviewParameterProvider<ColorPickerP
 
 @Preview
 @Composable
-private fun ColorPickerPreview(@PreviewParameter(ColorPickerPreviewProvider::class) previewData: ColorPickerPreviewData) {
+private fun ColorPickerPreview(
+    @PreviewParameter(ColorPickerPreviewProvider::class) previewData: ColorPickerPreviewData,
+) {
     ColorPicker(
         colors = previewData.colors,
         selectedColor = previewData.selectedColor,

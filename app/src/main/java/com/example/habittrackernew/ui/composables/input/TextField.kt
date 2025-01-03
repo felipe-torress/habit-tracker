@@ -33,7 +33,7 @@ fun HabitTrackerTextField(
     placeholder: String,
     label: String,
     @DrawableRes labelIconResId: Int,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.Top),
@@ -42,7 +42,7 @@ fun HabitTrackerTextField(
     ) {
         Label(
             label = label,
-            iconResId = labelIconResId
+            iconResId = labelIconResId,
         )
 
         TextField(
@@ -57,26 +57,22 @@ fun HabitTrackerTextField(
                 focusedContainerColor = HabitTrackerColors.softGreen,
                 unfocusedContainerColor = HabitTrackerColors.softGreen,
                 disabledContainerColor = HabitTrackerColors.softGreen,
-
                 // text color
                 focusedTextColor = HabitTrackerColors.green900,
                 unfocusedTextColor = HabitTrackerColors.green900,
                 disabledTextColor = HabitTrackerColors.green900,
-
                 // cursor color
                 cursorColor = HabitTrackerColors.green900,
-
                 // label color
                 focusedLabelColor = HabitTrackerColors.green900,
                 unfocusedLabelColor = HabitTrackerColors.green900,
                 disabledLabelColor = HabitTrackerColors.green900,
-
                 // indicator color
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
                 disabledIndicatorColor = Color.Transparent,
                 errorIndicatorColor = Color.Transparent,
-            )
+            ),
         )
     }
 }
@@ -84,13 +80,13 @@ fun HabitTrackerTextField(
 @Composable
 private fun Placeholder(
     placeholder: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Text(
         text = placeholder,
         style = HabitTrackerTypography.bodyLarge,
         color = HabitTrackerColors.green600,
-        modifier = modifier
+        modifier = modifier,
     )
 }
 
@@ -98,25 +94,25 @@ private fun Placeholder(
 private fun Label(
     label: String,
     @DrawableRes iconResId: Int,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(4.dp),
         verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier.semantics(mergeDescendants = true) {}
+        modifier = modifier.semantics(mergeDescendants = true) {},
     ) {
         Icon(
             painter = painterResource(iconResId),
             contentDescription = null,
             tint = HabitTrackerColors.green900,
-            modifier = Modifier.size(16.dp)
+            modifier = Modifier.size(16.dp),
         )
 
         Text(
             text = label,
             style = HabitTrackerTypography.bodyLarge,
             color = HabitTrackerColors.green900,
-            modifier = modifier
+            modifier = modifier,
         )
     }
 }
@@ -138,7 +134,9 @@ private class HabitTrackerTextFieldPreviewProvider : PreviewParameterProvider<Ha
 
 @DefaultBackgroundPreview
 @Composable
-private fun HabitTrackerTextFieldPreview(@PreviewParameter(HabitTrackerTextFieldPreviewProvider::class) previewData: HabitTrackerTextFieldPreviewData) {
+private fun HabitTrackerTextFieldPreview(
+    @PreviewParameter(HabitTrackerTextFieldPreviewProvider::class) previewData: HabitTrackerTextFieldPreviewData,
+) {
     HabitTrackerTextField(
         value = previewData.value,
         placeholder = previewData.placeholder,

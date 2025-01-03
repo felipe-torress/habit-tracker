@@ -41,7 +41,7 @@ fun HabitTaskCard(
     task: HabitTaskUIData,
     onEditClick: () -> Unit,
     testTagState: TestTagState,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val testTag = "${testTagState.origin}${testTagState.section}HabitTaskCard${testTagState.index}"
 
@@ -51,18 +51,18 @@ fun HabitTaskCard(
             .clip(RoundedCornerShape(16.dp))
             .background(HabitTrackerColors.softGreen)
             .padding(16.dp)
-            .testTag(testTag)
+            .testTag(testTag),
     ) {
         Header(
             name = task.name,
             onEditClick = onEditClick,
-            testTagState = TestTagState(testTag)
+            testTagState = TestTagState(testTag),
         )
 
         DateTimeInfo(
             daysOfWeek = task.daysOfWeek,
             time = task.time,
-            testTagState = TestTagState(testTag)
+            testTagState = TestTagState(testTag),
         )
     }
 }
@@ -72,7 +72,7 @@ fun Header(
     name: String,
     onEditClick: () -> Unit,
     testTagState: TestTagState,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -100,10 +100,10 @@ fun Header(
                     indication = ripple(
                         color = HabitTrackerColors.green500,
                         bounded = false,
-                        radius = 24.dp
-                    )
+                        radius = 24.dp,
+                    ),
                 ) { onEditClick() }
-                .testTag("${testTagState.origin}EditIconButton")
+                .testTag("${testTagState.origin}EditIconButton"),
         )
     }
 }
@@ -113,21 +113,21 @@ private fun DateTimeInfo(
     daysOfWeek: List<DayOfWeek>,
     time: LocalTime,
     testTagState: TestTagState,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(4.dp),
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier.fillMaxWidth(),
     ) {
         DaysOfWeek(
             daysOfWeek = daysOfWeek,
-            modifier = Modifier.testTag("${testTagState.origin}DaysOfWeek")
+            modifier = Modifier.testTag("${testTagState.origin}DaysOfWeek"),
         )
 
         Time(
             time = time,
-            modifier = Modifier.testTag("${testTagState.origin}Time")
+            modifier = Modifier.testTag("${testTagState.origin}Time"),
         )
     }
 }
@@ -135,24 +135,24 @@ private fun DateTimeInfo(
 @Composable
 private fun DaysOfWeek(
     daysOfWeek: List<DayOfWeek>,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     DateTimeInfoItem(
         info = daysOfWeek.toDaysOfWeekText(),
         iconResId = R.drawable.ic_repeat_16dp,
-        modifier = modifier
+        modifier = modifier,
     )
 }
 
 @Composable
 private fun Time(
     time: LocalTime,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     DateTimeInfoItem(
         info = time.toLocalizedTime(),
         iconResId = R.drawable.ic_clock_16dp,
-        modifier = modifier
+        modifier = modifier,
     )
 }
 
@@ -160,32 +160,32 @@ private fun Time(
 private fun DateTimeInfoItem(
     info: String,
     @DrawableRes iconResId: Int,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(4.dp),
-        modifier = modifier
+        modifier = modifier,
     ) {
         Icon(
             painter = painterResource(iconResId),
             contentDescription = null,
             tint = HabitTrackerColors.green700,
-            modifier = Modifier.size(16.dp)
+            modifier = Modifier.size(16.dp),
         )
 
         Text(
             text = info,
             style = HabitTrackerTypography.bodySmall,
             fontWeight = FontWeight.Normal,
-            color = HabitTrackerColors.textColor
+            color = HabitTrackerColors.textColor,
         )
     }
 }
 
 //region --- Preview ---
 private data class HabitTaskCardPreviewData(
-    val task: HabitTaskUIData = Mocks.habitTaskUIData_1
+    val task: HabitTaskUIData = Mocks.habitTaskUIData_1,
 )
 
 private class HabitTaskCardPreviewParameterProvider : PreviewParameterProvider<HabitTaskCardPreviewData> {
@@ -198,11 +198,13 @@ private class HabitTaskCardPreviewParameterProvider : PreviewParameterProvider<H
 
 @Preview
 @Composable
-private fun HabitTaskCardPreview(@PreviewParameter(HabitTaskCardPreviewParameterProvider::class) previewData: HabitTaskCardPreviewData) {
+private fun HabitTaskCardPreview(
+    @PreviewParameter(HabitTaskCardPreviewParameterProvider::class) previewData: HabitTaskCardPreviewData,
+) {
     HabitTaskCard(
         task = previewData.task,
         onEditClick = {},
-        testTagState = TestTagState("HabitTaskCard")
+        testTagState = TestTagState("HabitTaskCard"),
     )
 }
 //endregion

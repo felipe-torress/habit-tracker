@@ -19,7 +19,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HabitsListViewModel @Inject constructor(private val habitsRepository: HabitsRepository) : ViewModel() {
-
     private val refreshTrigger = MutableSharedFlow<Unit>(replay = 1)
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -31,18 +30,19 @@ class HabitsListViewModel @Inject constructor(private val habitsRepository: Habi
                 HabitsListUIState.NoHabits
             } else {
                 println("[Felipe] Habits Success")
-                HabitsListUIState.Success(habits = habits
-                    .map(Habit::toHabitUIData)
-                    .also {
-                        println("[Felipe] Habits: $it")
-                    }
+                HabitsListUIState.Success(
+                    habits = habits
+                        .map(Habit::toHabitUIData)
+                        .also {
+                            println("[Felipe] Habits: $it")
+                        },
                 )
             }
         }.onStart { emit(HabitsListUIState.Loading) }
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000L),
-        initialValue = HabitsListUIState.Loading
+        initialValue = HabitsListUIState.Loading,
     )
 
     init {

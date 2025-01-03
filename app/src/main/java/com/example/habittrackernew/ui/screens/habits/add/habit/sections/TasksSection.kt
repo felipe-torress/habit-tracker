@@ -19,17 +19,17 @@ fun TasksSection(
     tasks: List<HabitTaskUIData>,
     testTagState: TestTagState,
     onAddTaskClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     AddHabitSection(
         title = stringResource(id = R.string.add_habit_screen_add_task_section_title),
         description = stringResource(id = R.string.add_habit_screen_add_task_section_description),
         testTagState = testTagState,
-        modifier = modifier
+        modifier = modifier,
     ) {
         Column(
             verticalArrangement = Arrangement.spacedBy(8.dp),
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         ) {
             tasks.forEachIndexed { index, task ->
                 HabitTaskCard(
@@ -47,12 +47,12 @@ fun TasksSection(
 @Composable
 fun AddTaskButton(
     onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     SecondaryButton(
         onClick = onClick,
         text = stringResource(id = R.string.add_habit_screen_add_task_button_title),
         iconResId = R.drawable.ic_progress_24dp,
-        modifier = modifier
+        modifier = modifier,
     )
 }

@@ -13,7 +13,6 @@ import kotlinx.coroutines.flow.Flow
  */
 @Dao
 interface GoalDao {
-
     /**
      * Inserts a list of Goals
      */

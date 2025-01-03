@@ -25,7 +25,7 @@ fun ColorPickerItem(
     onColorClick: (ColorUI) -> Unit,
     isSelected: Boolean,
     testTagState: TestTagState,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val shape = RoundedCornerShape(16.dp)
 
@@ -44,7 +44,7 @@ fun ColorPickerItem(
             .clip(shape)
             .background(backgroundColor)
             .clickable { onColorClick(color) }
-            .testTag("${testTagState.origin}ColorPickerItem${testTagState.index}")
+            .testTag("${testTagState.origin}ColorPickerItem${testTagState.index}"),
     )
 }
 
@@ -58,33 +58,29 @@ private class ColorPickerItemPreviewProvider : PreviewParameterProvider<ColorPic
     override val values = sequenceOf(
         // Green - Not Selected
         ColorPickerItemPreviewData(),
-
         // Green - Selected
         ColorPickerItemPreviewData(isSelected = true),
-
         // Blue - Not Selected
         ColorPickerItemPreviewData(color = ColorUI.BLUE),
-
         // Blue - Selected
         ColorPickerItemPreviewData(color = ColorUI.BLUE, isSelected = true),
-
         // Purple - Not Selected
         ColorPickerItemPreviewData(color = ColorUI.PURPLE),
-
         // Purple - Selected
         ColorPickerItemPreviewData(color = ColorUI.PURPLE, isSelected = true),
-
-        )
+    )
 }
 
 @Preview
 @Composable
-fun ColorPickerItemPreview(@PreviewParameter(ColorPickerItemPreviewProvider::class) previewData: ColorPickerItemPreviewData) {
+fun ColorPickerItemPreview(
+    @PreviewParameter(ColorPickerItemPreviewProvider::class) previewData: ColorPickerItemPreviewData,
+) {
     ColorPickerItem(
         color = previewData.color,
         isSelected = previewData.isSelected,
         onColorClick = {},
-        testTagState = TestTagState("ColorPickerItem")
+        testTagState = TestTagState("ColorPickerItem"),
     )
 }
 //endregion

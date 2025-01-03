@@ -76,7 +76,7 @@ fun TimePickerDialog(
         ) {
             Column(
                 modifier = Modifier.padding(24.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Header()
                 Content(state, mode)
@@ -85,7 +85,7 @@ fun TimePickerDialog(
                     onSwitchMode = { switchMode() },
                     onCancel = onCancel,
                     onConfirm = onConfirm,
-                    localTime = localTime
+                    localTime = localTime,
                 )
             }
         }
@@ -125,12 +125,12 @@ private fun Footer(
     onSwitchMode: () -> Unit,
     onCancel: () -> Unit,
     onConfirm: (localTime: LocalTime) -> Unit,
-    localTime: State<LocalTime>
+    localTime: State<LocalTime>,
 ) {
     Row(
         modifier = Modifier
             .heightIn(40.dp)
-            .fillMaxWidth()
+            .fillMaxWidth(),
     ) {
         ToggleModeIcon(
             mode = mode,
@@ -140,7 +140,7 @@ private fun Footer(
         Buttons(
             onCancel = onCancel,
             onConfirm = onConfirm,
-            localTime = localTime.value
+            localTime = localTime.value,
         )
     }
 }
@@ -149,7 +149,7 @@ private fun Footer(
 private fun ToggleModeIcon(
     mode: TimePickerMode,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val iconResId = when (mode) {
         TimePickerMode.Dial -> R.drawable.ic_keyboard_24dp
@@ -173,27 +173,27 @@ private fun ToggleModeIcon(
 private fun Buttons(
     onCancel: () -> Unit,
     onConfirm: (localTime: LocalTime) -> Unit,
-    localTime: LocalTime
+    localTime: LocalTime,
 ) {
     TextButton(onClick = onCancel) {
         Text(
             text = stringResource(R.string.dialog_text_cancel),
             color = HabitTrackerColors.green900,
-            style = HabitTrackerTypography.bodyLarge
+            style = HabitTrackerTypography.bodyLarge,
         )
     }
     TextButton(onClick = { onConfirm(localTime) }) {
         Text(
             text = stringResource(R.string.dialog_text_ok),
             color = HabitTrackerColors.green900,
-            style = HabitTrackerTypography.bodyLarge
+            style = HabitTrackerTypography.bodyLarge,
         )
     }
 }
 
 enum class TimePickerMode {
     Dial,
-    Input
+    Input,
 }
 
 //region --- Preview ---
@@ -202,7 +202,7 @@ enum class TimePickerMode {
 private fun TimePickerDialogPreview() {
     TimePickerDialog(
         onCancel = {},
-        onConfirm = {}
+        onConfirm = {},
     )
 }
 //endregion

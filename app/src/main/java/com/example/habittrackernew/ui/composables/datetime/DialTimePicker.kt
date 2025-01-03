@@ -17,7 +17,7 @@ import com.example.habittrackernew.ui.theme.HabitTrackerColors
 @Composable
 fun DialTimePicker(
     state: TimePickerState,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     TimePicker(
         modifier = modifier,
@@ -26,50 +26,47 @@ fun DialTimePicker(
         colors = TimePickerDefaults.colors(
             // container
             containerColor = HabitTrackerColors.softGreen,
-
             // clock dial
             clockDialColor = HabitTrackerColors.softGreen,
             selectorColor = HabitTrackerColors.green700,
-
             // clock dial text (content)
             clockDialSelectedContentColor = HabitTrackerColors.green50,
             clockDialUnselectedContentColor = HabitTrackerColors.textColor,
-
             // time selector
             timeSelectorSelectedContainerColor = HabitTrackerColors.green700,
             timeSelectorUnselectedContainerColor = HabitTrackerColors.green100,
             timeSelectorSelectedContentColor = HabitTrackerColors.green50,
             timeSelectorUnselectedContentColor = HabitTrackerColors.textColor,
-
             // period selector
             periodSelectorBorderColor = HabitTrackerColors.green500,
             periodSelectorSelectedContainerColor = HabitTrackerColors.green700,
             periodSelectorUnselectedContainerColor = HabitTrackerColors.green100,
             periodSelectorSelectedContentColor = HabitTrackerColors.green50,
             periodSelectorUnselectedContentColor = HabitTrackerColors.textColor,
-        )
+        ),
     )
 }
 
 //region --- Preview ---
 private data class DialTimePickerPreviewData(
-    val is24Hour: Boolean = false
+    val is24Hour: Boolean = false,
 )
 
 private class DialTimePickerPreviewParameterProvider : PreviewParameterProvider<DialTimePickerPreviewData> {
     override val values = sequenceOf(
         // 12 hour
         DialTimePickerPreviewData(),
-
         // 24 hour
-        DialTimePickerPreviewData(is24Hour = true)
+        DialTimePickerPreviewData(is24Hour = true),
     )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
-private fun DialTimePickerPreview(@PreviewParameter(DialTimePickerPreviewParameterProvider::class) previewData: DialTimePickerPreviewData) {
+private fun DialTimePickerPreview(
+    @PreviewParameter(DialTimePickerPreviewParameterProvider::class) previewData: DialTimePickerPreviewData,
+) {
     DialTimePicker(state = rememberTimePickerState(is24Hour = previewData.is24Hour))
 }
 

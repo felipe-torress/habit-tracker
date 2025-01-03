@@ -24,9 +24,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AddHabitViewModel @Inject constructor(
-    private val temporaryHabitRepository: TemporaryHabitRepository
+    private val temporaryHabitRepository: TemporaryHabitRepository,
 ) : ViewModel() {
-
     //region --- Private ---
     private val _name = MutableStateFlow("")
     private val _color = MutableStateFlow<HabitColor?>(null)
@@ -48,7 +47,7 @@ class AddHabitViewModel @Inject constructor(
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000L),
-        initialValue = null
+        initialValue = null,
     )
 
     val tasks: StateFlow<List<HabitTaskUIData>> = temporaryHabitRepository.temporaryTasks.map { tasks ->
@@ -60,7 +59,7 @@ class AddHabitViewModel @Inject constructor(
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000L),
-        initialValue = emptyList()
+        initialValue = emptyList(),
     )
     //endregion
 

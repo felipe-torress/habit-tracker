@@ -19,7 +19,7 @@ fun AddHabitSection(
     testTagState: TestTagState,
     modifier: Modifier = Modifier,
     description: String? = null,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -28,7 +28,7 @@ fun AddHabitSection(
         Header(
             title = title,
             description = description,
-            testTagState = testTagState
+            testTagState = testTagState,
         )
 
         content()
@@ -40,11 +40,11 @@ private fun Header(
     title: String,
     description: String?,
     testTagState: TestTagState,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier.fillMaxWidth(),
     ) {
         Title(
             title = title,
@@ -64,7 +64,7 @@ private fun Header(
 private fun Title(
     title: String,
     testTagState: TestTagState,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Text(
         text = title,
@@ -72,7 +72,7 @@ private fun Title(
         color = HabitTrackerColors.green700,
         modifier = modifier
             .fillMaxWidth()
-            .testTag("${testTagState.origin}${testTagState.section}Title")
+            .testTag("${testTagState.origin}${testTagState.section}Title"),
     )
 }
 
@@ -80,7 +80,7 @@ private fun Title(
 private fun Description(
     description: String,
     testTagState: TestTagState,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Text(
         text = description,
@@ -88,6 +88,6 @@ private fun Description(
         color = HabitTrackerColors.textColor,
         modifier = modifier
             .fillMaxWidth()
-            .testTag("${testTagState.origin}${testTagState.section}Description")
+            .testTag("${testTagState.origin}${testTagState.section}Description"),
     )
 }

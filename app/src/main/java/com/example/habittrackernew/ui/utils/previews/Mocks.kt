@@ -34,8 +34,8 @@ object Mocks {
         tasks = listOf(
             habitTaskUIData_1,
             habitTaskUIData_2,
-            habitTaskUIData_3
-        )
+            habitTaskUIData_3,
+        ),
     )
     //endregion
 }
