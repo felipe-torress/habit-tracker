@@ -33,6 +33,7 @@ import java.time.LocalTime
 @Composable
 fun AddTaskRoute(
     viewModel: AddTaskViewModel = hiltViewModel(),
+    taskId: String?,
     navigateBack: () -> Unit,
 ) {
     val name by viewModel.name.collectAsStateWithLifecycle()
@@ -42,6 +43,12 @@ fun AddTaskRoute(
     val isConfirmEnabled by viewModel.isConfirmEnabled.collectAsStateWithLifecycle()
 
     val uiEvent by viewModel.uiEvent.collectAsStateWithLifecycle(null)
+
+    LaunchedEffect(taskId) {
+        taskId?.let {
+            viewModel.loadTask(taskId)
+        }
+    }
 
     LaunchedEffect(uiEvent) {
         when (uiEvent) {

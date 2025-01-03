@@ -39,7 +39,7 @@ import java.time.LocalTime
 @Composable
 fun HabitTaskCard(
     task: HabitTaskUIData,
-    onEditClick: () -> Unit,
+    onEditClick: (taskId: String) -> Unit,
     testTagState: TestTagState,
     modifier: Modifier = Modifier,
 ) {
@@ -55,7 +55,7 @@ fun HabitTaskCard(
     ) {
         Header(
             name = task.name,
-            onEditClick = onEditClick,
+            onEditClick = { onEditClick(task.id) },
             testTagState = TestTagState(testTag),
         )
 

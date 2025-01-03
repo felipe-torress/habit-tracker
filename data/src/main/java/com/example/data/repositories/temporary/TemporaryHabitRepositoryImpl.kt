@@ -18,6 +18,7 @@ interface TemporaryHabitRepository {
     val temporaryTasks: StateFlow<List<HabitTask>>
 
     suspend fun addTask(
+        taskId: String? = null,
         name: String,
         daysOfWeek: List<DayOfWeek>,
         time: LocalTime,
@@ -38,6 +39,54 @@ class TemporaryHabitRepositoryImpl @Inject constructor(
     override val temporaryTasks: StateFlow<List<HabitTask>> get() = _temporaryTasks.asStateFlow()
 
     override suspend fun addTask(
+        taskId: String?,
+        name: String,
+        daysOfWeek: List<DayOfWeek>,
+        time: LocalTime,
+    ) {
+        if (taskId != null) {
+            editTask(
+                taskId = taskId,
+                name = name,
+                daysOfWeek = daysOfWeek,
+                time = time,
+            )
+        } else {
+            createNewTask(
+                name = name,
+                daysOfWeek = daysOfWeek,
+                time = time,
+            )
+        }
+    }
+
+    private fun editTask(
+        taskId: String,
+        name: String,
+        daysOfWeek: List<DayOfWeek>,
+        time: LocalTime,
+    ) {
+        temporaryTasks.value.find {
+            it.id == taskId
+        }?.let { task ->
+            val updatedTask = task.copy(
+                name = name,
+                daysOfWeek = daysOfWeek,
+                time = time,
+                requiredWeeklyCompletions = daysOfWeek.size,
+                createdAt = ZonedDateTime.now(),
+                updatedAt = ZonedDateTime.now(),
+            )
+
+            _temporaryTasks.update { temporaryTasks ->
+                temporaryTasks.map { task ->
+                    if (task.id == taskId) updatedTask else task
+                }
+            }
+        }
+    }
+
+    private fun createNewTask(
         name: String,
         daysOfWeek: List<DayOfWeek>,
         time: LocalTime,
@@ -55,8 +104,6 @@ class TemporaryHabitRepositoryImpl @Inject constructor(
         )
 
         _temporaryTasks.update { temporaryTasks -> temporaryTasks + task }
-        println("[Felipe] Task Added: $task")
-        println("[Felipe] Temporary tasks: ${temporaryTasks.value}")
     }
 
     override suspend fun saveTemporaryHabit(

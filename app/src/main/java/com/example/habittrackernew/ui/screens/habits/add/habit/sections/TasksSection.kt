@@ -19,6 +19,7 @@ fun TasksSection(
     tasks: List<HabitTaskUIData>,
     testTagState: TestTagState,
     onAddTaskClick: () -> Unit,
+    onEditTaskClick: (taskId: String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     AddHabitSection(
@@ -34,7 +35,7 @@ fun TasksSection(
             tasks.forEachIndexed { index, task ->
                 HabitTaskCard(
                     task = task,
-                    onEditClick = {},
+                    onEditClick = onEditTaskClick,
                     testTagState = testTagState.index(index),
                 )
             }

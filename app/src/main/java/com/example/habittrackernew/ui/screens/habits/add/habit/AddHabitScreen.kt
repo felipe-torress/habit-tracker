@@ -35,7 +35,7 @@ import com.example.habittrackernew.ui.utils.testTags.TestTagState
 fun AddHabitRoute(
     viewModel: AddHabitViewModel = hiltViewModel(),
     navigateBack: () -> Unit,
-    onAddTaskClick: () -> Unit,
+    navigateToAddTask: (taskId: String?) -> Unit,
 ) {
     val name by viewModel.name.collectAsStateWithLifecycle()
     val color by viewModel.color.collectAsStateWithLifecycle()
@@ -54,7 +54,8 @@ fun AddHabitRoute(
         name = name,
         color = color,
         tasks = tasks,
-        onAddTaskClick = onAddTaskClick,
+        onAddTaskClick = { navigateToAddTask(null) },
+        onEditTaskClick = navigateToAddTask,
         onCloseClick = viewModel::onCloseClick,
         updateHabitName = viewModel::updateHabitName,
         onColorClick = viewModel::onColorClick,
@@ -70,6 +71,7 @@ fun AddHabitScreen(
     onCloseClick: () -> Unit,
     updateHabitName: (String) -> Unit,
     onAddTaskClick: () -> Unit,
+    onEditTaskClick: (taskId: String) -> Unit,
     onColorClick: (ColorUI) -> Unit,
     onAddHabitClick: () -> Unit,
 ) {
@@ -112,7 +114,8 @@ fun AddHabitScreen(
             TasksSection(
                 tasks = tasks,
                 testTagState = testTagState.section("TasksSection"),
-                onAddTaskClick = onAddTaskClick
+                onAddTaskClick = onAddTaskClick,
+                onEditTaskClick = onEditTaskClick,
             )
 
             ReadyToStartSection(
@@ -169,6 +172,7 @@ private fun AddHabitScreenPreview(@PreviewParameter(AddHabitScreenPreviewParamet
         updateHabitName = {},
         onColorClick = {},
         onAddHabitClick = {},
+        onEditTaskClick = {},
     )
 }
 //endregion

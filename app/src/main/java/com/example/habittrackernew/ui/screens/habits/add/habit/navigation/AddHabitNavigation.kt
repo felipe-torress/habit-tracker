@@ -11,7 +11,7 @@ fun NavGraphBuilder.addHabitScreen(navController: NavController) =
     composable<AddHabit> {
         AddHabitRoute(
             navigateBack = { navController.popBackStack() },
-            onAddTaskClick = { navController.navigate(AddTask) },
+            navigateToAddTask = { taskId -> navController.navigate(AddTask(taskId)) },
         )
     }
 

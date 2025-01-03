@@ -26,6 +26,7 @@ class AddTaskViewModel @Inject constructor(
     private val _daysOfWeek = MutableStateFlow<List<DayOfWeek>>(emptyList())
     private val _time = MutableStateFlow<LocalTime?>(null)
     private val _isTimePickerVisible = MutableStateFlow(false)
+    private var _taskId: String? = null
     //endregion
 
     //region --- UI ---
@@ -77,6 +78,17 @@ class AddTaskViewModel @Inject constructor(
         _isTimePickerVisible.update { false }
     }
 
+    fun loadTask(taskId: String) {
+        temporaryHabitRepository.temporaryTasks.value.find {
+            it.id == taskId
+        }?.let { task ->
+            _taskId = task.id
+            _name.update { task.name }
+            _daysOfWeek.update { task.daysOfWeek }
+            _time.update { task.time }
+        }
+    }
+
     fun addTask() {
         viewModelScope.launch {
             time.value?.let { time ->
@@ -84,6 +96,7 @@ class AddTaskViewModel @Inject constructor(
                     return@launch
                 } else {
                     temporaryHabitRepository.addTask(
+                        taskId = _taskId,
                         name = name.value,
                         daysOfWeek = daysOfWeek.value,
                         time = time,
