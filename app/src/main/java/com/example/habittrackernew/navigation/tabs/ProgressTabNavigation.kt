@@ -9,7 +9,7 @@ import com.example.habittrackernew.ui.screens.progress.navigation.progressScreen
 
 fun NavController.navigateToProgressTab(navOptions: NavOptions) =
     navigate(
-        TopLevelRoutes.ProfileTab,
+        TopLevelRoutes.ProgressTab,
         navOptions,
     )
 
