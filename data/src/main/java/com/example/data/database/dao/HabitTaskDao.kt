@@ -12,14 +12,21 @@ import kotlinx.coroutines.flow.Flow
  */
 @Dao
 interface HabitTaskDao {
+
     /**
-     * Inserts a new Goal
+     * Inserts a list of Tasks
+     */
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertHabitTasks(goals: List<HabitTaskEntity>)
+
+    /**
+     * Inserts a new Tasks
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertHabitTask(goal: HabitTaskEntity)
 
     /**
-     * Deletes a Goal
+     * Deletes a Tasks
      */
     @Query("DELETE FROM habit_tasks WHERE id = :habitTaskId")
     suspend fun deleteHabitTask(habitTaskId: String)

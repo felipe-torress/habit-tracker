@@ -13,6 +13,13 @@ import kotlinx.coroutines.flow.Flow
  */
 @Dao
 interface GoalDao {
+
+    /**
+     * Inserts a list of Goals
+     */
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertGoals(goals: List<GoalEntity>)
+
     /**
      * Inserts a new Goal
      */

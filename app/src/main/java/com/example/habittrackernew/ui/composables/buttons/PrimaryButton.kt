@@ -27,8 +27,8 @@ fun PrimaryButton(
         colors = ButtonDefaults.buttonColors(
             containerColor = HabitTrackerColors.green700,
             contentColor = HabitTrackerColors.green50,
-            disabledContainerColor = HabitTrackerColors.green700, // TODO: Change to disabled color
-            disabledContentColor = HabitTrackerColors.green50, // TODO: Change to disabled color
+            disabledContainerColor = HabitTrackerColors.darkGrey50, // TODO: Change to disabled color
+            disabledContentColor = HabitTrackerColors.darkGrey300, // TODO: Change to disabled color
         ),
         modifier = modifier,
     )
@@ -47,7 +47,13 @@ private class PrimaryButtonPreviewParameterProvider : PreviewParameterProvider<P
         PrimaryButtonPreviewData(),
 
         // Button with icon - enabled
-        PrimaryButtonPreviewData(iconResId = R.drawable.ic_habits_24dp)
+        PrimaryButtonPreviewData(iconResId = R.drawable.ic_habits_24dp),
+
+        // Button with no icon - disabled
+        PrimaryButtonPreviewData(enabled = false),
+
+        // Button with icon - disabled
+        PrimaryButtonPreviewData(iconResId = R.drawable.ic_habits_24dp, enabled = false),
     )
 }
 

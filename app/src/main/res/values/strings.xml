@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">Habit Tracker</string>
 
+    <!--region Dialogs -->
+    <string name="time_picker_dialog_title">Selecione uma hora</string>
+    <string name="dialog_text_cancel">Cancelar</string>
+    <string name="dialog_text_ok">OK</string>
+    <!--endregion-->
+
     <!--region Home Tab -->
     <string name="home_tab_title">Home</string>
     <string name="home_screen_toolbar_title">Olá, %s</string>
@@ -23,6 +29,16 @@
     <string name="add_habit_screen_add_task_button_title">Adicionar Tarefa</string>
     <string name="add_habit_screen_add_habit_button_title">Adicionar Hábito</string>
     <string name="add_habit_screen_ready_to_start_section_title">Pronto para começar?</string>
+    <!--endregion-->
+
+    <!--region Add Task Screen -->
+    <string name="add_task_screen_toolbar_title">Adicionar Tarefa</string>
+    <string name="add_task_screen_task_name_text_field_label">Tarefa</string>
+    <string name="add_task_screen_task_name_text_field_placeholder">Digite o nome da tarefa</string>
+    <string name="add_task_screen_days_of_week_section_title">Repete às/aos</string>
+    <string name="add_task_screen_time_picker_label">Hora</string>
+    <string name="add_task_screen_time_picker_placeholder">Selecione uma hora</string>
+    <string name="add_task_screen_confirm_add_task_button_title">Adicionar Tarefa</string>
     <!--endregion-->
 
     <!--endregion-->

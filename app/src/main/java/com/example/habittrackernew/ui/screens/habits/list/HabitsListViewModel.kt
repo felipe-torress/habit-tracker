@@ -31,7 +31,12 @@ class HabitsListViewModel @Inject constructor(private val habitsRepository: Habi
                 HabitsListUIState.NoHabits
             } else {
                 println("[Felipe] Habits Success")
-                HabitsListUIState.Success(habits = habits.map(Habit::toHabitUIData))
+                HabitsListUIState.Success(habits = habits
+                    .map(Habit::toHabitUIData)
+                    .also {
+                        println("[Felipe] Habits: $it")
+                    }
+                )
             }
         }.onStart { emit(HabitsListUIState.Loading) }
     }.stateIn(

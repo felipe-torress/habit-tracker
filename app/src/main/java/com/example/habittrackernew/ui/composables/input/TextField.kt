@@ -25,6 +25,7 @@ import com.example.habittrackernew.ui.theme.HabitTrackerColors
 import com.example.habittrackernew.ui.theme.HabitTrackerTypography
 import com.example.habittrackernew.ui.utils.previews.DefaultBackgroundPreview
 
+// TODO: Add TestTagState
 @Composable
 fun HabitTrackerTextField(
     value: String,

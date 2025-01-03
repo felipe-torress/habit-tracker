@@ -12,19 +12,24 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class RepositoriesModule {
     @Binds
+    @Singleton
     internal abstract fun bindsHabitsRepository(implementation: LocalHabitsRepository): HabitsRepository
 
     @Binds
+    @Singleton
     internal abstract fun bindsGoalsRepository(implementation: LocalGoalsRepository): GoalsRepository
 
     @Binds
+    @Singleton
     internal abstract fun bindsHabitTasksRepository(implementation: LocalHabitTasksRepository): HabitTasksRepository
 
     @Binds
+    @Singleton
     internal abstract fun bindsTemporaryHabitRepository(implementation: TemporaryHabitRepositoryImpl): TemporaryHabitRepository
 }

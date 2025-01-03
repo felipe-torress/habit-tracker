@@ -33,7 +33,7 @@ class AddHabitViewModel @Inject constructor(
     //endregion
 
     //region --- Events ---
-    val uiEvents: MutableSharedFlow<AddHabitEvent> = MutableSharedFlow()
+    val uiEvent: MutableSharedFlow<AddHabitEvent> = MutableSharedFlow()
 
     sealed class AddHabitEvent {
         data object NavigateBack : AddHabitEvent()
@@ -52,7 +52,11 @@ class AddHabitViewModel @Inject constructor(
     )
 
     val tasks: StateFlow<List<HabitTaskUIData>> = temporaryHabitRepository.temporaryTasks.map { tasks ->
-        tasks.map(HabitTask::toHabitTaskUIData)
+        tasks
+            .map(HabitTask::toHabitTaskUIData)
+            .also {
+                println("[Felipe] Tasks: $it")
+            }
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000L),
@@ -72,7 +76,15 @@ class AddHabitViewModel @Inject constructor(
                 color = _color.value ?: HabitColor.BLUE,
             )
 
-            uiEvents.emit(AddHabitEvent.NavigateBack)
+            uiEvent.emit(AddHabitEvent.NavigateBack)
+        }
+    }
+
+    fun onCloseClick() {
+        viewModelScope.launch {
+            temporaryHabitRepository.discardTemporaryHabit()
+
+            uiEvent.emit(AddHabitEvent.NavigateBack)
         }
     }
     //endregion

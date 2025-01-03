@@ -17,4 +17,8 @@ fun List<DayOfWeek>.toDaysOfWeekText(): String {
     return displayNames.joinToString { it.removeSuffix(".").capitalize() }
 }
 
+fun DayOfWeek.toDayOfWeekInitial(): String = this.getDisplayName(TextStyle.NARROW_STANDALONE, defaultLocale)
+
 fun String.capitalize() = replaceFirstChar { it.uppercase() }
+
+fun getLocalTime(hour: Int, minute: Int): LocalTime = LocalTime.of(hour, minute)

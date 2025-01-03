@@ -41,10 +41,10 @@ fun AddHabitRoute(
     val color by viewModel.color.collectAsStateWithLifecycle()
     val tasks by viewModel.tasks.collectAsStateWithLifecycle()
 
-    val uiEvents by viewModel.uiEvents.collectAsStateWithLifecycle(null)
+    val uiEvent by viewModel.uiEvent.collectAsStateWithLifecycle(null)
 
-    LaunchedEffect(uiEvents) {
-        when (uiEvents) {
+    LaunchedEffect(uiEvent) {
+        when (uiEvent) {
             AddHabitViewModel.AddHabitEvent.NavigateBack -> navigateBack()
             null -> {}
         }
@@ -54,8 +54,8 @@ fun AddHabitRoute(
         name = name,
         color = color,
         tasks = tasks,
-        onCloseClick = navigateBack,
         onAddTaskClick = onAddTaskClick,
+        onCloseClick = viewModel::onCloseClick,
         updateHabitName = viewModel::updateHabitName,
         onColorClick = viewModel::onColorClick,
         onAddHabitClick = viewModel::onAddHabitClick,
