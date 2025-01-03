@@ -11,8 +11,8 @@ object Mocks {
         id = UUID.randomUUID().toString(),
         name = MockConstants.habitTask_title_1,
         time = MockConstants.localTime_11_00_AM,
-        currentWeeklyCompletions = 0,
-        requiredWeeklyCompletions = 0,
+        currentWeeklyCompletions = 2,
+        requiredWeeklyCompletions = 10,
         daysOfWeek = MockConstants.daysOfWeek_1,
     )
 

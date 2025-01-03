@@ -25,6 +25,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import com.example.habittrackernew.R
+import com.example.habittrackernew.ui.composables.progress.ProgressIndicator
 import com.example.habittrackernew.ui.screens.habits.model.ColorUI
 import com.example.habittrackernew.ui.screens.habits.model.HabitTaskUIData
 import com.example.habittrackernew.ui.theme.HabitTrackerColors
@@ -68,7 +69,7 @@ fun HabitCard(
         )
         Content(
             tasks = tasks,
-            colors = colors,
+            color = color,
             testTagState = localTestTagState,
         )
     }
@@ -148,7 +149,7 @@ private fun RepeatInfo(
 @Composable
 private fun Content(
     tasks: List<HabitTaskUIData>,
-    colors: HabitCardColors,
+    color: ColorUI,
     testTagState: TestTagState,
     modifier: Modifier = Modifier,
 ) {
@@ -162,13 +163,16 @@ private fun Content(
             text = pluralStringResource(R.plurals.habit_card_tasks_header_title, tasks.size),
             style = HabitTrackerTypography.bodyLarge,
             fontWeight = FontWeight.Bold,
-            color = colors.icon,
+            color = getCardColors(color).icon,
         )
 
         tasks.forEachIndexed { index, task ->
             TaskItem(
                 name = task.name,
                 time = task.time,
+                maximumProgress = task.requiredWeeklyCompletions,
+                currentProgress = task.currentWeeklyCompletions,
+                color = color,
                 testTagState = testTagState.index(index),
             )
         }
@@ -178,7 +182,10 @@ private fun Content(
 @Composable
 fun TaskItem(
     name: String,
+    maximumProgress: Int,
+    currentProgress: Int,
     time: LocalTime,
+    color: ColorUI,
     testTagState: TestTagState,
     modifier: Modifier = Modifier,
 ) {
@@ -187,9 +194,7 @@ fun TaskItem(
             .fillMaxWidth()
             .testTag("${testTagState.origin}Task${testTagState.index}"),
     ) {
-        Column(
-            modifier = Modifier.fillMaxWidth(),
-        ) {
+        Column(modifier = Modifier.weight(1f)) {
             Text(
                 text = name,
                 style = HabitTrackerTypography.bodySmall,
@@ -205,7 +210,11 @@ fun TaskItem(
             )
         }
 
-        // TODO: Add Progress Indicator (will be added on future PR)
+        ProgressIndicator(
+            maximum = maximumProgress,
+            current = currentProgress,
+            color = color,
+        )
     }
 }
 

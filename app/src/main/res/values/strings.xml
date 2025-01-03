@@ -49,6 +49,7 @@
     <!--region Progress Tab -->
     <string name="progress_tab_title">Progresso</string>
     <string name="progress_screen_toolbar_title">Seu Progresso</string>
+    <string name="progress_indicator_text">%1$s/%2$s</string>
     <!--endregion-->
 
     <!--region Profile Tab -->
