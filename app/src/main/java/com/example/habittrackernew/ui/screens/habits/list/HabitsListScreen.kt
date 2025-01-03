@@ -111,9 +111,7 @@ private fun Content(
 
             is HabitsListUIState.NoHabits -> NoHabitsPlaceholder()
 
-            else -> {
-                // No Content
-            }
+            else -> Box(modifier = Modifier.fillMaxSize())
         }
     }
 }
