@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -145,7 +146,7 @@ fun Content(
             .fillMaxWidth(),
     ) {
         Text(
-            text = stringResource(R.string.habit_card_tasks_header_title),
+            text = pluralStringResource(R.plurals.habit_card_tasks_header_title, tasks.size),
             style = HabitTrackerTypography.bodyLarge,
             fontWeight = FontWeight.Bold,
             color = HabitTrackerColors.blue700,
