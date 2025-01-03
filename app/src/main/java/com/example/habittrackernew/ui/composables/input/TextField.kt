@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -24,8 +25,8 @@ import com.example.habittrackernew.R
 import com.example.habittrackernew.ui.theme.HabitTrackerColors
 import com.example.habittrackernew.ui.theme.HabitTrackerTypography
 import com.example.habittrackernew.ui.utils.previews.DefaultBackgroundPreview
+import com.example.habittrackernew.ui.utils.testTags.TestTagState
 
-// TODO: Add TestTagState
 @Composable
 fun HabitTrackerTextField(
     value: String,
@@ -33,16 +34,21 @@ fun HabitTrackerTextField(
     placeholder: String,
     label: String,
     @DrawableRes labelIconResId: Int,
+    testTagState: TestTagState,
     modifier: Modifier = Modifier,
 ) {
+    val testTag = "${testTagState.origin}${testTagState.type}TextField"
+    val innerTestTagState = TestTagState(testTag)
+
     Column(
         verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.Top),
         horizontalAlignment = Alignment.Start,
-        modifier = modifier,
+        modifier = modifier.testTag("${testTag}Container"),
     ) {
         Label(
             label = label,
             iconResId = labelIconResId,
+            testTagState = innerTestTagState
         )
 
         TextField(
@@ -50,8 +56,7 @@ fun HabitTrackerTextField(
             onValueChange = onValueChange,
             shape = RoundedCornerShape(16.dp),
             textStyle = HabitTrackerTypography.bodyLarge,
-            modifier = Modifier.fillMaxWidth(),
-            placeholder = { Placeholder(placeholder) },
+            placeholder = { Placeholder(placeholder = placeholder, testTagState = innerTestTagState) },
             colors = TextFieldDefaults.colors(
                 // background colors
                 focusedContainerColor = HabitTrackerColors.softGreen,
@@ -73,6 +78,9 @@ fun HabitTrackerTextField(
                 disabledIndicatorColor = Color.Transparent,
                 errorIndicatorColor = Color.Transparent,
             ),
+            modifier = Modifier
+                .fillMaxWidth()
+                .testTag(testTag)
         )
     }
 }
@@ -80,13 +88,14 @@ fun HabitTrackerTextField(
 @Composable
 private fun Placeholder(
     placeholder: String,
+    testTagState: TestTagState,
     modifier: Modifier = Modifier,
 ) {
     Text(
         text = placeholder,
         style = HabitTrackerTypography.bodyLarge,
         color = HabitTrackerColors.green600,
-        modifier = modifier,
+        modifier = modifier.testTag("${testTagState.origin}Placeholder"),
     )
 }
 
@@ -94,6 +103,7 @@ private fun Placeholder(
 private fun Label(
     label: String,
     @DrawableRes iconResId: Int,
+    testTagState: TestTagState,
     modifier: Modifier = Modifier,
 ) {
     Row(
@@ -105,14 +115,16 @@ private fun Label(
             painter = painterResource(iconResId),
             contentDescription = null,
             tint = HabitTrackerColors.green900,
-            modifier = Modifier.size(16.dp),
+            modifier = Modifier
+                .size(16.dp)
+                .testTag("${testTagState.origin}LabelIcon"),
         )
 
         Text(
             text = label,
             style = HabitTrackerTypography.bodyLarge,
             color = HabitTrackerColors.green900,
-            modifier = modifier,
+            modifier = Modifier.testTag("${testTagState.origin}LabelText"),
         )
     }
 }
@@ -143,6 +155,7 @@ private fun HabitTrackerTextFieldPreview(
         label = previewData.label,
         labelIconResId = previewData.iconResId,
         onValueChange = {},
+        testTagState = TestTagState("HabitTrackerTextFieldPreview")
     )
 }
 //endregion

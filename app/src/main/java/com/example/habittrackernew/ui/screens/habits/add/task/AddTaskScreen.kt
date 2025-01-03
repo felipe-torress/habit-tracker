@@ -107,6 +107,7 @@ fun AddTaskScreen(
                 label = stringResource(id = R.string.add_task_screen_task_name_text_field_label),
                 labelIconResId = R.drawable.ic_habits_16dp,
                 placeholder = stringResource(id = R.string.add_task_screen_task_name_text_field_placeholder),
+                testTagState = testTagState.type("TaskName"),
             )
 
             DaysOfWeekSection(

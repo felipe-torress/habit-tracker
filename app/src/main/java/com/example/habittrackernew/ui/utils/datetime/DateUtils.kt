@@ -1,5 +1,6 @@
 package com.example.habittrackernew.ui.utils.datetime
 
+import com.example.data.model.HabitTask
 import java.time.DayOfWeek
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
@@ -25,3 +26,11 @@ fun getLocalTime(
     hour: Int,
     minute: Int,
 ): LocalTime = LocalTime.of(hour, minute)
+
+fun List<HabitTask>.getDaysOfWeek(): List<DayOfWeek> {
+    return this
+        .map { it.daysOfWeek }
+        .flatten()
+        .distinct()
+        .sortedBy { it.ordinal }
+}

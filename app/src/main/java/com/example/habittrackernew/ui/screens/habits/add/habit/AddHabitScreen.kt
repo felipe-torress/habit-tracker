@@ -99,7 +99,8 @@ fun AddHabitScreen(
                 label = stringResource(id = R.string.add_habit_screen_habit_text_field_label),
                 labelIconResId = R.drawable.ic_habits_16dp,
                 placeholder = stringResource(id = R.string.add_habit_screen_habit_text_field_placeholder),
-                modifier = Modifier.padding(top = 16.dp)
+                testTagState = testTagState.type("HabitName"),
+                modifier = Modifier.padding(top = 16.dp),
             )
 
             ColorPickerSection(
