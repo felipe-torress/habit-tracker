@@ -10,10 +10,11 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -25,30 +26,37 @@ import com.example.habittrackernew.R
 import com.example.habittrackernew.ui.screens.habits.model.ColorUI
 import com.example.habittrackernew.ui.theme.HabitTrackerColors
 import com.example.habittrackernew.ui.theme.HabitTrackerTypography
+import com.example.habittrackernew.ui.utils.testTags.TestTagState
 
 @Composable
 fun ProgressIndicator(
     current: Int,
     maximum: Int,
     color: ColorUI,
+    testTagState: TestTagState,
     modifier: Modifier = Modifier
 ) {
-    val textColor = when (color) {
-        ColorUI.BLUE -> HabitTrackerColors.blue700
-        ColorUI.PURPLE -> HabitTrackerColors.purple700
-        ColorUI.GREEN -> HabitTrackerColors.green700
+    val testTag = "${testTagState.origin}ProgressIndicator${testTagState.index}"
+
+    val textColor = remember {
+        when (color) {
+            ColorUI.BLUE -> HabitTrackerColors.blue700
+            ColorUI.PURPLE -> HabitTrackerColors.purple700
+            ColorUI.GREEN -> HabitTrackerColors.green700
+        }
     }
 
     Column(
         verticalArrangement = Arrangement.spacedBy(4.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier
+        modifier = modifier.testTag(testTag)
     ) {
         Text(
             text = stringResource(R.string.progress_indicator_text, current, maximum),
             style = HabitTrackerTypography.caption,
             fontWeight = FontWeight.Bold,
-            color = textColor
+            color = textColor,
+            modifier = Modifier.testTag("${testTag}Text")
         )
 
         ProgressBar(
@@ -68,10 +76,12 @@ private fun ProgressBar(
 ) {
     val shape = RoundedCornerShape(8.dp)
 
-    val (barColor, shadow) = when (color) {
-        ColorUI.BLUE -> HabitTrackerColors.blue500 to HabitTrackerColors.blue800
-        ColorUI.PURPLE -> HabitTrackerColors.purple500 to HabitTrackerColors.purple800
-        ColorUI.GREEN -> HabitTrackerColors.green500 to HabitTrackerColors.green800
+    val barColor = remember {
+        when (color) {
+            ColorUI.BLUE -> HabitTrackerColors.blue500
+            ColorUI.PURPLE -> HabitTrackerColors.purple500
+            ColorUI.GREEN -> HabitTrackerColors.green500
+        }
     }
 
     Box(
@@ -142,7 +152,8 @@ private fun ProgressIndicatorPreview(@PreviewParameter(ProgressIndicatorPreviewP
         ProgressIndicator(
             current = previewData.current,
             maximum = previewData.maximum,
-            color = previewData.color
+            color = previewData.color,
+            testTagState = TestTagState("ProgressIndicator")
         )
     }
 }

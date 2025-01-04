@@ -39,5 +39,5 @@ interface HabitDao {
      */
     @Transaction
     @Query(value = "SELECT * FROM habits WHERE id = :habitId")
-    fun getHabitById(habitId: String): Flow<PopulatedHabit>
+    fun getHabitById(habitId: String): Flow<PopulatedHabit?>
 }

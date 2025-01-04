@@ -25,6 +25,7 @@ fun ConfirmAddTaskSection(
             text = stringResource(R.string.add_task_screen_confirm_add_task_button_title),
             iconResId = R.drawable.ic_progress_24dp,
             enabled = isConfirmEnabled,
+            testTagState = testTagState.action("ConfirmAddTask")
         )
     }
 }

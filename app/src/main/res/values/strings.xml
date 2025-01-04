@@ -3,8 +3,15 @@
 
     <!--region Dialogs -->
     <string name="time_picker_dialog_title">Selecione uma hora</string>
+    <string name="dialog_generic_title">Ops, algo deu errado</string>
+    <string name="dialog_generic_description">Sentimos muito, tivemos um problema :(</string>
+    <string name="dialog_delete_generic_title">Deletar</string>
+    <string name="dialog_delete_generic_description">Quer mesmo deletar? Esta ação não poderá ser desfeita.</string>
+    <string name="dialog_generic_try_again_description">Sentimos muito, tivemos um problema. Tente novamente mais tarde.</string>
     <string name="dialog_text_cancel">Cancelar</string>
     <string name="dialog_text_ok">OK</string>
+    <string name="dialog_text_try_again">Tentar de novo</string>
+    <string name="dialog_text_delete">Deletar</string>
     <!--endregion-->
 
     <!--region Home Tab -->
@@ -42,6 +49,18 @@
     <string name="add_task_screen_time_picker_label">Hora</string>
     <string name="add_task_screen_time_picker_placeholder">Selecione uma hora</string>
     <string name="add_task_screen_confirm_add_task_button_title">Adicionar Tarefa</string>
+    <!--endregion-->
+
+    <!--region Habit Details Screen -->
+    <string name="habit_details_screen_toolbar_title">Hábito</string>
+    <string name="habit_details_screen_load_habit_failed_dialog_title">Erro ao carregar o hábito</string>
+    <string name="habit_details_screen_load_habit_failed_dialog_description">Tivemos um problema ao carregar o hábito. Tente novamente mais tarde</string>
+    <string name="habit_details_screen_delete_habit_dialog_title">Deletar Hábito</string>
+    <string name="habit_details_screen_delete_habit_dialog_description">Quer mesmo deletar este hábito? Esta ação não poderá ser desfeita.</string>
+    <string name="habit_details_screen_delete_button_title">Deletar</string>
+    <string name="habit_details_screen_tasks_section_title">Tarefas</string>
+    <string name="habit_details_screen_tasks_section_description">Crie pequenas tarefas associadas a este hábito. Dessa maneira, você será capaz de gerenciar tarefas mais facilmente, e ter uma melhor percepção de avanço</string>
+    <string name="habit_details_screen_task_card_weekly_goal">Meta semanal</string>
     <!--endregion-->
 
     <!--endregion-->

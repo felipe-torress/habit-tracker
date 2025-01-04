@@ -13,6 +13,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -22,6 +23,7 @@ import com.example.habittrackernew.R
 import com.example.habittrackernew.ui.theme.HabitTrackerColors
 import com.example.habittrackernew.ui.theme.HabitTrackerTypography
 import com.example.habittrackernew.ui.utils.previews.MockConstants
+import com.example.habittrackernew.ui.utils.testTags.TestTagState
 
 @Composable
 fun BasicButton(
@@ -30,6 +32,7 @@ fun BasicButton(
     colors: ButtonColors,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
+    testTagState: TestTagState,
     @DrawableRes iconResId: Int? = null,
 ) {
     Button(
@@ -40,7 +43,8 @@ fun BasicButton(
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
         modifier = modifier
             .fillMaxWidth()
-            .heightIn(48.dp),
+            .heightIn(48.dp)
+            .testTag("${testTagState.origin}${testTagState.action}Button")
     ) {
         iconResId?.let { icon ->
             Icon(
@@ -92,6 +96,7 @@ private fun BasicButtonPreview(
         colors = previewData.colors,
         iconResId = previewData.iconResId,
         enabled = previewData.enabled,
+        testTagState = TestTagState(""),
     )
 }
 //endregion

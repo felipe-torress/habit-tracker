@@ -20,13 +20,17 @@ fun ReadyToStartSection(
         testTagState = testTagState.section("ReadyToStartSection"),
         modifier = modifier,
     ) {
-        AddHabitButton(onClick = onAddHabitClick)
+        AddHabitButton(
+            onClick = onAddHabitClick,
+            testTagState = testTagState,
+        )
     }
 }
 
 @Composable
 private fun AddHabitButton(
     onClick: () -> Unit,
+    testTagState: TestTagState,
     modifier: Modifier = Modifier,
 ) {
     PrimaryButton(
@@ -34,6 +38,7 @@ private fun AddHabitButton(
         text = stringResource(id = R.string.add_habit_screen_add_habit_button_title),
         iconResId = R.drawable.ic_habits_24dp,
         modifier = modifier,
+        testTagState = testTagState.action("AddHabit")
     )
 }
 

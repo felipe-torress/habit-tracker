@@ -36,8 +36,12 @@ class LocalHabitsRepository @Inject constructor(
             }
         }
 
-    override fun getHabitById(habitId: String): Flow<Habit> =
-        habitDao.getHabitById(habitId).map { habitEntity ->
-            habitEntity.asHabit()
+    override fun getHabitById(habitId: String): Flow<Habit?> {
+        println("[Felipe] Getting habit of id: $habitId")
+        return habitDao.getHabitById(habitId).map { habitEntity ->
+            habitEntity?.asHabit()
+        }.also {
+            println("[Felipe] Habit: $it")
         }
+    }
 }

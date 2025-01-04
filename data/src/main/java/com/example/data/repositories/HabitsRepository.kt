@@ -22,5 +22,5 @@ interface HabitsRepository {
     /**
      * Gets a [Habit] by it's id
      */
-    fun getHabitById(habitId: String): Flow<Habit>
+    fun getHabitById(habitId: String): Flow<Habit?>
 }

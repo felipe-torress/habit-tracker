@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.testTag
@@ -29,10 +30,12 @@ fun ColorPickerItem(
 ) {
     val shape = RoundedCornerShape(16.dp)
 
-    val (backgroundColor, borderColor) = when (color) {
-        ColorUI.GREEN -> HabitTrackerColors.green300 to HabitTrackerColors.green600
-        ColorUI.BLUE -> HabitTrackerColors.blue300 to HabitTrackerColors.blue600
-        ColorUI.PURPLE -> HabitTrackerColors.purple200 to HabitTrackerColors.purple500
+    val (backgroundColor, borderColor) = remember {
+        when (color) {
+            ColorUI.GREEN -> HabitTrackerColors.green300 to HabitTrackerColors.green600
+            ColorUI.BLUE -> HabitTrackerColors.blue300 to HabitTrackerColors.blue600
+            ColorUI.PURPLE -> HabitTrackerColors.purple200 to HabitTrackerColors.purple500
+        }
     }
 
     Box(

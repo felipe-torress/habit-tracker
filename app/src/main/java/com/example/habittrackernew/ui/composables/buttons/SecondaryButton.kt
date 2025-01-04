@@ -10,6 +10,7 @@ import com.example.habittrackernew.R
 import com.example.habittrackernew.ui.theme.HabitTrackerColors
 import com.example.habittrackernew.ui.utils.previews.DefaultBackgroundPreview
 import com.example.habittrackernew.ui.utils.previews.MockConstants
+import com.example.habittrackernew.ui.utils.testTags.TestTagState
 
 @Composable
 fun SecondaryButton(
@@ -17,6 +18,7 @@ fun SecondaryButton(
     text: String,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
+    testTagState: TestTagState,
     @DrawableRes iconResId: Int? = null,
 ) {
     BasicButton(
@@ -30,6 +32,7 @@ fun SecondaryButton(
             disabledContainerColor = HabitTrackerColors.darkGrey50,
             disabledContentColor = HabitTrackerColors.darkGrey100,
         ),
+        testTagState = testTagState,
         modifier = modifier,
     )
 }
@@ -60,6 +63,7 @@ private fun SecondaryButtonPreview(
         text = previewData.text,
         iconResId = previewData.iconResId,
         enabled = previewData.enabled,
+        testTagState = TestTagState("")
     )
 }
 //endregion

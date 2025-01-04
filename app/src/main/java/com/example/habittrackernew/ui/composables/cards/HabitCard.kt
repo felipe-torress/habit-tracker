@@ -12,6 +12,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -52,7 +53,7 @@ fun HabitCard(
     val localTestTag = "${testTagState.origin}HabitCard${testTagState.index}"
     val localTestTagState = TestTagState(localTestTag)
 
-    val colors: HabitCardColors = getCardColors(color)
+    val colors: HabitCardColors = remember { getCardColors(color) }
 
     Column(
         modifier = modifier
@@ -153,6 +154,8 @@ private fun Content(
     testTagState: TestTagState,
     modifier: Modifier = Modifier,
 ) {
+    val iconColor = remember { getCardColors(color).icon }
+
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp),
         modifier = modifier
@@ -163,7 +166,7 @@ private fun Content(
             text = pluralStringResource(R.plurals.habit_card_tasks_header_title, tasks.size),
             style = HabitTrackerTypography.bodyLarge,
             fontWeight = FontWeight.Bold,
-            color = getCardColors(color).icon,
+            color = iconColor,
         )
 
         tasks.forEachIndexed { index, task ->
@@ -214,6 +217,7 @@ fun TaskItem(
             maximum = maximumProgress,
             current = currentProgress,
             color = color,
+            testTagState = testTagState,
         )
     }
 }

@@ -10,6 +10,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.example.habittrackernew.R
 import com.example.habittrackernew.ui.theme.HabitTrackerColors
 import com.example.habittrackernew.ui.utils.previews.MockConstants
+import com.example.habittrackernew.ui.utils.testTags.TestTagState
 
 @Composable
 fun PrimaryButton(
@@ -17,6 +18,7 @@ fun PrimaryButton(
     text: String,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
+    testTagState: TestTagState,
     @DrawableRes iconResId: Int? = null,
 ) {
     BasicButton(
@@ -30,6 +32,7 @@ fun PrimaryButton(
             disabledContainerColor = HabitTrackerColors.darkGrey50,
             disabledContentColor = HabitTrackerColors.darkGrey300,
         ),
+        testTagState = testTagState,
         modifier = modifier,
     )
 }
@@ -64,6 +67,7 @@ private fun PrimaryButtonPreview(
         text = previewData.text,
         iconResId = previewData.iconResId,
         enabled = previewData.enabled,
+        testTagState = TestTagState("")
     )
 }
 //endregion

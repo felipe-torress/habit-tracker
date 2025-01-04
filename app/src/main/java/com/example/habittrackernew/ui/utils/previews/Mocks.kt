@@ -39,5 +39,13 @@ object Mocks {
         ),
         color = ColorUI.BLUE
     )
+
+    val habitUIData_purple = habitUIData_1.copy(
+        color = ColorUI.PURPLE
+    )
+
+    val habitUIData_green = habitUIData_1.copy(
+        color = ColorUI.GREEN
+    )
     //endregion
 }

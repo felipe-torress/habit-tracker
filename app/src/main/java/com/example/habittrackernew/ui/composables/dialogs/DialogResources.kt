@@ -1,0 +1,32 @@
+package com.example.habittrackernew.ui.composables.dialogs
+
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import com.example.habittrackernew.R
+
+object DialogResources {
+
+    @Composable
+    fun genericDialog() = GenericDialogResources(
+        title = stringResource(R.string.dialog_generic_title),
+        description = stringResource(R.string.dialog_generic_description),
+        positiveTitle = stringResource(R.string.dialog_text_ok),
+        negativeTitle = stringResource(R.string.dialog_text_cancel)
+    )
+
+    @Composable
+    fun genericTryAgainDialog() = GenericDialogResources(
+        title = stringResource(R.string.dialog_generic_title),
+        description = stringResource(R.string.dialog_generic_try_again_description),
+        positiveTitle = stringResource(R.string.dialog_text_try_again),
+        negativeTitle = stringResource(R.string.dialog_text_cancel)
+    )
+
+    @Composable
+    fun deleteDialog() = GenericDialogResources(
+        title = stringResource(R.string.dialog_delete_generic_title),
+        description = stringResource(R.string.dialog_delete_generic_description),
+        positiveTitle = stringResource(R.string.dialog_text_delete),
+        negativeTitle = stringResource(R.string.dialog_text_cancel),
+    )
+}

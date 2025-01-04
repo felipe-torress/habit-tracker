@@ -15,6 +15,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -38,16 +39,29 @@ import com.example.habittrackernew.ui.utils.testTags.TestTagState
 @Composable
 fun HabitsListRoute(
     viewModel: HabitsListViewModel = hiltViewModel(),
-    onAddHabitClick: () -> Unit,
+    navigateToAddHabit: () -> Unit,
+    navigateToHabitDetails: (habitId: String) -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    val uiEvent by viewModel.uiEvent.collectAsStateWithLifecycle(null)
+    LaunchedEffect(uiEvent) {
+        when (uiEvent) {
+            is HabitsListViewModel.HabitsListEvent.NavigateToAddHabit -> navigateToAddHabit()
+            is HabitsListViewModel.HabitsListEvent.NavigateToHabitDetails -> {
+                val habitId = (uiEvent as HabitsListViewModel.HabitsListEvent.NavigateToHabitDetails).habitId
+                navigateToHabitDetails(habitId)
+            }
+
+            else -> {}
+        }
+    }
+
     HabitsListScreen(
         uiState = uiState,
         onRefresh = viewModel::refresh,
-        onAddHabitClick = onAddHabitClick,
-        onHabitCardClick = {
-            // TODO: Add  navigation to Habit Details
-        },
+        onAddHabitClick = viewModel::onAddHabitClick,
+        onHabitClick = viewModel::onHabitClick,
     )
 }
 
@@ -57,7 +71,7 @@ fun HabitsListScreen(
     uiState: HabitsListUIState,
     onRefresh: () -> Unit,
     onAddHabitClick: () -> Unit,
-    onHabitCardClick: (id: String) -> Unit,
+    onHabitClick: (habitId: String) -> Unit,
 ) {
     val testTagState = TestTagState("HabitsListScreen")
 
@@ -82,7 +96,7 @@ fun HabitsListScreen(
         ) {
             Content(
                 uiState = uiState,
-                onHabitCardClick = onHabitCardClick,
+                onHabitCardClick = onHabitClick,
                 testTagState = testTagState
             )
         }
@@ -177,7 +191,7 @@ private fun HabitsListScreenPreview(@PreviewParameter(HabitsListScreenPreviewPar
     HabitsListScreen(
         uiState = previewData.uiState,
         onAddHabitClick = {},
-        onHabitCardClick = {},
+        onHabitClick = {},
         onRefresh = {}
     )
 }
