@@ -21,7 +21,6 @@ import javax.inject.Inject
 class AddTaskViewModel @Inject constructor(
     private val temporaryHabitRepository: TemporaryHabitRepository,
 ) : ViewModel() {
-
     //region --- UI ---
     private val _name = MutableStateFlow("")
     private val _daysOfWeek = MutableStateFlow<List<DayOfWeek>>(emptyList())
@@ -46,7 +45,6 @@ class AddTaskViewModel @Inject constructor(
         initialValue = false,
     )
     //endregion
-
 
     //region --- Events ---
     val uiEvent: MutableSharedFlow<AddTaskEvent> = MutableSharedFlow()
