@@ -21,19 +21,18 @@ import javax.inject.Inject
 class AddTaskViewModel @Inject constructor(
     private val temporaryHabitRepository: TemporaryHabitRepository,
 ) : ViewModel() {
-    //region --- Private ---
+
+    //region --- UI ---
     private val _name = MutableStateFlow("")
     private val _daysOfWeek = MutableStateFlow<List<DayOfWeek>>(emptyList())
     private val _time = MutableStateFlow<LocalTime?>(null)
     private val _isTimePickerVisible = MutableStateFlow(false)
-    private var _taskId: String? = null
-    //endregion
-
-    //region --- UI ---
     val name: StateFlow<String> get() = _name.asStateFlow()
     val daysOfWeek: StateFlow<List<DayOfWeek>> get() = _daysOfWeek.asStateFlow()
     val time: StateFlow<LocalTime?> get() = _time.asStateFlow()
     val isTimePickerVisible: StateFlow<Boolean> get() = _isTimePickerVisible.asStateFlow()
+
+    private var taskId: String? = null
 
     val isConfirmEnabled: StateFlow<Boolean> = combine(
         name,
@@ -47,6 +46,7 @@ class AddTaskViewModel @Inject constructor(
         initialValue = false,
     )
     //endregion
+
 
     //region --- Events ---
     val uiEvent: MutableSharedFlow<AddTaskEvent> = MutableSharedFlow()
@@ -82,7 +82,7 @@ class AddTaskViewModel @Inject constructor(
         temporaryHabitRepository.temporaryTasks.value.find {
             it.id == taskId
         }?.let { task ->
-            _taskId = task.id
+            this.taskId = task.id
             _name.update { task.name }
             _daysOfWeek.update { task.daysOfWeek }
             _time.update { task.time }
@@ -96,7 +96,7 @@ class AddTaskViewModel @Inject constructor(
                     return@launch
                 } else {
                     temporaryHabitRepository.addTask(
-                        taskId = _taskId,
+                        taskId = taskId,
                         name = name.value,
                         daysOfWeek = daysOfWeek.value,
                         time = time,

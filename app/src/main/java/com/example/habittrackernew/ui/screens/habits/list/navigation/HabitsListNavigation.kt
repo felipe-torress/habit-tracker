@@ -17,7 +17,7 @@ fun NavGraphBuilder.habitsListScreen(
         navigateToAddHabit = { navController.navigate(route = AddHabit, navOptions = navOptions) },
         navigateToHabitDetails = { habitId ->
             navController.navigate(route = HabitDetails(habitId))
-        }
+        },
     )
 }
 

@@ -16,11 +16,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
-import com.example.habittrackernew.MainActivityViewModel
 import com.example.habittrackernew.navigation.HabitTrackerNavHost
 import com.example.habittrackernew.navigation.TopLevelDestination
 import com.example.habittrackernew.ui.composables.bottombar.HabitTrackerBottomBar
@@ -39,7 +36,7 @@ fun HabitTrackerApp(
             durationMillis = 300,
             easing = FastOutSlowInEasing,
         ),
-        label = "statusBarColor"
+        label = "statusBarColor",
     )
 
     Scaffold(

@@ -18,12 +18,12 @@ fun LazyListScope.habitDetailsSection(
     @StringRes descriptionResId: Int,
     color: ColorUI,
     isFirstSection: Boolean,
-    content: LazyListScope.() -> Unit
+    content: LazyListScope.() -> Unit,
 ) {
     title(
         titleResId = titleResId,
         color = color,
-        isFirstSection = isFirstSection
+        isFirstSection = isFirstSection,
     )
 
     description(descriptionResId = descriptionResId)
@@ -34,7 +34,7 @@ fun LazyListScope.habitDetailsSection(
 private fun LazyListScope.title(
     @StringRes titleResId: Int,
     color: ColorUI,
-    isFirstSection: Boolean
+    isFirstSection: Boolean,
 ) {
     item {
         val textColor = remember {
@@ -49,18 +49,20 @@ private fun LazyListScope.title(
             text = stringResource(titleResId),
             style = HabitTrackerTypography.subtitle1.copy(fontSize = 20.sp),
             color = textColor,
-            modifier = Modifier.padding(top = if (isFirstSection) 0.dp else 24.dp)
+            modifier = Modifier.padding(top = if (isFirstSection) 0.dp else 24.dp),
         )
     }
 }
 
-private fun LazyListScope.description(@StringRes descriptionResId: Int) {
+private fun LazyListScope.description(
+    @StringRes descriptionResId: Int,
+) {
     item {
         Text(
             text = stringResource(descriptionResId),
             style = HabitTrackerTypography.bodySmall,
             color = HabitTrackerColors.textColor,
-            modifier = Modifier.padding(top = 4.dp)
+            modifier = Modifier.padding(top = 4.dp),
         )
     }
 }

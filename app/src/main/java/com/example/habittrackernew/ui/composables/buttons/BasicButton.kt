@@ -44,7 +44,7 @@ fun BasicButton(
         modifier = modifier
             .fillMaxWidth()
             .heightIn(48.dp)
-            .testTag("${testTagState.origin}${testTagState.action}Button")
+            .testTag("${testTagState.origin}${testTagState.action}Button"),
     ) {
         iconResId?.let { icon ->
             Icon(

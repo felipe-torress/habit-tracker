@@ -12,7 +12,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainActivityViewModel @Inject constructor() : ViewModel() {
-
     private val _statusBarColor = MutableStateFlow(HabitTrackerColors.backgroundColor)
     val statusBarColor: StateFlow<Color> get() = _statusBarColor.asStateFlow()
 

@@ -48,7 +48,7 @@ fun HabitTrackerTextField(
         Label(
             label = label,
             iconResId = labelIconResId,
-            testTagState = innerTestTagState
+            testTagState = innerTestTagState,
         )
 
         TextField(
@@ -80,7 +80,7 @@ fun HabitTrackerTextField(
             ),
             modifier = Modifier
                 .fillMaxWidth()
-                .testTag(testTag)
+                .testTag(testTag),
         )
     }
 }
@@ -155,7 +155,7 @@ private fun HabitTrackerTextFieldPreview(
         label = previewData.label,
         labelIconResId = previewData.iconResId,
         onValueChange = {},
-        testTagState = TestTagState("HabitTrackerTextFieldPreview")
+        testTagState = TestTagState("HabitTrackerTextFieldPreview"),
     )
 }
 //endregion

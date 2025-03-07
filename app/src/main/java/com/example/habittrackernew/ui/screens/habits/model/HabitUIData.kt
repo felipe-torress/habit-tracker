@@ -19,6 +19,6 @@ fun Habit.toHabitUIData(): HabitUIData {
         name = name,
         daysOfWeek = tasks.getDaysOfWeek(),
         tasks = tasks.map(HabitTask::toHabitTaskUIData),
-        color = color.toColorUI()
+        color = color.toColorUI(),
     )
 }

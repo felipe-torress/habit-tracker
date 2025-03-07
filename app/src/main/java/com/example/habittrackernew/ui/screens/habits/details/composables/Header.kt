@@ -10,7 +10,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.habittrackernew.ui.composables.buttons.iconbuttons.EditButton
@@ -25,7 +24,7 @@ fun Header(
     color: ColorUI,
     onEditNameClick: () -> Unit,
     testTagState: TestTagState,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val backgroundColor = when (color) {
         ColorUI.BLUE -> HabitTrackerColors.softBlue
@@ -38,7 +37,7 @@ fun Header(
             .fillMaxWidth()
             .clip(RoundedCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp))
             .background(backgroundColor)
-            .padding(16.dp)
+            .padding(16.dp),
     ) {
         Text(
             text = name,
@@ -46,13 +45,13 @@ fun Header(
             color = HabitTrackerColors.textColor,
             modifier = Modifier
                 .weight(1f)
-                .testTag("${testTagState.origin}HabitName")
+                .testTag("${testTagState.origin}HabitName"),
         )
 
         EditButton(
             onClick = onEditNameClick,
             color = color,
-            testTagState = testTagState
+            testTagState = testTagState,
         )
     }
 }

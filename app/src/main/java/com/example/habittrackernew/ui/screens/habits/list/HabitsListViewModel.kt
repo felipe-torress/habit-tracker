@@ -11,7 +11,6 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
@@ -27,6 +26,7 @@ class HabitsListViewModel @Inject constructor(private val habitsRepository: Habi
 
     sealed class HabitsListEvent {
         data object NavigateToAddHabit : HabitsListEvent()
+
         data class NavigateToHabitDetails(val habitId: String) : HabitsListEvent()
     }
     //endregion

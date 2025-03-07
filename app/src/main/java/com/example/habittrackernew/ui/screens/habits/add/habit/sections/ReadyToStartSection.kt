@@ -38,7 +38,7 @@ private fun AddHabitButton(
         text = stringResource(id = R.string.add_habit_screen_add_habit_button_title),
         iconResId = R.drawable.ic_habits_24dp,
         modifier = modifier,
-        testTagState = testTagState.action("AddHabit")
+        testTagState = testTagState.action("AddHabit"),
     )
 }
 

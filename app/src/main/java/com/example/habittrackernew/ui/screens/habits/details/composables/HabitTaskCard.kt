@@ -43,7 +43,7 @@ fun HabitTaskCard(
     color: ColorUI,
     onEditClick: (taskId: String) -> Unit,
     testTagState: TestTagState,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val testTag = "${testTagState.origin}HabitTaskCard${testTagState.index}"
     val innerTestTag = TestTagState(testTag)
@@ -62,13 +62,13 @@ fun HabitTaskCard(
             .background(color = backgroundColor, shape = RoundedCornerShape(16.dp))
             .fillMaxWidth()
             .padding(16.dp)
-            .testTag("${testTagState.origin}HabitTaskCard${testTagState.index}")
+            .testTag("${testTagState.origin}HabitTaskCard${testTagState.index}"),
     ) {
         Header(
             name = task.name,
             onEditClick = { onEditClick(task.id) },
             color = color,
-            testTagState = innerTestTag
+            testTagState = innerTestTag,
         )
 
         Info(
@@ -77,7 +77,7 @@ fun HabitTaskCard(
             maximumProgress = task.requiredWeeklyCompletions,
             currentProgress = task.currentWeeklyCompletions,
             color = color,
-            testTagState = innerTestTag
+            testTagState = innerTestTag,
         )
     }
 }
@@ -88,12 +88,12 @@ private fun Header(
     onEditClick: () -> Unit,
     color: ColorUI,
     testTagState: TestTagState,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(16.dp),
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier.fillMaxWidth(),
     ) {
         Text(
             text = name,
@@ -102,14 +102,14 @@ private fun Header(
             color = HabitTrackerColors.textColor,
             modifier = Modifier
                 .weight(1f)
-                .testTag("${testTagState.origin}Title")
+                .testTag("${testTagState.origin}Title"),
         )
 
         EditButton(
             onClick = onEditClick,
             color = color,
             modifier = Modifier.testTag("${testTagState.origin}EditButton"),
-            testTagState = testTagState
+            testTagState = testTagState,
         )
     }
 }
@@ -122,12 +122,12 @@ private fun Info(
     currentProgress: Int,
     color: ColorUI,
     testTagState: TestTagState,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier
+        modifier = modifier,
     ) {
         DateTimeInfo(
             daysOfWeek = daysOfWeek,
@@ -141,7 +141,7 @@ private fun Info(
             maximumProgress = maximumProgress,
             currentProgress = currentProgress,
             color = color,
-            testTagState = testTagState
+            testTagState = testTagState,
         )
     }
 }
@@ -152,7 +152,7 @@ private fun DateTimeInfo(
     time: LocalTime,
     color: ColorUI,
     testTagState: TestTagState,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(
         horizontalAlignment = Alignment.Start,
@@ -163,14 +163,14 @@ private fun DateTimeInfo(
             text = time.toLocalizedTime(),
             iconResId = R.drawable.ic_clock_16dp,
             color = color,
-            testTagState = testTagState.type("Time")
+            testTagState = testTagState.type("Time"),
         )
 
         DateTimeInfoItem(
             text = daysOfWeek.toDaysOfWeekText(),
             iconResId = R.drawable.ic_repeat_16dp,
             color = color,
-            testTagState = testTagState.type("DaysOfWeek")
+            testTagState = testTagState.type("DaysOfWeek"),
         )
     }
 }
@@ -181,7 +181,7 @@ private fun DateTimeInfoItem(
     @DrawableRes iconResId: Int,
     color: ColorUI,
     testTagState: TestTagState,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val iconColor = when (color) {
         ColorUI.BLUE -> HabitTrackerColors.blue700
@@ -192,7 +192,7 @@ private fun DateTimeInfoItem(
     Row(
         horizontalArrangement = Arrangement.spacedBy(4.dp),
         verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier
+        modifier = modifier,
     ) {
         Icon(
             painter = painterResource(iconResId),
@@ -200,7 +200,7 @@ private fun DateTimeInfoItem(
             tint = iconColor,
             modifier = Modifier
                 .size(16.dp)
-                .testTag("${testTagState.origin}${testTagState.type}InfoIcon")
+                .testTag("${testTagState.origin}${testTagState.type}InfoIcon"),
         )
 
         Text(
@@ -208,7 +208,7 @@ private fun DateTimeInfoItem(
             style = HabitTrackerTypography.bodySmall,
             fontWeight = FontWeight.Normal,
             color = HabitTrackerColors.textColor,
-            modifier = Modifier.testTag("${testTagState.origin}${testTagState.type}InfoText")
+            modifier = Modifier.testTag("${testTagState.origin}${testTagState.type}InfoText"),
         )
     }
 }
@@ -219,7 +219,7 @@ private fun ProgressInfo(
     currentProgress: Int,
     color: ColorUI,
     testTagState: TestTagState,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val textColor = when (color) {
         ColorUI.BLUE -> HabitTrackerColors.blue800
@@ -230,20 +230,20 @@ private fun ProgressInfo(
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(8.dp),
-        modifier = modifier
+        modifier = modifier,
     ) {
         ProgressIndicator(
             current = currentProgress,
             maximum = maximumProgress,
             color = color,
-            testTagState = testTagState
+            testTagState = testTagState,
         )
 
         Text(
             text = stringResource(R.string.habit_details_screen_task_card_weekly_goal).uppercase(),
             style = HabitTrackerTypography.caption,
             fontWeight = FontWeight.Bold,
-            color = textColor
+            color = textColor,
         )
     }
 }
@@ -251,17 +251,15 @@ private fun ProgressInfo(
 //region --- Preview ---
 private data class HabitTaskCardPreviewData(
     val task: HabitTaskUIData = Mocks.habitTaskUIData_1,
-    val color: ColorUI = ColorUI.BLUE
+    val color: ColorUI = ColorUI.BLUE,
 )
 
 private class HabitTaskCardPreviewParameterProvider : PreviewParameterProvider<HabitTaskCardPreviewData> {
     override val values = sequenceOf(
         // Blue
         HabitTaskCardPreviewData(),
-
         // Purple
         HabitTaskCardPreviewData(color = ColorUI.PURPLE),
-
         // Green
         HabitTaskCardPreviewData(color = ColorUI.GREEN),
     )
@@ -269,12 +267,14 @@ private class HabitTaskCardPreviewParameterProvider : PreviewParameterProvider<H
 
 @Preview
 @Composable
-private fun HabitTaskCardPreview(@PreviewParameter(HabitTaskCardPreviewParameterProvider::class) previewData: HabitTaskCardPreviewData) {
+private fun HabitTaskCardPreview(
+    @PreviewParameter(HabitTaskCardPreviewParameterProvider::class) previewData: HabitTaskCardPreviewData,
+) {
     HabitTaskCard(
         task = previewData.task,
         color = previewData.color,
         onEditClick = {},
-        testTagState = TestTagState("HabitTaskCardPreview")
+        testTagState = TestTagState("HabitTaskCardPreview"),
     )
 }
 //endregion

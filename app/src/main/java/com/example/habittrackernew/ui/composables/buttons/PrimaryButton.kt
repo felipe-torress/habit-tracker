@@ -67,7 +67,7 @@ private fun PrimaryButtonPreview(
         text = previewData.text,
         iconResId = previewData.iconResId,
         enabled = previewData.enabled,
-        testTagState = TestTagState("")
+        testTagState = TestTagState(""),
     )
 }
 //endregion

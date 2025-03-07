@@ -9,22 +9,25 @@ import com.example.habittrackernew.ui.composables.dialogs.GenericDialogResources
 
 sealed interface HabitDetailsDialogType {
     data object DeleteHabit : HabitDetailsDialogType
+
     data object LoadHabitFailed : HabitDetailsDialogType
+
     data object Generic : HabitDetailsDialogType
 
     companion object {
+        @Composable
+        private fun loadHabitFailedDialog() =
+            DialogResources.genericTryAgainDialog().copy(
+                title = stringResource(R.string.habit_details_screen_load_habit_failed_dialog_title),
+                description = stringResource(R.string.habit_details_screen_load_habit_failed_dialog_description),
+            )
 
         @Composable
-        private fun loadHabitFailedDialog() = DialogResources.genericTryAgainDialog().copy(
-            title = stringResource(R.string.habit_details_screen_load_habit_failed_dialog_title),
-            description = stringResource(R.string.habit_details_screen_load_habit_failed_dialog_description)
-        )
-
-        @Composable
-        private fun deleteHabitDialog() = DialogResources.deleteDialog().copy(
-            title = stringResource(R.string.habit_details_screen_delete_habit_dialog_title),
-            description = stringResource(R.string.habit_details_screen_delete_habit_dialog_description)
-        )
+        private fun deleteHabitDialog() =
+            DialogResources.deleteDialog().copy(
+                title = stringResource(R.string.habit_details_screen_delete_habit_dialog_title),
+                description = stringResource(R.string.habit_details_screen_delete_habit_dialog_description),
+            )
 
         @Composable
         fun getDialogResources(dialogType: HabitDetailsDialogType): GenericDialogResources {

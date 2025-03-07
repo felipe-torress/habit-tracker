@@ -276,10 +276,8 @@ private class HabitCardPreviewParameterProvider : PreviewParameterProvider<Habit
     override val values = sequenceOf(
         // Blue
         HabitCardPreviewData(),
-
         // Purple
         HabitCardPreviewData(color = ColorUI.PURPLE),
-
         // Green
         HabitCardPreviewData(color = ColorUI.GREEN),
     )

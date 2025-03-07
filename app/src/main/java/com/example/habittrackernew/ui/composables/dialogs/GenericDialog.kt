@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.BasicAlertDialog
@@ -44,11 +43,11 @@ fun GenericDialog(
                 .wrapContentSize()
                 .clip(RoundedCornerShape(16.dp))
                 .background(HabitTrackerColors.backgroundColor)
-                .padding(16.dp)
+                .padding(16.dp),
         ) {
             Column(
                 verticalArrangement = Arrangement.spacedBy(16.dp),
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             ) {
                 Title(title = resources.title)
                 Description(description = resources.description)
@@ -56,7 +55,7 @@ fun GenericDialog(
                     positiveTitle = resources.positiveTitle,
                     negativeTitle = resources.negativeTitle,
                     onPositiveAction = callbacks.onPositiveAction,
-                    onNegativeAction = callbacks.onNegativeAction
+                    onNegativeAction = callbacks.onNegativeAction,
                 )
             }
         }
@@ -66,7 +65,7 @@ fun GenericDialog(
 @Composable
 private fun Title(
     title: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Text(
         text = title,
@@ -80,7 +79,7 @@ private fun Title(
 @Composable
 private fun Description(
     description: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Text(
         text = description,
@@ -97,12 +96,12 @@ private fun Buttons(
     negativeTitle: String?,
     onPositiveAction: () -> Unit,
     onNegativeAction: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End),
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier.fillMaxWidth(),
     ) {
         negativeTitle?.let { negativeTitle ->
             NegativeButton(
@@ -122,7 +121,7 @@ private fun Buttons(
 private fun NegativeButton(
     negativeTitle: String,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     TextButton(
         onClick = onClick,
@@ -132,12 +131,12 @@ private fun NegativeButton(
         colors = ButtonDefaults.textButtonColors(
             contentColor = HabitTrackerColors.darkGrey300,
             disabledContentColor = HabitTrackerColors.darkGrey300,
-        )
+        ),
     ) {
         Text(
             text = negativeTitle,
             style = HabitTrackerTypography.bodyLarge,
-            color = HabitTrackerColors.darkGrey300
+            color = HabitTrackerColors.darkGrey300,
         )
     }
 }
@@ -146,7 +145,7 @@ private fun NegativeButton(
 private fun PositiveButton(
     positiveTitle: String,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Button(
         onClick = onClick,
@@ -164,7 +163,7 @@ private fun PositiveButton(
             text = positiveTitle,
             style = HabitTrackerTypography.bodyLarge,
             textAlign = TextAlign.Center,
-            color = HabitTrackerColors.green50
+            color = HabitTrackerColors.green50,
         )
     }
 }
@@ -174,7 +173,7 @@ data class GenericDialogResources(
     val title: String,
     val description: String,
     val positiveTitle: String,
-    val negativeTitle: String? = null
+    val negativeTitle: String? = null,
 )
 
 data class GenericDialogCallbacks(
@@ -196,7 +195,6 @@ private class GenericDialogPreviewParameterProvider : PreviewParameterProvider<G
     override val values = sequenceOf(
         // No Negative Action
         GenericDialogPreviewData(),
-
         // With Negative Action
         GenericDialogPreviewData(
             positiveTitle = "Tentar de novo",
@@ -207,7 +205,9 @@ private class GenericDialogPreviewParameterProvider : PreviewParameterProvider<G
 
 @Preview
 @Composable
-private fun GenericDialogPreview(@PreviewParameter(GenericDialogPreviewParameterProvider::class) previewData: GenericDialogPreviewData) {
+private fun GenericDialogPreview(
+    @PreviewParameter(GenericDialogPreviewParameterProvider::class) previewData: GenericDialogPreviewData,
+) {
     GenericDialog(
         isVisible = true,
         resources = GenericDialogResources(
@@ -220,7 +220,7 @@ private fun GenericDialogPreview(@PreviewParameter(GenericDialogPreviewParameter
             onNegativeAction = {},
             onPositiveAction = {},
             onDismiss = {},
-        )
+        ),
     )
 }
 //endregion

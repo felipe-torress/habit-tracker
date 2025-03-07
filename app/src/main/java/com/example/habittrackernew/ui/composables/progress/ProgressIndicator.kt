@@ -34,7 +34,7 @@ fun ProgressIndicator(
     maximum: Int,
     color: ColorUI,
     testTagState: TestTagState,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val testTag = "${testTagState.origin}ProgressIndicator${testTagState.index}"
 
@@ -49,20 +49,20 @@ fun ProgressIndicator(
     Column(
         verticalArrangement = Arrangement.spacedBy(4.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier.testTag(testTag)
+        modifier = modifier.testTag(testTag),
     ) {
         Text(
             text = stringResource(R.string.progress_indicator_text, current, maximum),
             style = HabitTrackerTypography.caption,
             fontWeight = FontWeight.Bold,
             color = textColor,
-            modifier = Modifier.testTag("${testTag}Text")
+            modifier = Modifier.testTag("${testTag}Text"),
         )
 
         ProgressBar(
             current = current,
             maximum = maximum,
-            color = color
+            color = color,
         )
     }
 }
@@ -72,7 +72,7 @@ private fun ProgressBar(
     current: Int,
     maximum: Int,
     color: ColorUI,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val shape = RoundedCornerShape(8.dp)
 
@@ -89,7 +89,7 @@ private fun ProgressBar(
         modifier = modifier
             .height(8.dp)
             .width(80.dp)
-            .background(color = HabitTrackerColors.progressIndicatorBackground, shape = shape)
+            .background(color = HabitTrackerColors.progressIndicatorBackground, shape = shape),
     ) {
         val width = (current.toFloat() / maximum.toFloat()) * 80.dp
 
@@ -98,7 +98,7 @@ private fun ProgressBar(
                 .shadow(elevation = 24.dp, shape = shape, spotColor = barColor, ambientColor = barColor)
                 .height(8.dp)
                 .width(width)
-                .background(color = barColor, shape = shape)
+                .background(color = barColor, shape = shape),
         )
     }
 }
@@ -107,35 +107,27 @@ private fun ProgressBar(
 private data class ProgressIndicatorPreviewData(
     val maximum: Int = 10,
     val current: Int = 5,
-    val color: ColorUI = ColorUI.BLUE
+    val color: ColorUI = ColorUI.BLUE,
 )
 
 private class ProgressIndicatorPreviewParameterProvider : PreviewParameterProvider<ProgressIndicatorPreviewData> {
     override val values = sequenceOf(
         // 5/10 - Blue
         ProgressIndicatorPreviewData(),
-
         // 10/10 - Blue
         ProgressIndicatorPreviewData(current = 10),
-
         // 0/10 - Blue
         ProgressIndicatorPreviewData(current = 0),
-
         // 5/10 - Purple
         ProgressIndicatorPreviewData(color = ColorUI.PURPLE),
-
         // 10/10 - Purple
         ProgressIndicatorPreviewData(color = ColorUI.PURPLE, current = 10),
-
         // 0/10 - Purple
         ProgressIndicatorPreviewData(color = ColorUI.PURPLE, current = 0),
-
         // 5/10 - Green
         ProgressIndicatorPreviewData(color = ColorUI.GREEN),
-
         // 10/10 - Green
         ProgressIndicatorPreviewData(color = ColorUI.GREEN, current = 10),
-
         // 0/10 - Green
         ProgressIndicatorPreviewData(color = ColorUI.GREEN, current = 0),
     )
@@ -143,17 +135,19 @@ private class ProgressIndicatorPreviewParameterProvider : PreviewParameterProvid
 
 @Preview
 @Composable
-private fun ProgressIndicatorPreview(@PreviewParameter(ProgressIndicatorPreviewParameterProvider::class) previewData: ProgressIndicatorPreviewData) {
+private fun ProgressIndicatorPreview(
+    @PreviewParameter(ProgressIndicatorPreviewParameterProvider::class) previewData: ProgressIndicatorPreviewData,
+) {
     Box(
         modifier = Modifier
             .background(HabitTrackerColors.backgroundColor)
-            .padding(8.dp)
+            .padding(8.dp),
     ) {
         ProgressIndicator(
             current = previewData.current,
             maximum = previewData.maximum,
             color = previewData.color,
-            testTagState = TestTagState("ProgressIndicator")
+            testTagState = TestTagState("ProgressIndicator"),
         )
     }
 }

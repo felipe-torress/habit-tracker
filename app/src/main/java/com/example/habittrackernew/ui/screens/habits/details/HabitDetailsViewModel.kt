@@ -22,14 +22,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HabitDetailsViewModel @Inject constructor(
-    private val habitsRepository: HabitsRepository
+    private val habitsRepository: HabitsRepository,
 ) : ViewModel() {
-
     //region --- UI Events ---
     val uiEvent: MutableSharedFlow<HabitDetailsEvent> = MutableSharedFlow()
 
     sealed class HabitDetailsEvent {
         data object NavigateBack : HabitDetailsEvent()
+
         data class NavigateToEditTask(val taskId: String) : HabitDetailsEvent()
     }
     //endregion
@@ -49,7 +49,7 @@ class HabitDetailsViewModel @Inject constructor(
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000L),
-        initialValue = HabitDetailsUIState.Loading
+        initialValue = HabitDetailsUIState.Loading,
     )
 
     fun onCloseClick() = navigateBack()
@@ -63,7 +63,6 @@ class HabitDetailsViewModel @Inject constructor(
     }
 
     fun onEditNameClick() {
-
     }
 
     fun refreshHabit(habitId: String) {
@@ -104,22 +103,23 @@ class HabitDetailsViewModel @Inject constructor(
         _isDialogVisible.update { true }
     }
 
-    private fun getDialogCallbacks(dialogType: HabitDetailsDialogType): GenericDialogCallbacks = when (dialogType) {
-        HabitDetailsDialogType.DeleteHabit -> GenericDialogCallbacks(
-            onPositiveAction = ::deleteHabit,
-            onNegativeAction = ::dismissDialog,
-            onDismiss = ::dismissDialog
-        )
+    private fun getDialogCallbacks(dialogType: HabitDetailsDialogType): GenericDialogCallbacks =
+        when (dialogType) {
+            HabitDetailsDialogType.DeleteHabit -> GenericDialogCallbacks(
+                onPositiveAction = ::deleteHabit,
+                onNegativeAction = ::dismissDialog,
+                onDismiss = ::dismissDialog,
+            )
 
-        HabitDetailsDialogType.LoadHabitFailed -> GenericDialogCallbacks(
-            onPositiveAction = ::navigateBack,
-            onDismiss = ::dismissDialog
-        )
+            HabitDetailsDialogType.LoadHabitFailed -> GenericDialogCallbacks(
+                onPositiveAction = ::navigateBack,
+                onDismiss = ::dismissDialog,
+            )
 
-        HabitDetailsDialogType.Generic -> GenericDialogCallbacks(
-            onPositiveAction = ::dismissDialog,
-            onDismiss = ::dismissDialog
-        )
-    }
+            HabitDetailsDialogType.Generic -> GenericDialogCallbacks(
+                onPositiveAction = ::dismissDialog,
+                onDismiss = ::dismissDialog,
+            )
+        }
     //endregion
 }

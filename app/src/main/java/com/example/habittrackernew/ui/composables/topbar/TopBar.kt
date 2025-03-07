@@ -55,13 +55,13 @@ fun TopBar(
         actions = { if (hasActionButton) actionButton(onActionButtonClick) },
         scrollBehavior = pinnedScrollBehavior(),
         colors =
-        TopAppBarColors(
-            containerColor = HabitTrackerColors.backgroundColor,
-            scrolledContainerColor = HabitTrackerColors.backgroundColor,
-            navigationIconContentColor = HabitTrackerColors.green500,
-            titleContentColor = HabitTrackerColors.textColor,
-            actionIconContentColor = HabitTrackerColors.green500,
-        ),
+            TopAppBarColors(
+                containerColor = HabitTrackerColors.backgroundColor,
+                scrolledContainerColor = HabitTrackerColors.backgroundColor,
+                navigationIconContentColor = HabitTrackerColors.green500,
+                titleContentColor = HabitTrackerColors.textColor,
+                actionIconContentColor = HabitTrackerColors.green500,
+            ),
         modifier = modifier.background(HabitTrackerColors.backgroundColor),
     )
 }
@@ -108,13 +108,13 @@ fun GradientTopBar(
         actions = { if (hasActionButton) actionButton(onActionButtonClick) },
         scrollBehavior = pinnedScrollBehavior(),
         colors =
-        TopAppBarColors(
-            containerColor = Color.Transparent,
-            scrolledContainerColor = HabitTrackerColors.backgroundColor,
-            navigationIconContentColor = HabitTrackerColors.green500,
-            titleContentColor = HabitTrackerColors.textColor,
-            actionIconContentColor = HabitTrackerColors.green500,
-        ),
+            TopAppBarColors(
+                containerColor = Color.Transparent,
+                scrolledContainerColor = HabitTrackerColors.backgroundColor,
+                navigationIconContentColor = HabitTrackerColors.green500,
+                titleContentColor = HabitTrackerColors.textColor,
+                actionIconContentColor = HabitTrackerColors.green500,
+            ),
         modifier = modifier.background(backgroundGradient),
     )
 }
@@ -150,10 +150,10 @@ private fun AddButton(onClick: () -> Unit) {
         onClick = onClick,
         shape = RoundedCornerShape(16.dp),
         colors =
-        buttonColors(
-            containerColor = HabitTrackerColors.green500,
-            contentColor = HabitTrackerColors.backgroundColor,
-        ),
+            buttonColors(
+                containerColor = HabitTrackerColors.green500,
+                contentColor = HabitTrackerColors.backgroundColor,
+            ),
         modifier = Modifier.heightIn(48.dp),
     ) {
         Image(
@@ -177,13 +177,10 @@ private class TopBarPreviewParameterProvider : PreviewParameterProvider<TopBarPr
     override val values = sequenceOf(
         // No Navigation Icon, No Action Button
         TopBarPreviewData(),
-
         // Navigation Icon, No Action Button
         TopBarPreviewData(hasNavigationIcon = true),
-
         // Action Button, No Navigation Icon
         TopBarPreviewData(hasActionButton = true),
-
         // Navigation Icon, Action Button
         TopBarPreviewData(hasNavigationIcon = true, hasActionButton = true),
     )
@@ -191,7 +188,9 @@ private class TopBarPreviewParameterProvider : PreviewParameterProvider<TopBarPr
 
 @Preview
 @Composable
-private fun TopBarPreview(@PreviewParameter(TopBarPreviewParameterProvider::class) previewData: TopBarPreviewData) {
+private fun TopBarPreview(
+    @PreviewParameter(TopBarPreviewParameterProvider::class) previewData: TopBarPreviewData,
+) {
     TopBar(
         title = previewData.title,
         hasNavigationIcon = previewData.hasNavigationIcon,
@@ -205,35 +204,31 @@ private data class GradientTopBarPreviewData(
     val title: String = "Title",
     val hasNavigationIcon: Boolean = false,
     val hasActionButton: Boolean = false,
-    val color: ColorUI = ColorUI.BLUE
+    val color: ColorUI = ColorUI.BLUE,
 )
 
 private class GradientTopBarPreviewParameterProvider : PreviewParameterProvider<GradientTopBarPreviewData> {
     override val values = sequenceOf(
         // Blue - No Navigation Icon, No Action Button
         GradientTopBarPreviewData(),
-
         // Green
         GradientTopBarPreviewData(hasNavigationIcon = true, color = ColorUI.GREEN),
-
         // Purple
         GradientTopBarPreviewData(hasNavigationIcon = true, color = ColorUI.PURPLE),
-
         // Blue - Navigation Icon, No Action Button
         GradientTopBarPreviewData(hasNavigationIcon = true),
-
         // Blue - Action Button, No Navigation Icon
         GradientTopBarPreviewData(hasActionButton = true),
-
         // Blue - Navigation Icon, Action Button
         GradientTopBarPreviewData(hasNavigationIcon = true, hasActionButton = true),
-
-        )
+    )
 }
 
 @Preview
 @Composable
-private fun GradientTopBarPreview(@PreviewParameter(GradientTopBarPreviewParameterProvider::class) previewData: GradientTopBarPreviewData) {
+private fun GradientTopBarPreview(
+    @PreviewParameter(GradientTopBarPreviewParameterProvider::class) previewData: GradientTopBarPreviewData,
+) {
     GradientTopBar(
         title = previewData.title,
         hasNavigationIcon = previewData.hasNavigationIcon,

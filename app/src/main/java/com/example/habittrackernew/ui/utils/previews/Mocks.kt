@@ -37,15 +37,15 @@ object Mocks {
             habitTaskUIData_2,
             habitTaskUIData_3,
         ),
-        color = ColorUI.BLUE
+        color = ColorUI.BLUE,
     )
 
     val habitUIData_purple = habitUIData_1.copy(
-        color = ColorUI.PURPLE
+        color = ColorUI.PURPLE,
     )
 
     val habitUIData_green = habitUIData_1.copy(
-        color = ColorUI.GREEN
+        color = ColorUI.GREEN,
     )
     //endregion
 }

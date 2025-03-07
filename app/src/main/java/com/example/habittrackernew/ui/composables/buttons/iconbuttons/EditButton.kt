@@ -21,7 +21,7 @@ fun EditButton(
     onClick: () -> Unit,
     color: ColorUI,
     testTagState: TestTagState,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val (iconColor, rippleColor) = remember {
         when (color) {

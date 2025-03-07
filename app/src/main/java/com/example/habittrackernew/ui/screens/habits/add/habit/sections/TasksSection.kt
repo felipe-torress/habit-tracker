@@ -59,6 +59,6 @@ fun AddTaskButton(
         text = stringResource(id = R.string.add_habit_screen_add_task_button_title),
         iconResId = R.drawable.ic_progress_24dp,
         modifier = modifier,
-        testTagState = testTagState.action("AddTask")
+        testTagState = testTagState.action("AddTask"),
     )
 }
