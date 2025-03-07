@@ -132,13 +132,10 @@ class TemporaryHabitRepositoryImpl @Inject constructor(
         )
 
         habitsRepository.createHabit(habit)
-        println("[Felipe] Habit Created: $habit")
-
         discardTemporaryHabit()
     }
 
     override fun discardTemporaryHabit() {
         _temporaryTasks.update { emptyList() }
-        println("[Felipe] Discarding temporary tasks")
     }
 }

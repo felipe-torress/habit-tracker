@@ -35,20 +35,11 @@ class HabitsListViewModel @Inject constructor(private val habitsRepository: Habi
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val uiState: StateFlow<HabitsListUIState> = refreshTrigger.flatMapLatest {
-        println("[Felipe] Loading Habits")
         habitsRepository.getAllHabits().map { habits ->
             return@map if (habits.isEmpty()) {
-                println("[Felipe] No Habits")
                 HabitsListUIState.NoHabits
             } else {
-                println("[Felipe] Habits Success")
-                HabitsListUIState.Success(
-                    habits = habits
-                        .map(Habit::toHabitUIData)
-                        .also {
-                            println("[Felipe] Habits: $it")
-                        },
-                )
+                HabitsListUIState.Success(habits = habits.map(Habit::toHabitUIData))
             }
         }.onStart { emit(HabitsListUIState.Loading) }
     }
@@ -76,7 +67,6 @@ class HabitsListViewModel @Inject constructor(private val habitsRepository: Habi
     }
 
     fun onHabitClick(habitId: String) {
-        println("[Felipe] Habit Clicked with id: $habitId")
         viewModelScope.launch {
             uiEvent.emit(HabitsListEvent.NavigateToHabitDetails(habitId))
         }

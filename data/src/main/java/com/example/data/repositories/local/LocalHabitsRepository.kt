@@ -31,17 +31,12 @@ class LocalHabitsRepository @Inject constructor(
 
     override fun getAllHabits(): Flow<List<Habit>> =
         habitDao.getAllHabits().map { habitEntities ->
-            habitEntities.map(PopulatedHabit::asHabit).also {
-                println("[Felipe] All Habits: $it")
-            }
+            habitEntities.map(PopulatedHabit::asHabit)
         }
 
     override fun getHabitById(habitId: String): Flow<Habit?> {
-        println("[Felipe] Getting habit of id: $habitId")
         return habitDao.getHabitById(habitId).map { habitEntity ->
             habitEntity?.asHabit()
-        }.also {
-            println("[Felipe] Habit: $it")
         }
     }
 }

@@ -11,7 +11,6 @@ import kotlinx.serialization.Serializable
 fun NavGraphBuilder.habitDetailsScreen(navController: NavController) =
     composable<HabitDetails> { backStackEntry ->
         val habitDetailsRoute: HabitDetails = backStackEntry.toRoute()
-        println("[Felipe] Habit Details Route with habitId: ${habitDetailsRoute.habitId}")
         HabitDetailsRoute(
             habitId = habitDetailsRoute.habitId,
             navigateBack = { navController.popBackStack() },

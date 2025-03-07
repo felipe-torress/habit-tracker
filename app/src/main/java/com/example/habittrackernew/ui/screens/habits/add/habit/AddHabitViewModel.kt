@@ -51,11 +51,7 @@ class AddHabitViewModel @Inject constructor(
     )
 
     val tasks: StateFlow<List<HabitTaskUIData>> = temporaryHabitRepository.temporaryTasks.map { tasks ->
-        tasks
-            .map(HabitTask::toHabitTaskUIData)
-            .also {
-                println("[Felipe] Tasks: $it")
-            }
+        tasks.map(HabitTask::toHabitTaskUIData)
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000L),

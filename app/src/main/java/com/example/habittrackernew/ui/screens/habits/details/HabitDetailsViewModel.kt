@@ -38,7 +38,6 @@ class HabitDetailsViewModel @Inject constructor(
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val habitUIState: StateFlow<HabitDetailsUIState> = habitRefreshTrigger.flatMapLatest { habitId ->
-        println("[Felipe] Refreshing habit (from UI State) with id: $habitId")
         habitsRepository.getHabitById(habitId).map { habit ->
             if (habit == null) {
                 showDialog(HabitDetailsDialogType.LoadHabitFailed)
@@ -69,7 +68,6 @@ class HabitDetailsViewModel @Inject constructor(
 
     fun refreshHabit(habitId: String) {
         viewModelScope.launch {
-            println("[Felipe] Refreshing habit (from VM) with id: $habitId")
             habitRefreshTrigger.emit(habitId)
         }
     }

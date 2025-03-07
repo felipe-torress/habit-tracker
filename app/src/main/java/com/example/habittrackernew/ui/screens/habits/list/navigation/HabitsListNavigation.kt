@@ -16,7 +16,6 @@ fun NavGraphBuilder.habitsListScreen(
     HabitsListRoute(
         navigateToAddHabit = { navController.navigate(route = AddHabit, navOptions = navOptions) },
         navigateToHabitDetails = { habitId ->
-            println("[Felipe] navigating to habit details with id: $habitId")
             navController.navigate(route = HabitDetails(habitId))
         }
     )
