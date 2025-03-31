@@ -31,6 +31,10 @@ class HabitsListViewModel @Inject constructor(private val habitsRepository: Habi
     }
     //endregion
 
+    init {
+        refresh()
+    }
+
     private val refreshTrigger = MutableSharedFlow<Unit>(replay = 1)
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -49,10 +53,6 @@ class HabitsListViewModel @Inject constructor(private val habitsRepository: Habi
             started = SharingStarted.WhileSubscribed(5000L),
             initialValue = HabitsListUIState.Loading,
         )
-
-    init {
-        refresh()
-    }
 
     fun refresh() {
         viewModelScope.launch {
