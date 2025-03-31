@@ -1,0 +1,19 @@
+package com.example.habittracker.ui.screens.habits.add.habit.navigation
+
+import androidx.navigation.NavController
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.compose.composable
+import com.example.habittracker.ui.screens.habits.add.habit.AddHabitRoute
+import com.example.habittracker.ui.screens.habits.add.task.navigation.AddTask
+import kotlinx.serialization.Serializable
+
+fun NavGraphBuilder.addHabitScreen(navController: NavController) =
+    composable<AddHabit> {
+        AddHabitRoute(
+            navigateBack = { navController.popBackStack() },
+            navigateToAddTask = { taskId -> navController.navigate(AddTask(taskId)) },
+        )
+    }
+
+@Serializable
+object AddHabit
