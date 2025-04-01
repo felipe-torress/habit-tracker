@@ -31,11 +31,11 @@ class HabitsListViewModel @Inject constructor(private val habitsRepository: Habi
     }
     //endregion
 
+    private val refreshTrigger = MutableSharedFlow<Unit>(replay = 1)
+
     init {
         refresh()
     }
-
-    private val refreshTrigger = MutableSharedFlow<Unit>(replay = 1)
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val uiState: StateFlow<HabitsListUIState> = refreshTrigger.flatMapLatest {

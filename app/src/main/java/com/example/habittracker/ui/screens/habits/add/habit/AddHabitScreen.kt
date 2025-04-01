@@ -35,7 +35,7 @@ import com.example.habittracker.ui.utils.testTags.TestTagState
 fun AddHabitRoute(
     viewModel: AddHabitViewModel = hiltViewModel(),
     navigateBack: () -> Unit,
-    navigateToAddTask: (taskId: String?) -> Unit,
+    navigateToTaskEntry: (taskId: String?) -> Unit,
 ) {
     val name by viewModel.name.collectAsStateWithLifecycle()
     val color by viewModel.color.collectAsStateWithLifecycle()
@@ -54,8 +54,8 @@ fun AddHabitRoute(
         name = name,
         color = color,
         tasks = tasks,
-        onAddTaskClick = { navigateToAddTask(null) },
-        onEditTaskClick = navigateToAddTask,
+        onAddTaskClick = { navigateToTaskEntry(null) },
+        onEditTaskClick = navigateToTaskEntry,
         onCloseClick = viewModel::onCloseClick,
         updateHabitName = viewModel::updateHabitName,
         onColorClick = viewModel::onColorClick,

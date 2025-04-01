@@ -14,7 +14,7 @@ import com.example.habittracker.ui.theme.HabitTrackerTypography
 import com.example.habittracker.ui.utils.testTags.TestTagState
 
 @Composable
-fun AddTaskSection(
+fun TaskEntrySection(
     title: String,
     testTagState: TestTagState,
     modifier: Modifier = Modifier,

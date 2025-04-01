@@ -30,7 +30,7 @@ class HabitDetailsViewModel @Inject constructor(
     sealed class HabitDetailsEvent {
         data object NavigateBack : HabitDetailsEvent()
 
-        data class NavigateToEditTask(val taskId: String) : HabitDetailsEvent()
+        data class NavigateToEditTask(val taskId: String? = null) : HabitDetailsEvent()
     }
     //endregion
 
@@ -52,6 +52,7 @@ class HabitDetailsViewModel @Inject constructor(
         initialValue = HabitDetailsUIState.Loading,
     )
 
+    //region --- Callbacks ---
     fun onCloseClick() = navigateBack()
 
     fun onDeleteClick() = showDialog(HabitDetailsDialogType.DeleteHabit)
@@ -70,6 +71,13 @@ class HabitDetailsViewModel @Inject constructor(
             habitRefreshTrigger.emit(habitId)
         }
     }
+
+    fun onAddTask() {
+        viewModelScope.launch {
+            uiEvent.emit(HabitDetailsEvent.NavigateToEditTask())
+        }
+    }
+    //endregion
 
     private fun deleteHabit() {
         viewModelScope.launch {

@@ -6,7 +6,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.navigation
 import androidx.navigation.navOptions
 import com.example.habittracker.ui.screens.habits.add.habit.navigation.addHabitScreen
-import com.example.habittracker.ui.screens.habits.add.task.navigation.addTaskScreen
+import com.example.habittracker.ui.screens.habits.add.task.navigation.taskEntryScreen
 import com.example.habittracker.ui.screens.habits.details.navigation.habitDetailsScreen
 import com.example.habittracker.ui.screens.habits.list.navigation.HabitList
 import com.example.habittracker.ui.screens.habits.list.navigation.habitsListScreen
@@ -30,6 +30,6 @@ fun NavGraphBuilder.habitsNavGraph(navController: NavController) =
 
         habitsListScreen(navController, navOptions)
         addHabitScreen(navController)
-        addTaskScreen(navController)
+        taskEntryScreen(navController)
         habitDetailsScreen(navController)
     }

@@ -4,17 +4,17 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
-import com.example.habittracker.ui.screens.habits.add.task.AddTaskRoute
+import com.example.habittracker.ui.screens.habits.add.task.TaskEntryRoute
 import kotlinx.serialization.Serializable
 
-fun NavGraphBuilder.addTaskScreen(navController: NavController) =
-    composable<AddTask> { backStackEntry ->
-        val addTaskRoute: AddTask = backStackEntry.toRoute()
-        AddTaskRoute(
-            taskId = addTaskRoute.taskId,
+fun NavGraphBuilder.taskEntryScreen(navController: NavController) =
+    composable<TaskEntry> { backStackEntry ->
+        val taskEntryRoute: TaskEntry = backStackEntry.toRoute()
+        TaskEntryRoute(
+            taskId = taskEntryRoute.taskId,
             navigateBack = { navController.popBackStack() },
         )
     }
 
 @Serializable
-data class AddTask(val taskId: String? = null)
+data class TaskEntry(val taskId: String? = null)

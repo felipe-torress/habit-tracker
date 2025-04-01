@@ -4,7 +4,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
-import com.example.habittracker.ui.screens.habits.add.task.navigation.AddTask
+import com.example.habittracker.ui.screens.habits.add.task.navigation.TaskEntry
 import com.example.habittracker.ui.screens.habits.details.HabitDetailsRoute
 import kotlinx.serialization.Serializable
 
@@ -14,7 +14,7 @@ fun NavGraphBuilder.habitDetailsScreen(navController: NavController) =
         HabitDetailsRoute(
             habitId = habitDetailsRoute.habitId,
             navigateBack = { navController.popBackStack() },
-            navigateToEditTask = { taskId -> navController.navigate(AddTask(taskId)) },
+            navigateToTaskEntry = { taskId -> navController.navigate(TaskEntry(taskId)) },
         )
     }
 

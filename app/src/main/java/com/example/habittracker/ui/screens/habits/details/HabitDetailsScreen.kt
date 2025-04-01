@@ -1,6 +1,5 @@
 package com.example.habittracker.ui.screens.habits.details
 
-import android.app.Activity
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,15 +14,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.habittracker.MainActivityViewModel
 import com.example.habittracker.R
@@ -41,6 +39,7 @@ import com.example.habittracker.ui.theme.HabitTrackerColors
 import com.example.habittracker.ui.utils.di.activityHiltViewModel
 import com.example.habittracker.ui.utils.previews.Mocks
 import com.example.habittracker.ui.utils.testTags.TestTagState
+import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
 @Composable
 fun HabitDetailsRoute(
@@ -48,7 +47,7 @@ fun HabitDetailsRoute(
     mainActivityViewModel: MainActivityViewModel = activityHiltViewModel(),
     habitId: String,
     navigateBack: () -> Unit,
-    navigateToEditTask: (taskId: String?) -> Unit,
+    navigateToTaskEntry: (taskId: String?) -> Unit,
 ) {
     val habitUIState by viewModel.habitUIState.collectAsStateWithLifecycle()
     val isDialogVisible by viewModel.isDialogVisible.collectAsStateWithLifecycle()
@@ -66,7 +65,7 @@ fun HabitDetailsRoute(
             is HabitDetailsViewModel.HabitDetailsEvent.NavigateBack -> navigateBack()
             is HabitDetailsViewModel.HabitDetailsEvent.NavigateToEditTask -> {
                 val taskId = (uiEvent as HabitDetailsViewModel.HabitDetailsEvent.NavigateToEditTask).taskId
-                navigateToEditTask(taskId)
+                navigateToTaskEntry(taskId)
             }
 
             else -> {}
@@ -99,7 +98,8 @@ fun HabitDetailsRoute(
         onCloseClick = viewModel::onCloseClick,
         onDeleteClick = viewModel::onDeleteClick,
         onEditTaskClick = viewModel::onEditTaskClick,
-        onEditNameClick = viewModel::onEditNameClick
+        onEditNameClick = viewModel::onEditNameClick,
+        onAddTask = viewModel::onAddTask,
     )
 }
 
@@ -111,6 +111,7 @@ fun HabitDetailsScreen(
     dialogCallbacks: GenericDialogCallbacks,
     onCloseClick: () -> Unit,
     onDeleteClick: () -> Unit,
+    onAddTask: () -> Unit,
     onEditTaskClick: (taskId: String) -> Unit,
     onEditNameClick: () -> Unit,
 ) {
@@ -132,6 +133,7 @@ fun HabitDetailsScreen(
                     onDeleteClick = onDeleteClick,
                     onEditTaskClick = onEditTaskClick,
                     onEditNameClick = onEditNameClick,
+                    onAddTask = onAddTask,
                 )
             }
         }
@@ -150,6 +152,7 @@ fun SuccessContent(
     onCloseClick: () -> Unit,
     onDeleteClick: () -> Unit,
     onEditTaskClick: (taskId: String) -> Unit,
+    onAddTask: () -> Unit,
     onEditNameClick: () -> Unit,
     testTagState: TestTagState,
     modifier: Modifier = Modifier
@@ -179,14 +182,15 @@ fun SuccessContent(
 
             LazyColumn(
                 contentPadding = PaddingValues(16.dp),
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-
                 tasksSection(
                     tasks = habit.tasks,
                     color = habit.color,
                     testTagState = testTagState,
                     onEditTaskClick = onEditTaskClick,
+                    onAddTask = onAddTask,
                 )
 
                 deleteButton(
@@ -263,6 +267,7 @@ private fun HabitDetailsScreenPreview(@PreviewParameter(HabitDetailsScreenPrevie
         onDeleteClick = {},
         onEditTaskClick = {},
         onEditNameClick = {},
+        onAddTask = {},
     )
 }
 //endregion

@@ -21,7 +21,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.habittracker.R
 import com.example.habittracker.ui.composables.input.HabitTrackerTextField
 import com.example.habittracker.ui.composables.topbar.TopBar
-import com.example.habittracker.ui.screens.habits.add.task.section.ConfirmAddTaskSection
+import com.example.habittracker.ui.screens.habits.add.task.section.ConfirmTaskSection
 import com.example.habittracker.ui.screens.habits.add.task.section.DaysOfWeekSection
 import com.example.habittracker.ui.screens.habits.add.task.section.TimeSection
 import com.example.habittracker.ui.theme.HabitTrackerColors
@@ -31,8 +31,8 @@ import java.time.DayOfWeek
 import java.time.LocalTime
 
 @Composable
-fun AddTaskRoute(
-    viewModel: AddTaskViewModel = hiltViewModel(),
+fun TaskEntryRoute(
+    viewModel: TaskEntryViewModel = hiltViewModel(),
     taskId: String?,
     navigateBack: () -> Unit,
 ) {
@@ -52,12 +52,12 @@ fun AddTaskRoute(
 
     LaunchedEffect(uiEvent) {
         when (uiEvent) {
-            AddTaskViewModel.AddTaskEvent.NavigateBack -> navigateBack()
+            TaskEntryViewModel.AddTaskEvent.NavigateBack -> navigateBack()
             null -> {}
         }
     }
 
-    AddTaskScreen(
+    TaskEntryScreen(
         name = name,
         daysOfWeek = daysOfWeek,
         time = time,
@@ -74,7 +74,7 @@ fun AddTaskRoute(
 }
 
 @Composable
-fun AddTaskScreen(
+fun TaskEntryScreen(
     name: String,
     daysOfWeek: List<DayOfWeek>,
     time: LocalTime?,
@@ -88,11 +88,12 @@ fun AddTaskScreen(
     onTimePickerConfirm: (time: LocalTime?) -> Unit,
     onConfirmAddTaskClick: () -> Unit,
 ) {
-    val testTagState = TestTagState("HabitsListScreen")
+    val testTagState = TestTagState("TaskEntryScreen")
 
     Scaffold(
         topBar = {
             TopBar(
+                // TODO: Make text dynamic
                 title = stringResource(id = R.string.add_task_screen_toolbar_title),
                 hasNavigationIcon = true,
                 onNavigationIconClick = onCloseClick,
@@ -131,7 +132,7 @@ fun AddTaskScreen(
                 onTimePickerDismiss = onTimePickerDismiss,
             )
 
-            ConfirmAddTaskSection(
+            ConfirmTaskSection(
                 isConfirmEnabled = isConfirmEnabled,
                 onConfirmClick = onConfirmAddTaskClick,
                 testTagState = testTagState.section("ConfirmAddTaskSection")
@@ -178,7 +179,7 @@ private fun AddTaskScreenPreview(@PreviewParameter(AddTaskScreenPreviewParameter
     val daysOfWeek = previewData.daysOfWeek
     val time = previewData.time
 
-    AddTaskScreen(
+    TaskEntryScreen(
         name = name,
         daysOfWeek = daysOfWeek,
         time = time,

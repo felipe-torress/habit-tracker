@@ -18,7 +18,7 @@ import java.time.LocalTime
 import javax.inject.Inject
 
 @HiltViewModel
-class AddTaskViewModel @Inject constructor(
+class TaskEntryViewModel @Inject constructor(
     private val temporaryHabitRepository: TemporaryHabitRepository,
 ) : ViewModel() {
     //region --- UI ---
