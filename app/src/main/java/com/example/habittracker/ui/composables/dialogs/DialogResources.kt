@@ -22,5 +22,6 @@ sealed class DialogResources {
     ) : DialogResources()
 
     fun isBasicDialog() = this is BasicDialog
+
     fun isInputDialog() = this is InputDialog
 }

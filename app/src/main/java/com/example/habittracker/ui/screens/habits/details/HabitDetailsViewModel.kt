@@ -36,7 +36,7 @@ class HabitDetailsViewModel @Inject constructor(
     }
     //endregion
 
-    private val _habit = MutableStateFlow<Habit?>(null)
+    private val habit = MutableStateFlow<Habit?>(null)
 
     private val _temporaryHabitName = MutableStateFlow("")
     val temporaryHabitName: StateFlow<String> get() = _temporaryHabitName.asStateFlow()
@@ -45,14 +45,14 @@ class HabitDetailsViewModel @Inject constructor(
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val habitUIState: StateFlow<HabitDetailsUIState> = habitRefreshTrigger.flatMapLatest { habitId ->
-        habitsRepository.getHabitById(habitId).map { habit ->
-            if (habit == null) {
+        habitsRepository.getHabitById(habitId).map { rawHabit ->
+            if (rawHabit == null) {
                 showDialog(HabitDetailsDialogType.BasicDialog.LoadHabitFailed)
                 return@map HabitDetailsUIState.Failure
             }
 
-            _habit.update { habit }
-            HabitDetailsUIState.Success(habit.toHabitUIData())
+            habit.update { rawHabit }
+            HabitDetailsUIState.Success(rawHabit.toHabitUIData())
         }.onStart { emit(HabitDetailsUIState.Loading) }
     }.stateIn(
         scope = viewModelScope,
@@ -72,7 +72,7 @@ class HabitDetailsViewModel @Inject constructor(
     }
 
     fun onEditNameClick() {
-        _temporaryHabitName.update { _habit.value?.name.orEmpty() }
+        _temporaryHabitName.update { habit.value?.name.orEmpty() }
         showDialog(HabitDetailsDialogType.InputDialog.RenameHabit)
     }
 
@@ -108,7 +108,7 @@ class HabitDetailsViewModel @Inject constructor(
     private fun renameHabit() {
         viewModelScope.launch(Dispatchers.IO) {
             val habitUIState = habitUIState.value
-            val habit = _habit.value
+            val habit = habit.value
             if (habitUIState is HabitDetailsUIState.Success && habit != null) {
                 habitsRepository.upsertHabit(habit.copy(name = _temporaryHabitName.value))
             }

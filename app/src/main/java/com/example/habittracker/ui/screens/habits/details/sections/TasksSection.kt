@@ -54,9 +54,7 @@ fun LazyListScope.tasksSection(
     }
 }
 
-fun LazyListScope.addTaskButton(
-    onAddTask: () -> Unit,
-) {
+fun LazyListScope.addTaskButton(onAddTask: () -> Unit) {
     item {
         Box(
             contentAlignment = Alignment.Center,
@@ -67,7 +65,7 @@ fun LazyListScope.addTaskButton(
                 .clickable(
                     interactionSource = rememberInteractionsSource(),
                     indication = ripple(color = HabitTrackerColors.green700),
-                    onClick = onAddTask
+                    onClick = onAddTask,
                 )
                 .size(48.dp),
         ) {
@@ -75,7 +73,7 @@ fun LazyListScope.addTaskButton(
                 painter = painterResource(id = R.drawable.ic_plus_16dp),
                 contentDescription = null,
                 tint = HabitTrackerColors.blue50,
-                modifier = Modifier.size(18.dp)
+                modifier = Modifier.size(18.dp),
             )
         }
     }

@@ -16,7 +16,7 @@ fun InputDialog(
     textFieldValue: String,
     resources: DialogResources,
     callbacks: DialogCallbacks,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     if (resources is DialogResources.InputDialog && callbacks is DialogCallbacks.InputDialog) {
         GenericDialog(
@@ -34,7 +34,9 @@ fun InputDialog(
                 testTagState = TestTagState("InputDialogTextField"),
             )
         }
-    } else Timber.e("Invalid DialogResources or DialogCallbacks for InputDialog")
+    } else {
+        Timber.e("Invalid DialogResources or DialogCallbacks for InputDialog")
+    }
 }
 
 //region --- Preview ---
@@ -51,7 +53,6 @@ private class InputDialogPreviewParameterProvider : PreviewParameterProvider<Inp
     override val values = sequenceOf(
         // Input dialog with no Description
         InputDialogPreviewData(),
-
         // Input dialog with Description
         InputDialogPreviewData(
             description = "Insira o novo nome do hábito",
@@ -83,4 +84,3 @@ private fun InputDialogPreview(
     )
 }
 //endregion
-

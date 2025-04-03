@@ -19,5 +19,6 @@ sealed class DialogCallbacks {
     ) : DialogCallbacks()
 
     fun isBasicDialog() = this is BasicDialog
+
     fun isInputDialog() = this is InputDialog
 }
