@@ -31,11 +31,11 @@ import com.example.habittracker.ui.utils.testTags.TestTagState
 fun HabitTrackerTextField(
     value: String,
     onValueChange: (String) -> Unit,
-    placeholder: String,
-    label: String,
-    @DrawableRes labelIconResId: Int,
     testTagState: TestTagState,
     modifier: Modifier = Modifier,
+    placeholder: String? = null,
+    label: String? = null,
+    @DrawableRes labelIconResId: Int? = null,
 ) {
     val testTag = "${testTagState.origin}${testTagState.type}TextField"
     val innerTestTagState = TestTagState(testTag)
@@ -56,7 +56,11 @@ fun HabitTrackerTextField(
             onValueChange = onValueChange,
             shape = RoundedCornerShape(16.dp),
             textStyle = HabitTrackerTypography.bodyLarge,
-            placeholder = { Placeholder(placeholder = placeholder, testTagState = innerTestTagState) },
+            placeholder = {
+                placeholder?.let {
+                    Placeholder(placeholder = placeholder, testTagState = innerTestTagState)
+                }
+            },
             colors = TextFieldDefaults.colors(
                 // background colors
                 focusedContainerColor = HabitTrackerColors.softGreen,
@@ -101,31 +105,35 @@ private fun Placeholder(
 
 @Composable
 private fun Label(
-    label: String,
-    @DrawableRes iconResId: Int,
+    label: String?,
+    @DrawableRes iconResId: Int?,
     testTagState: TestTagState,
     modifier: Modifier = Modifier,
 ) {
-    Row(
-        horizontalArrangement = Arrangement.spacedBy(4.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier.semantics(mergeDescendants = true) {},
-    ) {
-        Icon(
-            painter = painterResource(iconResId),
-            contentDescription = null,
-            tint = HabitTrackerColors.green700,
-            modifier = Modifier
-                .size(16.dp)
-                .testTag("${testTagState.origin}LabelIcon"),
-        )
+    label?.let {
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(4.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = modifier.semantics(mergeDescendants = true) {},
+        ) {
+            iconResId?.let {
+                Icon(
+                    painter = painterResource(iconResId),
+                    contentDescription = null,
+                    tint = HabitTrackerColors.green700,
+                    modifier = Modifier
+                        .size(16.dp)
+                        .testTag("${testTagState.origin}LabelIcon"),
+                )
+            }
 
-        Text(
-            text = label,
-            style = HabitTrackerTypography.bodyLarge,
-            color = HabitTrackerColors.green700,
-            modifier = Modifier.testTag("${testTagState.origin}LabelText"),
-        )
+            Text(
+                text = label,
+                style = HabitTrackerTypography.bodyLarge,
+                color = HabitTrackerColors.green700,
+                modifier = Modifier.testTag("${testTagState.origin}LabelText"),
+            )
+        }
     }
 }
 

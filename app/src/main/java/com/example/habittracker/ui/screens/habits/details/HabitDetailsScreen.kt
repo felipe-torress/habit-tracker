@@ -26,8 +26,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.habittracker.MainActivityViewModel
 import com.example.habittracker.R
 import com.example.habittracker.ui.composables.buttons.BasicButton
+import com.example.habittracker.ui.composables.dialogs.DialogCallbacks
 import com.example.habittracker.ui.composables.dialogs.GenericDialog
-import com.example.habittracker.ui.composables.dialogs.GenericDialogCallbacks
+import com.example.habittracker.ui.composables.dialogs.InputDialog
 import com.example.habittracker.ui.composables.loading.Loader
 import com.example.habittracker.ui.composables.topbar.GradientTopBar
 import com.example.habittracker.ui.screens.habits.details.HabitDetailsDialogType.Companion.getDialogResources
@@ -39,7 +40,6 @@ import com.example.habittracker.ui.theme.HabitTrackerColors
 import com.example.habittracker.ui.utils.di.activityHiltViewModel
 import com.example.habittracker.ui.utils.previews.Mocks
 import com.example.habittracker.ui.utils.testTags.TestTagState
-import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
 @Composable
 fun HabitDetailsRoute(
@@ -53,6 +53,7 @@ fun HabitDetailsRoute(
     val isDialogVisible by viewModel.isDialogVisible.collectAsStateWithLifecycle()
     val dialogType by viewModel.dialogType.collectAsStateWithLifecycle()
     val dialogCallbacks by viewModel.dialogCallbacks.collectAsStateWithLifecycle()
+    val temporaryHabitName by viewModel.temporaryHabitName.collectAsStateWithLifecycle()
 
     // Refresh the habit data whenever the screen initializes
     LaunchedEffect(habitId) {
@@ -95,6 +96,7 @@ fun HabitDetailsRoute(
         isDialogVisible = isDialogVisible,
         dialogType = dialogType,
         dialogCallbacks = dialogCallbacks,
+        temporaryHabitName = temporaryHabitName,
         onCloseClick = viewModel::onCloseClick,
         onDeleteClick = viewModel::onDeleteClick,
         onEditTaskClick = viewModel::onEditTaskClick,
@@ -108,7 +110,8 @@ fun HabitDetailsScreen(
     habitUIState: HabitDetailsUIState,
     isDialogVisible: Boolean,
     dialogType: HabitDetailsDialogType,
-    dialogCallbacks: GenericDialogCallbacks,
+    dialogCallbacks: DialogCallbacks,
+    temporaryHabitName: String,
     onCloseClick: () -> Unit,
     onDeleteClick: () -> Unit,
     onAddTask: () -> Unit,
@@ -139,11 +142,40 @@ fun HabitDetailsScreen(
         }
     }
 
-    GenericDialog(
-        isVisible = isDialogVisible,
-        resources = getDialogResources(dialogType),
-        callbacks = dialogCallbacks,
+    Dialogs(
+        isDialogVisible = isDialogVisible,
+        dialogType = dialogType,
+        dialogCallbacks = dialogCallbacks,
+        temporaryHabitName = temporaryHabitName,
     )
+}
+
+@Composable
+private fun Dialogs(
+    isDialogVisible: Boolean,
+    dialogType: HabitDetailsDialogType,
+    dialogCallbacks: DialogCallbacks,
+    temporaryHabitName: String,
+) {
+    val resources = getDialogResources(dialogType)
+    when (dialogType) {
+        is HabitDetailsDialogType.BasicDialog -> {
+            GenericDialog(
+                isVisible = isDialogVisible,
+                resources = resources,
+                callbacks = dialogCallbacks,
+            )
+        }
+
+        is HabitDetailsDialogType.InputDialog.RenameHabit -> {
+            InputDialog(
+                isVisible = isDialogVisible,
+                textFieldValue = temporaryHabitName,
+                resources = resources,
+                callbacks = dialogCallbacks,
+            )
+        }
+    }
 }
 
 @Composable
@@ -261,8 +293,9 @@ private fun HabitDetailsScreenPreview(@PreviewParameter(HabitDetailsScreenPrevie
     HabitDetailsScreen(
         habitUIState = previewData.habitUIState,
         isDialogVisible = false,
-        dialogType = HabitDetailsDialogType.DeleteHabit,
-        dialogCallbacks = GenericDialogCallbacks(),
+        dialogType = HabitDetailsDialogType.BasicDialog.DeleteHabit,
+        dialogCallbacks = DialogCallbacks.BasicDialog(),
+        temporaryHabitName = Mocks.habitUIData_1.name,
         onCloseClick = {},
         onDeleteClick = {},
         onEditTaskClick = {},

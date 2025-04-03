@@ -2,10 +2,12 @@ package com.example.habittracker.ui.screens.habits.details
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.data.model.Habit
 import com.example.data.repositories.HabitsRepository
-import com.example.habittracker.ui.composables.dialogs.GenericDialogCallbacks
+import com.example.habittracker.ui.composables.dialogs.DialogCallbacks
 import com.example.habittracker.ui.screens.habits.model.toHabitUIData
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -34,16 +36,22 @@ class HabitDetailsViewModel @Inject constructor(
     }
     //endregion
 
+    private val _habit = MutableStateFlow<Habit?>(null)
+
+    private val _temporaryHabitName = MutableStateFlow("")
+    val temporaryHabitName: StateFlow<String> get() = _temporaryHabitName.asStateFlow()
+
     private val habitRefreshTrigger = MutableSharedFlow<String>(replay = 1)
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val habitUIState: StateFlow<HabitDetailsUIState> = habitRefreshTrigger.flatMapLatest { habitId ->
         habitsRepository.getHabitById(habitId).map { habit ->
             if (habit == null) {
-                showDialog(HabitDetailsDialogType.LoadHabitFailed)
+                showDialog(HabitDetailsDialogType.BasicDialog.LoadHabitFailed)
                 return@map HabitDetailsUIState.Failure
             }
 
+            _habit.update { habit }
             HabitDetailsUIState.Success(habit.toHabitUIData())
         }.onStart { emit(HabitDetailsUIState.Loading) }
     }.stateIn(
@@ -55,7 +63,7 @@ class HabitDetailsViewModel @Inject constructor(
     //region --- Callbacks ---
     fun onCloseClick() = navigateBack()
 
-    fun onDeleteClick() = showDialog(HabitDetailsDialogType.DeleteHabit)
+    fun onDeleteClick() = showDialog(HabitDetailsDialogType.BasicDialog.DeleteHabit)
 
     fun onEditTaskClick(taskId: String) {
         viewModelScope.launch {
@@ -64,6 +72,8 @@ class HabitDetailsViewModel @Inject constructor(
     }
 
     fun onEditNameClick() {
+        _temporaryHabitName.update { _habit.value?.name.orEmpty() }
+        showDialog(HabitDetailsDialogType.InputDialog.RenameHabit)
     }
 
     fun refreshHabit(habitId: String) {
@@ -95,13 +105,24 @@ class HabitDetailsViewModel @Inject constructor(
         }
     }
 
+    private fun renameHabit() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val habitUIState = habitUIState.value
+            val habit = _habit.value
+            if (habitUIState is HabitDetailsUIState.Success && habit != null) {
+                habitsRepository.upsertHabit(habit.copy(name = _temporaryHabitName.value))
+            }
+        }
+        dismissDialog()
+    }
+
     //region --- Dialog ---
     private val _isDialogVisible = MutableStateFlow(false)
-    private val _dialogType = MutableStateFlow<HabitDetailsDialogType>(HabitDetailsDialogType.Generic)
-    private val _dialogCallbacks = MutableStateFlow(GenericDialogCallbacks())
+    private val _dialogType = MutableStateFlow<HabitDetailsDialogType>(HabitDetailsDialogType.BasicDialog.Generic)
+    private val _dialogCallbacks = MutableStateFlow<DialogCallbacks>(DialogCallbacks.BasicDialog())
     val isDialogVisible: StateFlow<Boolean> get() = _isDialogVisible.asStateFlow()
     val dialogType: StateFlow<HabitDetailsDialogType> get() = _dialogType.asStateFlow()
-    val dialogCallbacks: StateFlow<GenericDialogCallbacks> get() = _dialogCallbacks.asStateFlow()
+    val dialogCallbacks: StateFlow<DialogCallbacks> get() = _dialogCallbacks.asStateFlow()
 
     fun dismissDialog() = _isDialogVisible.update { false }
 
@@ -111,23 +132,38 @@ class HabitDetailsViewModel @Inject constructor(
         _isDialogVisible.update { true }
     }
 
-    private fun getDialogCallbacks(dialogType: HabitDetailsDialogType): GenericDialogCallbacks =
+    private fun getDialogCallbacks(dialogType: HabitDetailsDialogType): DialogCallbacks =
         when (dialogType) {
-            HabitDetailsDialogType.DeleteHabit -> GenericDialogCallbacks(
+            HabitDetailsDialogType.BasicDialog.DeleteHabit -> DialogCallbacks.BasicDialog(
                 onPositiveAction = ::deleteHabit,
                 onNegativeAction = ::dismissDialog,
                 onDismiss = ::dismissDialog,
             )
 
-            HabitDetailsDialogType.LoadHabitFailed -> GenericDialogCallbacks(
+            HabitDetailsDialogType.BasicDialog.LoadHabitFailed -> DialogCallbacks.BasicDialog(
                 onPositiveAction = ::navigateBack,
                 onDismiss = ::dismissDialog,
             )
 
-            HabitDetailsDialogType.Generic -> GenericDialogCallbacks(
+            HabitDetailsDialogType.BasicDialog.Generic -> DialogCallbacks.BasicDialog(
                 onPositiveAction = ::dismissDialog,
                 onDismiss = ::dismissDialog,
             )
+
+            HabitDetailsDialogType.InputDialog.RenameHabit -> DialogCallbacks.InputDialog(
+                onPositiveAction = ::renameHabit,
+                onDismiss = ::onDismissRenameHabitDialog,
+                onTextValueChange = ::onRenameHabitTextValueChange,
+            )
         }
+
+    private fun onRenameHabitTextValueChange(newName: String) {
+        _temporaryHabitName.update { newName }
+    }
+
+    private fun onDismissRenameHabitDialog() {
+        _temporaryHabitName.update { "" }
+        dismissDialog()
+    }
     //endregion
 }

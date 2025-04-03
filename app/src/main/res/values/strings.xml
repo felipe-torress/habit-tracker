@@ -10,8 +10,12 @@
     <string name="dialog_generic_try_again_description">Sentimos muito, tivemos um problema. Tente novamente mais tarde.</string>
     <string name="dialog_text_cancel">Cancelar</string>
     <string name="dialog_text_ok">OK</string>
+    <string name="dialog_text_save">Salvar</string>
     <string name="dialog_text_try_again">Tentar de novo</string>
     <string name="dialog_text_delete">Deletar</string>
+
+    <string name="rename_habit_dialog_title">Renomear Hábito</string>
+    <string name="rename_habit_dialog_placeholder">Nome do Hábito</string>
     <!--endregion-->
 
     <!--region Home Tab -->

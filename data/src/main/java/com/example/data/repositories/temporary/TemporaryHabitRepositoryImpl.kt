@@ -131,7 +131,7 @@ class TemporaryHabitRepositoryImpl @Inject constructor(
             updatedAt = ZonedDateTime.now(),
         )
 
-        habitsRepository.createHabit(habit)
+        habitsRepository.upsertHabit(habit)
         discardTemporaryHabit()
     }
 

@@ -65,6 +65,7 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.dagger.hilt)
+    implementation(libs.timber)
     ksp(libs.dagger.hilt.compiler)
 
     testImplementation(libs.junit)

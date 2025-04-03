@@ -21,7 +21,7 @@ class LocalHabitsRepository @Inject constructor(
     private val goalDao: GoalDao,
     private val habitTaskDao: HabitTaskDao,
 ) : HabitsRepository {
-    override suspend fun createHabit(habit: Habit) {
+    override suspend fun upsertHabit(habit: Habit) {
         habitDao.insertHabit(habit.asHabitEntity())
         goalDao.insertGoals(habit.goals.map(Goal::asGoalEntity))
         habitTaskDao.insertHabitTasks(habit.tasks.map(HabitTask::asHabitTaskEntity))

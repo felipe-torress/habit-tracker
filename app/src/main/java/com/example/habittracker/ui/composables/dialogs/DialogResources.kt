@@ -1,34 +1,26 @@
 package com.example.habittracker.ui.composables.dialogs
 
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource
-import com.example.habittracker.R
+sealed class DialogResources {
+    abstract val title: String
+    abstract val positiveTitle: String
+    abstract val description: String?
+    abstract val negativeTitle: String?
 
-object DialogResources {
-    @Composable
-    fun genericDialog() =
-        GenericDialogResources(
-            title = stringResource(R.string.dialog_generic_title),
-            description = stringResource(R.string.dialog_generic_description),
-            positiveTitle = stringResource(R.string.dialog_text_ok),
-            negativeTitle = stringResource(R.string.dialog_text_cancel),
-        )
+    data class BasicDialog(
+        override val title: String,
+        override val positiveTitle: String,
+        override val description: String? = null,
+        override val negativeTitle: String? = null,
+    ) : DialogResources()
 
-    @Composable
-    fun genericTryAgainDialog() =
-        GenericDialogResources(
-            title = stringResource(R.string.dialog_generic_title),
-            description = stringResource(R.string.dialog_generic_try_again_description),
-            positiveTitle = stringResource(R.string.dialog_text_try_again),
-            negativeTitle = stringResource(R.string.dialog_text_cancel),
-        )
+    data class InputDialog(
+        override val title: String,
+        override val positiveTitle: String,
+        override val description: String? = null,
+        override val negativeTitle: String? = null,
+        val textFieldPlaceholder: String? = null,
+    ) : DialogResources()
 
-    @Composable
-    fun deleteDialog() =
-        GenericDialogResources(
-            title = stringResource(R.string.dialog_delete_generic_title),
-            description = stringResource(R.string.dialog_delete_generic_description),
-            positiveTitle = stringResource(R.string.dialog_text_delete),
-            negativeTitle = stringResource(R.string.dialog_text_cancel),
-        )
+    fun isBasicDialog() = this is BasicDialog
+    fun isInputDialog() = this is InputDialog
 }

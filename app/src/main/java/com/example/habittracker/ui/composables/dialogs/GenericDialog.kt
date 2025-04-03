@@ -28,13 +28,15 @@ import androidx.compose.ui.unit.dp
 import com.example.habittracker.ui.theme.HabitTrackerColors
 import com.example.habittracker.ui.theme.HabitTrackerTypography
 
+// TODO: Add TestTagState
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GenericDialog(
     isVisible: Boolean,
-    resources: GenericDialogResources,
-    callbacks: GenericDialogCallbacks,
+    resources: DialogResources,
+    callbacks: DialogCallbacks,
     modifier: Modifier = Modifier,
+    additionalContent: @Composable () -> Unit = {},
 ) {
     if (isVisible) {
         BasicAlertDialog(
@@ -51,6 +53,7 @@ fun GenericDialog(
             ) {
                 Title(title = resources.title)
                 Description(description = resources.description)
+                additionalContent()
                 Buttons(
                     positiveTitle = resources.positiveTitle,
                     negativeTitle = resources.negativeTitle,
@@ -78,16 +81,18 @@ private fun Title(
 
 @Composable
 private fun Description(
-    description: String,
+    description: String?,
     modifier: Modifier = Modifier,
 ) {
-    Text(
-        text = description,
-        style = HabitTrackerTypography.bodySmall,
-        color = HabitTrackerColors.textColor,
-        textAlign = TextAlign.Left,
-        modifier = modifier.fillMaxWidth(),
-    )
+    description?.let {
+        Text(
+            text = description,
+            style = HabitTrackerTypography.bodySmall,
+            color = HabitTrackerColors.textColor,
+            textAlign = TextAlign.Left,
+            modifier = modifier.fillMaxWidth(),
+        )
+    }
 }
 
 @Composable
@@ -168,21 +173,6 @@ private fun PositiveButton(
     }
 }
 
-//region --- UI Objects ---
-data class GenericDialogResources(
-    val title: String,
-    val description: String,
-    val positiveTitle: String,
-    val negativeTitle: String? = null,
-)
-
-data class GenericDialogCallbacks(
-    val onPositiveAction: () -> Unit = {},
-    val onDismiss: () -> Unit = {},
-    val onNegativeAction: () -> Unit = {},
-)
-//endregion
-
 //region --- Preview ---
 private data class GenericDialogPreviewData(
     val title: String = "Ops, algo deu errado",
@@ -210,13 +200,13 @@ private fun GenericDialogPreview(
 ) {
     GenericDialog(
         isVisible = true,
-        resources = GenericDialogResources(
+        resources = DialogResources.BasicDialog(
             title = previewData.title,
             description = previewData.description,
             positiveTitle = previewData.positiveTitle,
             negativeTitle = previewData.negativeTitle,
         ),
-        callbacks = GenericDialogCallbacks(
+        callbacks = DialogCallbacks.BasicDialog(
             onNegativeAction = {},
             onPositiveAction = {},
             onDismiss = {},

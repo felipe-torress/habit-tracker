@@ -5,9 +5,9 @@ import kotlinx.coroutines.flow.Flow
 
 interface HabitsRepository {
     /**
-     * Creates a new [Habit]
+     * Upsert a [Habit]
      */
-    suspend fun createHabit(habit: Habit)
+    suspend fun upsertHabit(habit: Habit)
 
     /**
      * Deletes a [Habit]
