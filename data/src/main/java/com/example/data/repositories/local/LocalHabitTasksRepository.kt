@@ -34,8 +34,8 @@ class LocalHabitTasksRepository @Inject constructor(private val habitTaskDao: Ha
 
     override suspend fun updateHabitTask(habitTaskId: String, name: String, daysOfWeek: List<DayOfWeek>, time: LocalTime) {
         val habitTask = getHabitTaskById(habitTaskId)
-        habitTask.first()?.let {
-            val updatedHabitTask = it.copy(
+        habitTask.first()?.let { task ->
+            val updatedHabitTask = task.copy(
                 name = name,
                 daysOfWeek = daysOfWeek,
                 time = time,

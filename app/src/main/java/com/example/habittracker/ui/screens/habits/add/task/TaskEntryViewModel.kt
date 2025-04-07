@@ -94,7 +94,9 @@ class TaskEntryViewModel @Inject constructor(
         if (isSavedTask) loadSavedTask(taskId) else loadTemporaryTask(taskId)
     }
 
-    fun onConfirmTaskEntryClick() = if (_isSavedTask) updateSavedTask() else addTemporaryTask()
+    fun onConfirmTaskEntryClick() {
+        if (_isSavedTask) updateSavedTask() else addTemporaryTask()
+    }
     //endregion
 
     //region --- Saved Task ---

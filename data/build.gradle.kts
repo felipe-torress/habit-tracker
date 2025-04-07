@@ -41,6 +41,7 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     implementation(libs.dagger.hilt)
+    implementation(libs.timber)
     ksp(libs.androidx.room.compiler)
     ksp(libs.dagger.hilt.compiler)
 
