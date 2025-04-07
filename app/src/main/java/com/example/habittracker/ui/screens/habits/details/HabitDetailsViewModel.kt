@@ -15,11 +15,13 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -32,7 +34,7 @@ class HabitDetailsViewModel @Inject constructor(
     sealed class HabitDetailsEvent {
         data object NavigateBack : HabitDetailsEvent()
 
-        data class NavigateToEditTask(val taskId: String? = null) : HabitDetailsEvent()
+        data class NavigateToTaskEntry(val taskId: String? = null, val isSavedTask: Boolean) : HabitDetailsEvent()
     }
     //endregion
 
@@ -54,11 +56,13 @@ class HabitDetailsViewModel @Inject constructor(
             habit.update { rawHabit }
             HabitDetailsUIState.Success(rawHabit.toHabitUIData())
         }.onStart { emit(HabitDetailsUIState.Loading) }
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5000L),
-        initialValue = HabitDetailsUIState.Loading,
-    )
+    }
+        .flowOn(Dispatchers.IO)
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000L),
+            initialValue = HabitDetailsUIState.Loading,
+        )
 
     //region --- Callbacks ---
     fun onCloseClick() = navigateBack()
@@ -67,7 +71,8 @@ class HabitDetailsViewModel @Inject constructor(
 
     fun onEditTaskClick(taskId: String) {
         viewModelScope.launch {
-            uiEvent.emit(HabitDetailsEvent.NavigateToEditTask(taskId))
+            Timber.d("Felipe - taskId: $taskId")
+            uiEvent.emit(HabitDetailsEvent.NavigateToTaskEntry(taskId = taskId, isSavedTask = true))
         }
     }
 
@@ -84,7 +89,7 @@ class HabitDetailsViewModel @Inject constructor(
 
     fun onAddTask() {
         viewModelScope.launch {
-            uiEvent.emit(HabitDetailsEvent.NavigateToEditTask())
+            uiEvent.emit(HabitDetailsEvent.NavigateToTaskEntry(isSavedTask = false))
         }
     }
     //endregion

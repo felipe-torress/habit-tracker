@@ -7,7 +7,11 @@ import com.example.data.mappers.asHabitTaskEntity
 import com.example.data.model.HabitTask
 import com.example.data.repositories.HabitTasksRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import java.time.DayOfWeek
+import java.time.LocalTime
+import java.time.ZonedDateTime
 import javax.inject.Inject
 
 class LocalHabitTasksRepository @Inject constructor(private val habitTaskDao: HabitTaskDao) : HabitTasksRepository {
@@ -23,12 +27,25 @@ class LocalHabitTasksRepository @Inject constructor(private val habitTaskDao: Ha
             habitTaskEntities.map(HabitTaskEntity::asHabitTask)
         }
 
-    override fun getHabitTaskById(habitTaskId: String): Flow<HabitTask> =
+    override fun getHabitTaskById(habitTaskId: String): Flow<HabitTask?> =
         habitTaskDao.getHabitTaskById(habitTaskId).map { habitTaskEntity ->
             habitTaskEntity.asHabitTask()
         }
 
-    override fun getHabitTasksFromHabit(habitId: String): Flow<List<HabitTask>> =
+    override suspend fun updateHabitTask(habitTaskId: String, name: String, daysOfWeek: List<DayOfWeek>, time: LocalTime) {
+        val habitTask = getHabitTaskById(habitTaskId)
+        habitTask.first()?.let {
+            val updatedHabitTask = it.copy(
+                name = name,
+                daysOfWeek = daysOfWeek,
+                time = time,
+                updatedAt = ZonedDateTime.now(),
+            )
+            createHabitTask(updatedHabitTask)
+        }
+    }
+
+    override fun getHabitTasksFromHabit(habitId: String): Flow<List<HabitTask>?> =
         habitTaskDao.getHabitTasksFromHabit(habitId).map { habitEntities ->
             habitEntities.map(HabitTaskEntity::asHabitTask)
         }

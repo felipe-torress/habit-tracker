@@ -24,8 +24,10 @@ import com.example.habittracker.ui.composables.topbar.TopBar
 import com.example.habittracker.ui.screens.habits.add.task.section.ConfirmTaskSection
 import com.example.habittracker.ui.screens.habits.add.task.section.DaysOfWeekSection
 import com.example.habittracker.ui.screens.habits.add.task.section.TimeSection
+import com.example.habittracker.ui.screens.habits.model.TaskEntryUIData
 import com.example.habittracker.ui.theme.HabitTrackerColors
 import com.example.habittracker.ui.utils.previews.MockConstants
+import com.example.habittracker.ui.utils.previews.Mocks
 import com.example.habittracker.ui.utils.testTags.TestTagState
 import java.time.DayOfWeek
 import java.time.LocalTime
@@ -34,19 +36,18 @@ import java.time.LocalTime
 fun TaskEntryRoute(
     viewModel: TaskEntryViewModel = hiltViewModel(),
     taskId: String?,
+    isSavedTask: Boolean,
     navigateBack: () -> Unit,
 ) {
-    val name by viewModel.name.collectAsStateWithLifecycle()
-    val daysOfWeek by viewModel.daysOfWeek.collectAsStateWithLifecycle()
-    val time by viewModel.time.collectAsStateWithLifecycle()
+    val taskEntryData by viewModel.taskEntryData.collectAsStateWithLifecycle()
     val isTimePickerVisible by viewModel.isTimePickerVisible.collectAsStateWithLifecycle()
     val isConfirmEnabled by viewModel.isConfirmEnabled.collectAsStateWithLifecycle()
 
     val uiEvent by viewModel.uiEvent.collectAsStateWithLifecycle(null)
 
-    LaunchedEffect(taskId) {
+    LaunchedEffect(taskId, isSavedTask) {
         taskId?.let {
-            viewModel.loadTask(taskId)
+            viewModel.loadTask(taskId = taskId, isSavedTask = isSavedTask)
         }
     }
 
@@ -58,9 +59,7 @@ fun TaskEntryRoute(
     }
 
     TaskEntryScreen(
-        name = name,
-        daysOfWeek = daysOfWeek,
-        time = time,
+        taskEntryData = taskEntryData,
         isTimePickerVisible = isTimePickerVisible,
         isConfirmEnabled = isConfirmEnabled,
         onCloseClick = navigateBack,
@@ -75,9 +74,7 @@ fun TaskEntryRoute(
 
 @Composable
 fun TaskEntryScreen(
-    name: String,
-    daysOfWeek: List<DayOfWeek>,
-    time: LocalTime?,
+    taskEntryData: TaskEntryUIData,
     isTimePickerVisible: Boolean,
     isConfirmEnabled: Boolean,
     onCloseClick: () -> Unit,
@@ -110,7 +107,7 @@ fun TaskEntryScreen(
                 .padding(16.dp),
         ) {
             HabitTrackerTextField(
-                value = name,
+                value = taskEntryData.name,
                 onValueChange = updateTaskName,
                 label = stringResource(id = R.string.add_task_screen_task_name_text_field_label),
                 labelIconResId = R.drawable.ic_habits_16dp,
@@ -119,13 +116,13 @@ fun TaskEntryScreen(
             )
 
             DaysOfWeekSection(
-                selectedDaysOfWeek = daysOfWeek,
+                selectedDaysOfWeek = taskEntryData.daysOfWeek,
                 onDayOfWeekClick = onDayOfWeekClick,
                 testTagState = testTagState.section("DaysOfWeekSection")
             )
 
             TimeSection(
-                time = time,
+                time = taskEntryData.time,
                 onClick = onTimeClick,
                 isTimePickerVisible = isTimePickerVisible,
                 onTimePickerConfirm = onTimePickerConfirm,
@@ -143,9 +140,7 @@ fun TaskEntryScreen(
 
 //region --- Preview ---
 private data class AddTaskScreenPreviewData(
-    val name: String = "",
-    val daysOfWeek: List<DayOfWeek> = emptyList(),
-    val time: LocalTime? = null,
+    val taskEntryData: TaskEntryUIData = Mocks.taskEntryUIData_empty,
     val isTimePickerVisible: Boolean = false,
 )
 
@@ -154,37 +149,23 @@ private class AddTaskScreenPreviewParameterProvider : PreviewParameterProvider<A
         // Initial state
         AddTaskScreenPreviewData(),
 
-        // Name Added
-        AddTaskScreenPreviewData(name = MockConstants.habit_title_1),
-
-        // Name + Days Of Week Added
-        AddTaskScreenPreviewData(
-            name = MockConstants.habit_title_1,
-            daysOfWeek = listOf(DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY)
-        ),
-
-        // Name + Days Of Week + Time Added
-        AddTaskScreenPreviewData(
-            name = MockConstants.habit_title_1,
-            daysOfWeek = MockConstants.daysOfWeek_1,
-            time = MockConstants.localTime_11_00_AM
-        )
+        // Data Added
+        AddTaskScreenPreviewData(taskEntryData = Mocks.taskEntryUIData_1),
     )
 }
 
 @Preview
 @Composable
 private fun AddTaskScreenPreview(@PreviewParameter(AddTaskScreenPreviewParameterProvider::class) previewData: AddTaskScreenPreviewData) {
-    val name = previewData.name
-    val daysOfWeek = previewData.daysOfWeek
-    val time = previewData.time
+    val name = previewData.taskEntryData.name
+    val daysOfWeek = previewData.taskEntryData.daysOfWeek
+    val time = previewData.taskEntryData.time
+    val isConfirmEnabled = name.isNotBlank() && daysOfWeek.isNotEmpty() && time != null
 
     TaskEntryScreen(
-        name = name,
-        daysOfWeek = daysOfWeek,
-        time = time,
+        taskEntryData = previewData.taskEntryData,
         isTimePickerVisible = previewData.isTimePickerVisible,
-        isConfirmEnabled = name.isNotBlank() && daysOfWeek.isNotEmpty() && time != null,
+        isConfirmEnabled = isConfirmEnabled,
         onCloseClick = {},
         onDayOfWeekClick = {},
         updateTaskName = {},

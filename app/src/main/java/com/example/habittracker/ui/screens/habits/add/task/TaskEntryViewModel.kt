@@ -1,18 +1,25 @@
 package com.example.habittracker.ui.screens.habits.add.task
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.data.repositories.HabitTasksRepository
 import com.example.data.repositories.temporary.TemporaryHabitRepository
+import com.example.habittracker.ui.screens.habits.model.TaskEntryUIData
+import com.example.habittracker.ui.screens.habits.model.toTaskEntryUIData
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.time.DayOfWeek
 import java.time.LocalTime
 import javax.inject.Inject
@@ -20,25 +27,25 @@ import javax.inject.Inject
 @HiltViewModel
 class TaskEntryViewModel @Inject constructor(
     private val temporaryHabitRepository: TemporaryHabitRepository,
+    private val habitTasksRepository: HabitTasksRepository,
 ) : ViewModel() {
+
     //region --- UI ---
-    private val _name = MutableStateFlow("")
-    private val _daysOfWeek = MutableStateFlow<List<DayOfWeek>>(emptyList())
-    private val _time = MutableStateFlow<LocalTime?>(null)
+    private val _initialTaskEntryData = MutableStateFlow(TaskEntryUIData())
+
+    private val _taskEntryData = MutableStateFlow(TaskEntryUIData())
     private val _isTimePickerVisible = MutableStateFlow(false)
-    val name: StateFlow<String> get() = _name.asStateFlow()
-    val daysOfWeek: StateFlow<List<DayOfWeek>> get() = _daysOfWeek.asStateFlow()
-    val time: StateFlow<LocalTime?> get() = _time.asStateFlow()
+    val taskEntryData: StateFlow<TaskEntryUIData> get() = _taskEntryData.asStateFlow()
     val isTimePickerVisible: StateFlow<Boolean> get() = _isTimePickerVisible.asStateFlow()
 
-    private var taskId: String? = null
+    private var _taskId: String? = null
+    private var _isSavedTask: Boolean = false
 
     val isConfirmEnabled: StateFlow<Boolean> = combine(
-        name,
-        daysOfWeek,
-        time,
-    ) { name, daysOfWeek, time ->
-        name.isNotBlank() && daysOfWeek.isNotEmpty() && time != null
+        taskEntryData,
+        _initialTaskEntryData,
+    ) { taskEntryData, initialTaskEntryData ->
+        taskEntryData != initialTaskEntryData && taskEntryData.isValidToSave()
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000L),
@@ -52,17 +59,24 @@ class TaskEntryViewModel @Inject constructor(
     sealed class AddTaskEvent {
         data object NavigateBack : AddTaskEvent()
     }
+
+    private fun navigateBack() {
+        viewModelScope.launch {
+            uiEvent.emit(AddTaskEvent.NavigateBack)
+        }
+    }
     //endregion
 
     //region --- Callbacks ---
-    fun updateName(name: String) = _name.update { name }
+    fun updateName(name: String) = _taskEntryData.update { it.updateName(name) }
 
     fun onDayOfWeekClick(day: DayOfWeek) {
-        _daysOfWeek.update { daysOfWeek ->
+        _taskEntryData.update { taskEntryData ->
+            val daysOfWeek = taskEntryData.daysOfWeek.toMutableList()
             if (daysOfWeek.contains(day)) {
-                daysOfWeek - day
+                taskEntryData.removeDayOfWeek(day)
             } else {
-                daysOfWeek + day
+                taskEntryData.addDayOfWeek(day)
             }
         }
     }
@@ -72,37 +86,74 @@ class TaskEntryViewModel @Inject constructor(
     fun onTimePickerDismiss() = _isTimePickerVisible.update { false }
 
     fun onTimePickerConfirm(time: LocalTime?) {
-        _time.update { time }
+        _taskEntryData.update { it.updateTime(time) }
         _isTimePickerVisible.update { false }
     }
 
-    fun loadTask(taskId: String) {
-        temporaryHabitRepository.temporaryTasks.value.find {
-            it.id == taskId
-        }?.let { task ->
-            this.taskId = task.id
-            _name.update { task.name }
-            _daysOfWeek.update { task.daysOfWeek }
-            _time.update { task.time }
+    fun loadTask(taskId: String, isSavedTask: Boolean = false) {
+        _isSavedTask = isSavedTask
+        if (isSavedTask) loadSavedTask(taskId) else loadTemporaryTask(taskId)
+    }
+
+    private fun loadSavedTask(taskId: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            habitTasksRepository.getHabitTaskById(taskId).first()?.let { task ->
+                _taskId = task.id
+                val taskEntryUIData = task.toTaskEntryUIData()
+                _initialTaskEntryData.update { taskEntryUIData }
+                _taskEntryData.update { taskEntryUIData }
+                Timber.i("Saved task loaded")
+            } ?: Timber.w("Saved Task not found")
         }
     }
 
-    fun addTask() {
-        viewModelScope.launch {
-            time.value?.let { time ->
-                if (name.value.isBlank() || daysOfWeek.value.isEmpty()) {
-                    return@launch
-                } else {
-                    temporaryHabitRepository.addTask(
-                        taskId = taskId,
-                        name = name.value,
-                        daysOfWeek = daysOfWeek.value,
-                        time = time,
-                    )
-                }
-            }
+    private fun loadTemporaryTask(taskId: String) {
+        temporaryHabitRepository.temporaryTasks.value.find {
+            it.id == taskId
+        }?.let { task ->
+            _taskId = task.id
+            val taskEntryUIData = task.toTaskEntryUIData()
+            _initialTaskEntryData.update { taskEntryUIData }
+            _taskEntryData.update { taskEntryUIData }
+            Timber.i("Temporary task loaded")
+        } ?: Timber.w("Temporary Task not found")
+    }
 
-            uiEvent.emit(AddTaskEvent.NavigateBack)
+    fun addTask() {
+        if (_isSavedTask) {
+            addSavedTask()
+        } else {
+            addTemporaryTask()
+        }
+    }
+
+    private fun addSavedTask() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val taskId = _taskId ?: return@launch
+            _taskEntryData.value.getValidDataAndPerformAction { name, daysOfWeek, time ->
+                habitTasksRepository.updateHabitTask(
+                    habitTaskId = taskId,
+                    name = name,
+                    daysOfWeek = daysOfWeek,
+                    time = time,
+                )
+                navigateBack()
+            }
+        }
+    }
+
+    private fun addTemporaryTask() {
+        viewModelScope.launch(Dispatchers.IO) {
+            _taskEntryData.value.getValidDataAndPerformAction { name, daysOfWeek, time ->
+                temporaryHabitRepository.addTask(
+                    taskId = _taskId,
+                    name = name,
+                    daysOfWeek = daysOfWeek,
+                    time = time,
+                )
+                _taskEntryData.update { TaskEntryUIData() }
+                navigateBack()
+            }
         }
     }
     //endregion

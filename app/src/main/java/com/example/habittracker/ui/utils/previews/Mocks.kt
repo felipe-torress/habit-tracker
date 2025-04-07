@@ -3,6 +3,7 @@ package com.example.habittracker.ui.utils.previews
 import com.example.habittracker.ui.screens.habits.model.ColorUI
 import com.example.habittracker.ui.screens.habits.model.HabitTaskUIData
 import com.example.habittracker.ui.screens.habits.model.HabitUIData
+import com.example.habittracker.ui.screens.habits.model.TaskEntryUIData
 import java.util.UUID
 
 object Mocks {
@@ -46,6 +47,20 @@ object Mocks {
 
     val habitUIData_green = habitUIData_1.copy(
         color = ColorUI.GREEN,
+    )
+    //endregion
+
+    //region --- TaskEntryUIData ---
+    val taskEntryUIData_1 = TaskEntryUIData(
+        name = MockConstants.habitTask_title_1,
+        daysOfWeek = MockConstants.daysOfWeek_1,
+        time = MockConstants.localTime_11_00_AM,
+    )
+
+    val taskEntryUIData_empty = TaskEntryUIData(
+        name = "",
+        daysOfWeek = emptyList(),
+        time = null,
     )
     //endregion
 }

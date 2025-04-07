@@ -47,7 +47,7 @@ fun HabitDetailsRoute(
     mainActivityViewModel: MainActivityViewModel = activityHiltViewModel(),
     habitId: String,
     navigateBack: () -> Unit,
-    navigateToTaskEntry: (taskId: String?) -> Unit,
+    navigateToTaskEntry: (taskId: String?, isSavedTask: Boolean) -> Unit,
 ) {
     val habitUIState by viewModel.habitUIState.collectAsStateWithLifecycle()
     val isDialogVisible by viewModel.isDialogVisible.collectAsStateWithLifecycle()
@@ -64,9 +64,10 @@ fun HabitDetailsRoute(
     LaunchedEffect(uiEvent) {
         when (uiEvent) {
             is HabitDetailsViewModel.HabitDetailsEvent.NavigateBack -> navigateBack()
-            is HabitDetailsViewModel.HabitDetailsEvent.NavigateToEditTask -> {
-                val taskId = (uiEvent as HabitDetailsViewModel.HabitDetailsEvent.NavigateToEditTask).taskId
-                navigateToTaskEntry(taskId)
+            is HabitDetailsViewModel.HabitDetailsEvent.NavigateToTaskEntry -> {
+                val taskId = (uiEvent as HabitDetailsViewModel.HabitDetailsEvent.NavigateToTaskEntry).taskId
+                val isSavedTask = (uiEvent as HabitDetailsViewModel.HabitDetailsEvent.NavigateToTaskEntry).isSavedTask
+                navigateToTaskEntry(taskId, isSavedTask)
             }
 
             else -> {}
