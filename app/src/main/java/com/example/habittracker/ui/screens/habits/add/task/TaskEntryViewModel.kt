@@ -1,6 +1,5 @@
 package com.example.habittracker.ui.screens.habits.add.task
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.data.repositories.HabitTasksRepository
@@ -95,6 +94,10 @@ class TaskEntryViewModel @Inject constructor(
         if (isSavedTask) loadSavedTask(taskId) else loadTemporaryTask(taskId)
     }
 
+    fun onConfirmTaskEntryClick() = if (_isSavedTask) updateSavedTask() else addTemporaryTask()
+    //endregion
+
+    //region --- Saved Task ---
     private fun loadSavedTask(taskId: String) {
         viewModelScope.launch(Dispatchers.IO) {
             habitTasksRepository.getHabitTaskById(taskId).first()?.let { task ->
@@ -107,27 +110,7 @@ class TaskEntryViewModel @Inject constructor(
         }
     }
 
-    private fun loadTemporaryTask(taskId: String) {
-        temporaryHabitRepository.temporaryTasks.value.find {
-            it.id == taskId
-        }?.let { task ->
-            _taskId = task.id
-            val taskEntryUIData = task.toTaskEntryUIData()
-            _initialTaskEntryData.update { taskEntryUIData }
-            _taskEntryData.update { taskEntryUIData }
-            Timber.i("Temporary task loaded")
-        } ?: Timber.w("Temporary Task not found")
-    }
-
-    fun addTask() {
-        if (_isSavedTask) {
-            addSavedTask()
-        } else {
-            addTemporaryTask()
-        }
-    }
-
-    private fun addSavedTask() {
+    private fun updateSavedTask() {
         viewModelScope.launch(Dispatchers.IO) {
             val taskId = _taskId ?: return@launch
             _taskEntryData.value.getValidDataAndPerformAction { name, daysOfWeek, time ->
@@ -140,6 +123,20 @@ class TaskEntryViewModel @Inject constructor(
                 navigateBack()
             }
         }
+    }
+    //endregion
+
+    //region --- Temporary Task ---
+    private fun loadTemporaryTask(taskId: String) {
+        temporaryHabitRepository.temporaryTasks.value.find {
+            it.id == taskId
+        }?.let { task ->
+            _taskId = task.id
+            val taskEntryUIData = task.toTaskEntryUIData()
+            _initialTaskEntryData.update { taskEntryUIData }
+            _taskEntryData.update { taskEntryUIData }
+            Timber.i("Temporary task loaded")
+        } ?: Timber.w("Temporary Task not found")
     }
 
     private fun addTemporaryTask() {

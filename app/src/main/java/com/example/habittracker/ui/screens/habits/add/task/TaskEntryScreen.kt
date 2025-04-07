@@ -26,7 +26,6 @@ import com.example.habittracker.ui.screens.habits.add.task.section.DaysOfWeekSec
 import com.example.habittracker.ui.screens.habits.add.task.section.TimeSection
 import com.example.habittracker.ui.screens.habits.model.TaskEntryUIData
 import com.example.habittracker.ui.theme.HabitTrackerColors
-import com.example.habittracker.ui.utils.previews.MockConstants
 import com.example.habittracker.ui.utils.previews.Mocks
 import com.example.habittracker.ui.utils.testTags.TestTagState
 import java.time.DayOfWeek
@@ -68,7 +67,7 @@ fun TaskEntryRoute(
         onTimeClick = viewModel::onTimeClick,
         onTimePickerDismiss = viewModel::onTimePickerDismiss,
         onTimePickerConfirm = viewModel::onTimePickerConfirm,
-        onConfirmAddTaskClick = viewModel::addTask,
+        onConfirmTaskEntryClick = viewModel::onConfirmTaskEntryClick,
     )
 }
 
@@ -83,7 +82,7 @@ fun TaskEntryScreen(
     onTimeClick: () -> Unit,
     onTimePickerDismiss: () -> Unit,
     onTimePickerConfirm: (time: LocalTime?) -> Unit,
-    onConfirmAddTaskClick: () -> Unit,
+    onConfirmTaskEntryClick: () -> Unit,
 ) {
     val testTagState = TestTagState("TaskEntryScreen")
 
@@ -131,7 +130,7 @@ fun TaskEntryScreen(
 
             ConfirmTaskSection(
                 isConfirmEnabled = isConfirmEnabled,
-                onConfirmClick = onConfirmAddTaskClick,
+                onConfirmClick = onConfirmTaskEntryClick,
                 testTagState = testTagState.section("ConfirmAddTaskSection")
             )
         }
@@ -172,7 +171,7 @@ private fun AddTaskScreenPreview(@PreviewParameter(AddTaskScreenPreviewParameter
         onTimeClick = {},
         onTimePickerDismiss = {},
         onTimePickerConfirm = {},
-        onConfirmAddTaskClick = {}
+        onConfirmTaskEntryClick = {}
     )
 }
 //endregion
