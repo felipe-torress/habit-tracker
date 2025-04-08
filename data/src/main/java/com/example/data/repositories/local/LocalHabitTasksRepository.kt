@@ -60,6 +60,7 @@ class LocalHabitTasksRepository @Inject constructor(private val habitTaskDao: Ha
                 name = name,
                 daysOfWeek = daysOfWeek,
                 time = time,
+                requiredWeeklyCompletions = daysOfWeek.size,
                 updatedAt = ZonedDateTime.now(),
             )
             createHabitTask(updatedHabitTask)
