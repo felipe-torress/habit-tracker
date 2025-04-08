@@ -82,7 +82,4 @@ object HabitTrackerColors {
     val purple700 = Color(0xFF720078)
     val purple800 = Color(0xFF59005D)
     val purple900 = Color(0xFF440047)
-
-    // Miscellanous
-    val progressIndicatorBackground = Color(0xFFDCE0E5)
 }

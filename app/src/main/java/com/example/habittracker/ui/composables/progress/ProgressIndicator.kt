@@ -76,11 +76,11 @@ private fun ProgressBar(
 ) {
     val shape = RoundedCornerShape(8.dp)
 
-    val barColor = remember {
+    val (barColor, backgroundColor) = remember {
         when (color) {
-            ColorUI.BLUE -> HabitTrackerColors.blue500
-            ColorUI.PURPLE -> HabitTrackerColors.purple500
-            ColorUI.GREEN -> HabitTrackerColors.green500
+            ColorUI.BLUE -> HabitTrackerColors.blue500 to HabitTrackerColors.blue100
+            ColorUI.PURPLE -> HabitTrackerColors.purple500 to HabitTrackerColors.purple100
+            ColorUI.GREEN -> HabitTrackerColors.green500 to HabitTrackerColors.green100
         }
     }
 
@@ -89,7 +89,7 @@ private fun ProgressBar(
         modifier = modifier
             .height(8.dp)
             .width(80.dp)
-            .background(color = HabitTrackerColors.progressIndicatorBackground, shape = shape),
+            .background(color = backgroundColor, shape = shape),
     ) {
         val width = (current.toFloat() / maximum.toFloat()) * 80.dp
 
