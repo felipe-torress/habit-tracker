@@ -165,7 +165,7 @@ class HabitDetailsViewModel @Inject constructor(
 
             HabitDetailsDialogType.InputDialog.RenameHabit -> DialogCallbacks.InputDialog(
                 onPositiveAction = ::renameHabit,
-                onNegativeAction = ::dismissDialog,
+                onNegativeAction = ::onDismissRenameHabitDialog,
                 onDismiss = ::onDismissRenameHabitDialog,
                 onTextValueChange = ::onRenameHabitTextValueChange,
             )
