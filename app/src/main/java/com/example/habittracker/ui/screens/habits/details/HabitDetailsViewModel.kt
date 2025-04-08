@@ -40,6 +40,7 @@ class HabitDetailsViewModel @Inject constructor(
     //endregion
 
     private val habit = MutableStateFlow<Habit?>(null)
+    private var isDeleting: Boolean = false
 
     private val _temporaryHabitName = MutableStateFlow("")
     val temporaryHabitName: StateFlow<String> get() = _temporaryHabitName.asStateFlow()
@@ -50,8 +51,12 @@ class HabitDetailsViewModel @Inject constructor(
     val habitUIState: StateFlow<HabitDetailsUIState> = habitRefreshTrigger.flatMapLatest { habitId ->
         habitsRepository.getHabitById(habitId).map { rawHabit ->
             if (rawHabit == null) {
-                showDialog(HabitDetailsDialogType.BasicDialog.LoadHabitFailed)
-                return@map HabitDetailsUIState.Failure
+                if (!isDeleting) {
+                    showDialog(HabitDetailsDialogType.BasicDialog.LoadHabitFailed)
+                    return@map HabitDetailsUIState.Failure
+                } else {
+                    return@map HabitDetailsUIState.Loading
+                }
             }
 
             habit.update { rawHabit }
@@ -100,6 +105,7 @@ class HabitDetailsViewModel @Inject constructor(
         viewModelScope.launch {
             val habitUIState = habitUIState.value
             if (habitUIState is HabitDetailsUIState.Success) {
+                isDeleting = true
                 habitsRepository.deleteHabit(habitUIState.habit.id)
                 navigateBack()
             }
@@ -149,16 +155,17 @@ class HabitDetailsViewModel @Inject constructor(
 
             HabitDetailsDialogType.BasicDialog.LoadHabitFailed -> DialogCallbacks.BasicDialog(
                 onPositiveAction = ::navigateBack,
-                onDismiss = ::dismissDialog,
+                onDismiss = ::navigateBack,
             )
 
             HabitDetailsDialogType.BasicDialog.Generic -> DialogCallbacks.BasicDialog(
-                onPositiveAction = ::dismissDialog,
-                onDismiss = ::dismissDialog,
+                onPositiveAction = ::navigateBack,
+                onDismiss = ::navigateBack,
             )
 
             HabitDetailsDialogType.InputDialog.RenameHabit -> DialogCallbacks.InputDialog(
                 onPositiveAction = ::renameHabit,
+                onNegativeAction = ::dismissDialog,
                 onDismiss = ::onDismissRenameHabitDialog,
                 onTextValueChange = ::onRenameHabitTextValueChange,
             )

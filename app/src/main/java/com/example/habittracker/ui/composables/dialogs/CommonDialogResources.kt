@@ -11,7 +11,6 @@ object CommonDialogResources {
             title = stringResource(R.string.dialog_generic_title),
             description = stringResource(R.string.dialog_generic_description),
             positiveTitle = stringResource(R.string.dialog_text_ok),
-            negativeTitle = stringResource(R.string.dialog_text_cancel),
         )
 
     @Composable
