@@ -45,14 +45,16 @@
     <string name="add_habit_screen_ready_to_start_section_title">Pronto para começar?</string>
     <!--endregion-->
 
-    <!--region Add Task Screen -->
-    <string name="add_task_screen_toolbar_title">Adicionar Tarefa</string>
-    <string name="add_task_screen_task_name_text_field_label">Tarefa</string>
-    <string name="add_task_screen_task_name_text_field_placeholder">Digite o nome da tarefa</string>
-    <string name="add_task_screen_days_of_week_section_title">Repete às/aos</string>
-    <string name="add_task_screen_time_picker_label">Hora</string>
-    <string name="add_task_screen_time_picker_placeholder">Selecione uma hora</string>
-    <string name="add_task_screen_confirm_add_task_button_title">Adicionar Tarefa</string>
+    <!--region Task Entry Screen -->
+    <string name="task_entry_screen_toolbar_title_add">Adicionar Tarefa</string>
+    <string name="task_entry_screen_toolbar_title_edit">Editar Tarefa</string>
+    <string name="task_entry_screen_task_name_text_field_label">Tarefa</string>
+    <string name="task_entry_screen_task_name_text_field_placeholder">Digite o nome da tarefa</string>
+    <string name="task_entry_screen_days_of_week_section_title">Repete às/aos</string>
+    <string name="task_entry_screen_time_picker_label">Hora</string>
+    <string name="task_entry_screen_time_picker_placeholder">Selecione uma hora</string>
+    <string name="task_entry_screen_confirm_add_task_button_title_add">Adicionar Tarefa</string>
+    <string name="task_entry_screen_confirm_add_task_button_title_edit">Editar Tarefa</string>
     <!--endregion-->
 
     <!--region Habit Details Screen -->

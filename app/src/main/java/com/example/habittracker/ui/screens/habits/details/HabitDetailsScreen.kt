@@ -31,6 +31,7 @@ import com.example.habittracker.ui.composables.dialogs.GenericDialog
 import com.example.habittracker.ui.composables.dialogs.InputDialog
 import com.example.habittracker.ui.composables.loading.Loader
 import com.example.habittracker.ui.composables.topbar.GradientTopBar
+import com.example.habittracker.ui.screens.habits.add.task.TaskEntryFlow
 import com.example.habittracker.ui.screens.habits.details.HabitDetailsDialogType.Companion.getDialogResources
 import com.example.habittracker.ui.screens.habits.details.composables.Header
 import com.example.habittracker.ui.screens.habits.details.sections.tasksSection
@@ -47,7 +48,7 @@ fun HabitDetailsRoute(
     mainActivityViewModel: MainActivityViewModel = activityHiltViewModel(),
     habitId: String,
     navigateBack: () -> Unit,
-    navigateToTaskEntry: (taskId: String?, isSavedTask: Boolean) -> Unit,
+    navigateToTaskEntry: (taskEntryFlow: TaskEntryFlow) -> Unit,
 ) {
     val habitUIState by viewModel.habitUIState.collectAsStateWithLifecycle()
     val isDialogVisible by viewModel.isDialogVisible.collectAsStateWithLifecycle()
@@ -65,9 +66,8 @@ fun HabitDetailsRoute(
         when (uiEvent) {
             is HabitDetailsViewModel.HabitDetailsEvent.NavigateBack -> navigateBack()
             is HabitDetailsViewModel.HabitDetailsEvent.NavigateToTaskEntry -> {
-                val taskId = (uiEvent as HabitDetailsViewModel.HabitDetailsEvent.NavigateToTaskEntry).taskId
-                val isSavedTask = (uiEvent as HabitDetailsViewModel.HabitDetailsEvent.NavigateToTaskEntry).isSavedTask
-                navigateToTaskEntry(taskId, isSavedTask)
+                val taskEntryFlow = (uiEvent as HabitDetailsViewModel.HabitDetailsEvent.NavigateToTaskEntry).taskEntryFlow
+                navigateToTaskEntry(taskEntryFlow)
             }
 
             else -> {}

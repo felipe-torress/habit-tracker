@@ -17,8 +17,14 @@ import javax.inject.Inject
 interface TemporaryHabitRepository {
     val temporaryTasks: StateFlow<List<HabitTask>>
 
-    suspend fun addTask(
-        taskId: String? = null,
+    suspend fun createTask(
+        name: String,
+        daysOfWeek: List<DayOfWeek>,
+        time: LocalTime,
+    )
+
+    suspend fun editTask(
+        taskId: String,
         name: String,
         daysOfWeek: List<DayOfWeek>,
         time: LocalTime,
@@ -38,29 +44,7 @@ class TemporaryHabitRepositoryImpl @Inject constructor(
     private val _temporaryTasks = MutableStateFlow<List<HabitTask>>(emptyList())
     override val temporaryTasks: StateFlow<List<HabitTask>> get() = _temporaryTasks.asStateFlow()
 
-    override suspend fun addTask(
-        taskId: String?,
-        name: String,
-        daysOfWeek: List<DayOfWeek>,
-        time: LocalTime,
-    ) {
-        if (taskId != null) {
-            editTask(
-                taskId = taskId,
-                name = name,
-                daysOfWeek = daysOfWeek,
-                time = time,
-            )
-        } else {
-            createNewTask(
-                name = name,
-                daysOfWeek = daysOfWeek,
-                time = time,
-            )
-        }
-    }
-
-    private fun editTask(
+    override suspend fun editTask(
         taskId: String,
         name: String,
         daysOfWeek: List<DayOfWeek>,
@@ -74,7 +58,6 @@ class TemporaryHabitRepositoryImpl @Inject constructor(
                 daysOfWeek = daysOfWeek,
                 time = time,
                 requiredWeeklyCompletions = daysOfWeek.size,
-                createdAt = ZonedDateTime.now(),
                 updatedAt = ZonedDateTime.now(),
             )
 
@@ -86,7 +69,7 @@ class TemporaryHabitRepositoryImpl @Inject constructor(
         }
     }
 
-    private fun createNewTask(
+    override suspend fun createTask(
         name: String,
         daysOfWeek: List<DayOfWeek>,
         time: LocalTime,

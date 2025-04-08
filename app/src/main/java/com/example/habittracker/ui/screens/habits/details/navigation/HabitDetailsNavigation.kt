@@ -15,9 +15,9 @@ fun NavGraphBuilder.habitDetailsScreen(navController: NavController) =
         HabitDetailsRoute(
             habitId = habitDetailsRoute.habitId,
             navigateBack = { navController.popBackStack() },
-            navigateToTaskEntry = { taskId, isSavedTask ->
-                Timber.d("Felipe - habitDetailsScreen: navigateToTaskEntry: taskId: $taskId")
-                navController.navigate(TaskEntry(taskId = taskId, isSavedTask = isSavedTask))
+            navigateToTaskEntry = { taskEntryFlow ->
+                Timber.d("Felipe - habitDetailsScreen: navigateToTaskEntry: taskEntryFlow: $taskEntryFlow")
+                navController.navigate(TaskEntry(taskEntryFlow))
             },
         )
     }

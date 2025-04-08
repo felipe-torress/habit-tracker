@@ -87,7 +87,7 @@ private fun Label(modifier: Modifier = Modifier) {
         )
 
         Text(
-            text = stringResource(R.string.add_task_screen_time_picker_label),
+            text = stringResource(R.string.task_entry_screen_time_picker_label),
             style = HabitTrackerTypography.bodyLarge,
             fontWeight = FontWeight.Bold,
             color = HabitTrackerColors.green700,
@@ -103,7 +103,7 @@ private fun RowScope.Time(
     val (text, textColor) = if (time != null) {
         time.toLocalizedTime() to HabitTrackerColors.textColor
     } else {
-        stringResource(R.string.add_task_screen_time_picker_placeholder) to HabitTrackerColors.green500
+        stringResource(R.string.task_entry_screen_time_picker_placeholder) to HabitTrackerColors.green500
     }
 
     Text(

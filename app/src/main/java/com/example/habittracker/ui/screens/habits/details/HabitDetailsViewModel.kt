@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.data.model.Habit
 import com.example.data.repositories.HabitsRepository
 import com.example.habittracker.ui.composables.dialogs.DialogCallbacks
+import com.example.habittracker.ui.screens.habits.add.task.TaskEntryFlow
 import com.example.habittracker.ui.screens.habits.model.toHabitUIData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -34,7 +35,7 @@ class HabitDetailsViewModel @Inject constructor(
     sealed class HabitDetailsEvent {
         data object NavigateBack : HabitDetailsEvent()
 
-        data class NavigateToTaskEntry(val taskId: String? = null, val isSavedTask: Boolean) : HabitDetailsEvent()
+        data class NavigateToTaskEntry(val taskEntryFlow: TaskEntryFlow) : HabitDetailsEvent()
     }
     //endregion
 
@@ -71,8 +72,7 @@ class HabitDetailsViewModel @Inject constructor(
 
     fun onEditTaskClick(taskId: String) {
         viewModelScope.launch {
-            Timber.d("Felipe - taskId: $taskId")
-            uiEvent.emit(HabitDetailsEvent.NavigateToTaskEntry(taskId = taskId, isSavedTask = true))
+            uiEvent.emit(HabitDetailsEvent.NavigateToTaskEntry(taskEntryFlow = TaskEntryFlow.SavedTask.Edit(taskId)))
         }
     }
 
@@ -88,9 +88,11 @@ class HabitDetailsViewModel @Inject constructor(
     }
 
     fun onAddTask() {
-        viewModelScope.launch {
-            uiEvent.emit(HabitDetailsEvent.NavigateToTaskEntry(isSavedTask = false))
-        }
+        habit.value?.let { habit ->
+            viewModelScope.launch {
+                uiEvent.emit(HabitDetailsEvent.NavigateToTaskEntry(taskEntryFlow = TaskEntryFlow.SavedTask.Add(habitId = habit.id)))
+            }
+        } ?: Timber.w("Not able to add task: habit is null")
     }
     //endregion
 

@@ -1,12 +1,14 @@
 package com.example.habittracker.ui.screens.habits.details.composables
 
 import androidx.annotation.StringRes
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material3.Text
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.habittracker.ui.screens.habits.model.ColorUI
@@ -35,6 +37,7 @@ private fun LazyListScope.title(
     @StringRes titleResId: Int,
     color: ColorUI,
     isFirstSection: Boolean,
+    modifier: Modifier = Modifier,
 ) {
     item {
         val textColor = remember {
@@ -49,7 +52,10 @@ private fun LazyListScope.title(
             text = stringResource(titleResId),
             style = HabitTrackerTypography.subtitle1.copy(fontSize = 20.sp),
             color = textColor,
-            modifier = Modifier.padding(top = if (isFirstSection) 0.dp else 24.dp),
+            textAlign = TextAlign.Start,
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(top = if (isFirstSection) 0.dp else 24.dp),
         )
     }
 }

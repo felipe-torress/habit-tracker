@@ -11,19 +11,25 @@ import com.example.habittracker.ui.utils.testTags.TestTagState
 @Composable
 fun ConfirmTaskSection(
     isConfirmEnabled: Boolean,
+    isEditFlow: Boolean,
     onConfirmClick: () -> Unit,
     testTagState: TestTagState,
     modifier: Modifier = Modifier,
 ) {
     TaskEntrySection(
-        title = stringResource(R.string.add_task_screen_days_of_week_section_title),
+        title = stringResource(R.string.task_entry_screen_days_of_week_section_title),
         testTagState = testTagState,
         modifier = modifier,
     ) {
         PrimaryButton(
             onClick = onConfirmClick,
-            // TODO: Make text dynamic
-            text = stringResource(R.string.add_task_screen_confirm_add_task_button_title),
+            text = stringResource(
+                if (isEditFlow) {
+                    R.string.task_entry_screen_confirm_add_task_button_title_edit
+                } else {
+                    R.string.task_entry_screen_confirm_add_task_button_title_add
+                }
+            ),
             iconResId = R.drawable.ic_progress_24dp,
             enabled = isConfirmEnabled,
             testTagState = testTagState.action("ConfirmTaskEntry"),

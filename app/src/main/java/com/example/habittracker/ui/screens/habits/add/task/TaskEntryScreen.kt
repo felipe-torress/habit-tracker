@@ -34,20 +34,18 @@ import java.time.LocalTime
 @Composable
 fun TaskEntryRoute(
     viewModel: TaskEntryViewModel = hiltViewModel(),
-    taskId: String?,
-    isSavedTask: Boolean,
+    taskEntryFlow: TaskEntryFlow,
     navigateBack: () -> Unit,
 ) {
     val taskEntryData by viewModel.taskEntryData.collectAsStateWithLifecycle()
     val isTimePickerVisible by viewModel.isTimePickerVisible.collectAsStateWithLifecycle()
     val isConfirmEnabled by viewModel.isConfirmEnabled.collectAsStateWithLifecycle()
+    val isEditFlow by viewModel.isEditFlow.collectAsStateWithLifecycle()
 
     val uiEvent by viewModel.uiEvent.collectAsStateWithLifecycle(null)
 
-    LaunchedEffect(taskId, isSavedTask) {
-        taskId?.let {
-            viewModel.loadTask(taskId = taskId, isSavedTask = isSavedTask)
-        }
+    LaunchedEffect(taskEntryFlow) {
+        viewModel.loadTask(taskEntryFlow)
     }
 
     LaunchedEffect(uiEvent) {
@@ -59,6 +57,7 @@ fun TaskEntryRoute(
 
     TaskEntryScreen(
         taskEntryData = taskEntryData,
+        isEditFlow = isEditFlow,
         isTimePickerVisible = isTimePickerVisible,
         isConfirmEnabled = isConfirmEnabled,
         onCloseClick = navigateBack,
@@ -74,6 +73,7 @@ fun TaskEntryRoute(
 @Composable
 fun TaskEntryScreen(
     taskEntryData: TaskEntryUIData,
+    isEditFlow: Boolean,
     isTimePickerVisible: Boolean,
     isConfirmEnabled: Boolean,
     onCloseClick: () -> Unit,
@@ -89,8 +89,13 @@ fun TaskEntryScreen(
     Scaffold(
         topBar = {
             TopBar(
-                // TODO: Make text dynamic
-                title = stringResource(id = R.string.add_task_screen_toolbar_title),
+                title = stringResource(
+                    id = if (isEditFlow) {
+                        R.string.task_entry_screen_toolbar_title_edit
+                    } else {
+                        R.string.task_entry_screen_toolbar_title_add
+                    }
+                ),
                 hasNavigationIcon = true,
                 onNavigationIconClick = onCloseClick,
                 navigationIconColor = HabitTrackerColors.green700,
@@ -108,9 +113,9 @@ fun TaskEntryScreen(
             HabitTrackerTextField(
                 value = taskEntryData.name,
                 onValueChange = updateTaskName,
-                label = stringResource(id = R.string.add_task_screen_task_name_text_field_label),
+                label = stringResource(id = R.string.task_entry_screen_task_name_text_field_label),
                 labelIconResId = R.drawable.ic_habits_16dp,
-                placeholder = stringResource(id = R.string.add_task_screen_task_name_text_field_placeholder),
+                placeholder = stringResource(id = R.string.task_entry_screen_task_name_text_field_placeholder),
                 testTagState = testTagState.type("TaskName"),
             )
 
@@ -130,6 +135,7 @@ fun TaskEntryScreen(
 
             ConfirmTaskSection(
                 isConfirmEnabled = isConfirmEnabled,
+                isEditFlow = isEditFlow,
                 onConfirmClick = onConfirmTaskEntryClick,
                 testTagState = testTagState.section("ConfirmAddTaskSection")
             )
@@ -141,6 +147,7 @@ fun TaskEntryScreen(
 private data class AddTaskScreenPreviewData(
     val taskEntryData: TaskEntryUIData = Mocks.taskEntryUIData_empty,
     val isTimePickerVisible: Boolean = false,
+    val isEditFlow: Boolean = false,
 )
 
 private class AddTaskScreenPreviewParameterProvider : PreviewParameterProvider<AddTaskScreenPreviewData> {
@@ -150,6 +157,9 @@ private class AddTaskScreenPreviewParameterProvider : PreviewParameterProvider<A
 
         // Data Added
         AddTaskScreenPreviewData(taskEntryData = Mocks.taskEntryUIData_1),
+
+        // Edit Flow
+        AddTaskScreenPreviewData(isEditFlow = true),
     )
 }
 
@@ -163,6 +173,7 @@ private fun AddTaskScreenPreview(@PreviewParameter(AddTaskScreenPreviewParameter
 
     TaskEntryScreen(
         taskEntryData = previewData.taskEntryData,
+        isEditFlow = previewData.isEditFlow,
         isTimePickerVisible = previewData.isTimePickerVisible,
         isConfirmEnabled = isConfirmEnabled,
         onCloseClick = {},

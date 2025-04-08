@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.data.model.HabitColor
 import com.example.data.model.HabitTask
 import com.example.data.repositories.temporary.TemporaryHabitRepository
+import com.example.habittracker.ui.screens.habits.add.task.TaskEntryFlow
 import com.example.habittracker.ui.screens.habits.model.ColorUI
 import com.example.habittracker.ui.screens.habits.model.HabitTaskUIData
 import com.example.habittracker.ui.screens.habits.model.toColorUI
@@ -36,6 +37,7 @@ class AddHabitViewModel @Inject constructor(
 
     sealed class AddHabitEvent {
         data object NavigateBack : AddHabitEvent()
+        data class NavigateToTaskEntry(val taskEntryFlow: TaskEntryFlow.TemporaryTask) : AddHabitEvent()
     }
     //endregion
 
@@ -80,6 +82,18 @@ class AddHabitViewModel @Inject constructor(
             temporaryHabitRepository.discardTemporaryHabit()
 
             uiEvent.emit(AddHabitEvent.NavigateBack)
+        }
+    }
+
+    fun onAddTaskClick() {
+        viewModelScope.launch {
+            uiEvent.emit(AddHabitEvent.NavigateToTaskEntry(TaskEntryFlow.TemporaryTask.Add))
+        }
+    }
+
+    fun onEditTaskClick(taskId: String) {
+        viewModelScope.launch {
+            uiEvent.emit(AddHabitEvent.NavigateToTaskEntry(TaskEntryFlow.TemporaryTask.Edit(taskId)))
         }
     }
     //endregion

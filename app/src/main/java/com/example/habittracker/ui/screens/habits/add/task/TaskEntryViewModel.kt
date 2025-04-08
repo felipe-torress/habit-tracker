@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -31,14 +32,22 @@ class TaskEntryViewModel @Inject constructor(
 
     //region --- UI ---
     private val _initialTaskEntryData = MutableStateFlow(TaskEntryUIData())
+    private val _habitId = MutableStateFlow<String?>(null)
+    private val _flow = MutableStateFlow<TaskEntryFlow>(TaskEntryFlow.TemporaryTask.Add)
+    private var _taskId: String? = null
 
     private val _taskEntryData = MutableStateFlow(TaskEntryUIData())
     private val _isTimePickerVisible = MutableStateFlow(false)
     val taskEntryData: StateFlow<TaskEntryUIData> get() = _taskEntryData.asStateFlow()
     val isTimePickerVisible: StateFlow<Boolean> get() = _isTimePickerVisible.asStateFlow()
 
-    private var _taskId: String? = null
-    private var _isSavedTask: Boolean = false
+    val isEditFlow: StateFlow<Boolean> = _flow.map { flow ->
+        flow is TaskEntryFlow.SavedTask.Edit || flow is TaskEntryFlow.TemporaryTask.Edit
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000L),
+        initialValue = false,
+    )
 
     val isConfirmEnabled: StateFlow<Boolean> = combine(
         taskEntryData,
@@ -89,13 +98,23 @@ class TaskEntryViewModel @Inject constructor(
         _isTimePickerVisible.update { false }
     }
 
-    fun loadTask(taskId: String, isSavedTask: Boolean = false) {
-        _isSavedTask = isSavedTask
-        if (isSavedTask) loadSavedTask(taskId) else loadTemporaryTask(taskId)
+    fun loadTask(taskEntryFlow: TaskEntryFlow) {
+        _flow.update { taskEntryFlow }
+        when (taskEntryFlow) {
+            is TaskEntryFlow.TemporaryTask.Edit -> loadTemporaryTask(taskEntryFlow.taskId)
+            is TaskEntryFlow.SavedTask.Edit -> loadSavedTask(taskEntryFlow.taskId)
+            is TaskEntryFlow.SavedTask.Add -> _habitId.update { taskEntryFlow.habitId }
+            is TaskEntryFlow.TemporaryTask.Add -> Unit
+        }
     }
 
     fun onConfirmTaskEntryClick() {
-        if (_isSavedTask) updateSavedTask() else addTemporaryTask()
+        when (_flow.value) {
+            is TaskEntryFlow.SavedTask.Add -> addSavedTask()
+            is TaskEntryFlow.SavedTask.Edit -> updateSavedTask()
+            is TaskEntryFlow.TemporaryTask.Add -> addTemporaryTask()
+            is TaskEntryFlow.TemporaryTask.Edit -> editTemporaryTask()
+        }
     }
     //endregion
 
@@ -126,6 +145,22 @@ class TaskEntryViewModel @Inject constructor(
             }
         }
     }
+
+    private fun addSavedTask() {
+        viewModelScope.launch(Dispatchers.IO) {
+            _taskEntryData.value.getValidDataAndPerformAction { name, daysOfWeek, time ->
+                _habitId.value?.let { habitId ->
+                    habitTasksRepository.createHabitTask(
+                        habitId = habitId,
+                        name = name,
+                        daysOfWeek = daysOfWeek,
+                        time = time,
+                    )
+                    navigateBack()
+                } ?: Timber.e("Cannot add new task: Habit ID is null")
+            }
+        }
+    }
     //endregion
 
     //region --- Temporary Task ---
@@ -141,16 +176,32 @@ class TaskEntryViewModel @Inject constructor(
         } ?: Timber.w("Temporary Task not found")
     }
 
+    private fun editTemporaryTask() {
+        viewModelScope.launch(Dispatchers.IO) {
+            _taskEntryData.value.getValidDataAndPerformAction { name, daysOfWeek, time ->
+                _taskId?.let { taskId ->
+                    temporaryHabitRepository.editTask(
+                        taskId = taskId,
+                        name = name,
+                        daysOfWeek = daysOfWeek,
+                        time = time,
+                    )
+
+                    navigateBack()
+                }
+
+            }
+        }
+    }
+
     private fun addTemporaryTask() {
         viewModelScope.launch(Dispatchers.IO) {
             _taskEntryData.value.getValidDataAndPerformAction { name, daysOfWeek, time ->
-                temporaryHabitRepository.addTask(
-                    taskId = _taskId,
+                temporaryHabitRepository.createTask(
                     name = name,
                     daysOfWeek = daysOfWeek,
                     time = time,
                 )
-                _taskEntryData.update { TaskEntryUIData() }
                 navigateBack()
             }
         }

@@ -24,6 +24,7 @@ import com.example.habittracker.ui.composables.topbar.TopBar
 import com.example.habittracker.ui.screens.habits.add.habit.sections.ColorPickerSection
 import com.example.habittracker.ui.screens.habits.add.habit.sections.ReadyToStartSection
 import com.example.habittracker.ui.screens.habits.add.habit.sections.TasksSection
+import com.example.habittracker.ui.screens.habits.add.task.TaskEntryFlow
 import com.example.habittracker.ui.screens.habits.model.ColorUI
 import com.example.habittracker.ui.screens.habits.model.HabitTaskUIData
 import com.example.habittracker.ui.theme.HabitTrackerColors
@@ -35,7 +36,7 @@ import com.example.habittracker.ui.utils.testTags.TestTagState
 fun AddHabitRoute(
     viewModel: AddHabitViewModel = hiltViewModel(),
     navigateBack: () -> Unit,
-    navigateToTaskEntry: (taskId: String?) -> Unit,
+    navigateToTaskEntry: (taskEntryFlow: TaskEntryFlow) -> Unit,
 ) {
     val name by viewModel.name.collectAsStateWithLifecycle()
     val color by viewModel.color.collectAsStateWithLifecycle()
@@ -45,7 +46,11 @@ fun AddHabitRoute(
 
     LaunchedEffect(uiEvent) {
         when (uiEvent) {
-            AddHabitViewModel.AddHabitEvent.NavigateBack -> navigateBack()
+            is AddHabitViewModel.AddHabitEvent.NavigateBack -> navigateBack()
+            is AddHabitViewModel.AddHabitEvent.NavigateToTaskEntry -> {
+                val taskEntryFlow = (uiEvent as AddHabitViewModel.AddHabitEvent.NavigateToTaskEntry).taskEntryFlow
+                navigateToTaskEntry(taskEntryFlow)
+            }
             null -> {}
         }
     }
@@ -54,8 +59,8 @@ fun AddHabitRoute(
         name = name,
         color = color,
         tasks = tasks,
-        onAddTaskClick = { navigateToTaskEntry(null) },
-        onEditTaskClick = navigateToTaskEntry,
+        onAddTaskClick = viewModel::onAddTaskClick,
+        onEditTaskClick = viewModel::onEditTaskClick,
         onCloseClick = viewModel::onCloseClick,
         updateHabitName = viewModel::updateHabitName,
         onColorClick = viewModel::onColorClick,

@@ -12,6 +12,16 @@ interface HabitTasksRepository {
     suspend fun createHabitTask(habitTask: HabitTask)
 
     /**
+     * Creates a new [HabitTask]
+     */
+    suspend fun createHabitTask(
+        habitId: String,
+        name: String,
+        daysOfWeek: List<DayOfWeek>,
+        time: LocalTime,
+    )
+
+    /**
      * Deletes a [HabitTask]
      */
     suspend fun deleteHabitTask(habitTaskId: String)

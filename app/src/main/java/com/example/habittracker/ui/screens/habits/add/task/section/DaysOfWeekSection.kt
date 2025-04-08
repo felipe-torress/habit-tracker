@@ -17,7 +17,7 @@ fun DaysOfWeekSection(
     modifier: Modifier = Modifier,
 ) {
     TaskEntrySection(
-        title = stringResource(R.string.add_task_screen_days_of_week_section_title),
+        title = stringResource(R.string.task_entry_screen_days_of_week_section_title),
         testTagState = testTagState,
         modifier = modifier,
     ) {

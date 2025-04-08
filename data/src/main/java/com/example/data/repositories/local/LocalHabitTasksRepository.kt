@@ -17,6 +17,27 @@ import javax.inject.Inject
 class LocalHabitTasksRepository @Inject constructor(private val habitTaskDao: HabitTaskDao) : HabitTasksRepository {
     override suspend fun createHabitTask(habitTask: HabitTask) = habitTaskDao.insertHabitTask(habitTask.asHabitTaskEntity())
 
+    override suspend fun createHabitTask(
+        habitId: String,
+        name: String,
+        daysOfWeek: List<DayOfWeek>,
+        time: LocalTime,
+    ) {
+        val habitTask = HabitTask(
+            id = habitId,
+            habitId = habitId,
+            name = name,
+            time = time,
+            currentWeeklyCompletions = 0,
+            requiredWeeklyCompletions = daysOfWeek.size,
+            daysOfWeek = daysOfWeek,
+            createdAt = ZonedDateTime.now(),
+            updatedAt = ZonedDateTime.now(),
+        )
+
+        habitTaskDao.insertHabitTask(habitTask.asHabitTaskEntity())
+    }
+
     override suspend fun deleteHabitTask(habitTaskId: String) =
         habitTaskDao.deleteHabitTask(
             habitTaskId,
