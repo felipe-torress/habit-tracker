@@ -37,6 +37,7 @@ fun HabitTrackerApp(
     val window = (LocalContext.current as Activity).window
     val controller = WindowInsetsControllerCompat(window, window.decorView)
     controller.isAppearanceLightStatusBars = true
+    controller.isAppearanceLightNavigationBars = true
 
     // Animated Status Bar Color that smoothly transitions between values
     val animatedStatusBarColor by animateColorAsState(
