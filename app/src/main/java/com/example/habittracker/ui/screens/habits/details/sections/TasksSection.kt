@@ -50,21 +50,45 @@ fun LazyListScope.tasksSection(
             )
         }
 
-        addTaskButton(onAddTask)
+        addTaskButton(
+            onAddTask = onAddTask,
+            color = color,
+        )
     }
 }
 
-fun LazyListScope.addTaskButton(onAddTask: () -> Unit) {
+fun LazyListScope.addTaskButton(
+    onAddTask: () -> Unit,
+    color: ColorUI,
+) {
     item {
+        val backgroundColor = when (color) {
+            ColorUI.GREEN -> HabitTrackerColors.green500
+            ColorUI.BLUE -> HabitTrackerColors.blue500
+            ColorUI.PURPLE -> HabitTrackerColors.purple500
+        }
+
+        val rippleColor = when (color) {
+            ColorUI.GREEN -> HabitTrackerColors.green700
+            ColorUI.BLUE -> HabitTrackerColors.blue700
+            ColorUI.PURPLE -> HabitTrackerColors.purple700
+        }
+
+        val iconColor = when (color) {
+            ColorUI.GREEN -> HabitTrackerColors.green50
+            ColorUI.BLUE -> HabitTrackerColors.blue50
+            ColorUI.PURPLE -> HabitTrackerColors.purple50
+        }
+
         Box(
             contentAlignment = Alignment.Center,
             modifier = Modifier
                 .padding(top = 8.dp)
                 .clip(RoundedCornerShape(8.dp))
-                .background(HabitTrackerColors.blue500)
+                .background(backgroundColor)
                 .clickable(
                     interactionSource = rememberInteractionsSource(),
-                    indication = ripple(color = HabitTrackerColors.green700),
+                    indication = ripple(color = rippleColor),
                     onClick = onAddTask,
                 )
                 .size(48.dp),
@@ -72,7 +96,7 @@ fun LazyListScope.addTaskButton(onAddTask: () -> Unit) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_plus_16dp),
                 contentDescription = null,
-                tint = HabitTrackerColors.blue50,
+                tint = iconColor,
                 modifier = Modifier.size(18.dp),
             )
         }
