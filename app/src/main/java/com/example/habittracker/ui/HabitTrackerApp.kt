@@ -1,5 +1,6 @@
 package com.example.habittracker.ui
 
+import android.app.Activity
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
@@ -13,9 +14,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import com.example.habittracker.navigation.HabitTrackerNavHost
@@ -29,6 +32,12 @@ fun HabitTrackerApp(
     appState: AppState = rememberAppState(),
     statusBarColor: Color,
 ) {
+
+    // Set the status bar text color to dark
+    val window = (LocalContext.current as Activity).window
+    val controller = WindowInsetsControllerCompat(window, window.decorView)
+    controller.isAppearanceLightStatusBars = true
+
     // Animated Status Bar Color that smoothly transitions between values
     val animatedStatusBarColor by animateColorAsState(
         targetValue = statusBarColor,
