@@ -55,6 +55,7 @@
     <string name="task_entry_screen_time_picker_placeholder">Selecione uma hora</string>
     <string name="task_entry_screen_confirm_add_task_button_title_add">Adicionar Tarefa</string>
     <string name="task_entry_screen_confirm_add_task_button_title_edit">Editar Tarefa</string>
+    <string name="task_entry_screen_delete_task_button_title">Deletar Tarefa</string>
     <!--endregion-->
 
     <!--region Habit Details Screen -->

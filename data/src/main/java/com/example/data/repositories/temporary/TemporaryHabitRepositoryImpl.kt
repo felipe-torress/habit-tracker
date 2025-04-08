@@ -30,6 +30,8 @@ interface TemporaryHabitRepository {
         time: LocalTime,
     )
 
+    suspend fun deleteTask(taskId: String)
+
     suspend fun saveTemporaryHabit(
         name: String,
         color: HabitColor,
@@ -87,6 +89,12 @@ class TemporaryHabitRepositoryImpl @Inject constructor(
         )
 
         _temporaryTasks.update { temporaryTasks -> temporaryTasks + task }
+    }
+
+    override suspend fun deleteTask(taskId: String) {
+        _temporaryTasks.update { temporaryTasks ->
+            temporaryTasks.filterNot { it.id == taskId }
+        }
     }
 
     override suspend fun saveTemporaryHabit(

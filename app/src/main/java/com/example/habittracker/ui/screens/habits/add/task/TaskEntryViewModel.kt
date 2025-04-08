@@ -116,6 +116,14 @@ class TaskEntryViewModel @Inject constructor(
             is TaskEntryFlow.TemporaryTask.Edit -> editTemporaryTask()
         }
     }
+
+    fun onDeleteTaskClick() {
+        when (_flow.value) {
+            is TaskEntryFlow.SavedTask.Edit -> deleteSavedTask()
+            is TaskEntryFlow.TemporaryTask.Edit -> deleteTemporaryTask()
+            else -> Unit
+        }
+    }
     //endregion
 
     //region --- Saved Task ---
@@ -161,6 +169,15 @@ class TaskEntryViewModel @Inject constructor(
             }
         }
     }
+
+    private fun deleteSavedTask() {
+        viewModelScope.launch(Dispatchers.IO) {
+            _taskId?.let { taskId ->
+                habitTasksRepository.deleteHabitTask(taskId)
+                navigateBack()
+            } ?: Timber.e("Cannot delete task: Task ID is null")
+        }
+    }
     //endregion
 
     //region --- Temporary Task ---
@@ -204,6 +221,15 @@ class TaskEntryViewModel @Inject constructor(
                 )
                 navigateBack()
             }
+        }
+    }
+
+    private fun deleteTemporaryTask() {
+        viewModelScope.launch(Dispatchers.IO) {
+            _taskId?.let { taskId ->
+                temporaryHabitRepository.deleteTask(taskId)
+                navigateBack()
+            } ?: Timber.e("Cannot delete task: Task ID is null")
         }
     }
     //endregion

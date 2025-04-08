@@ -26,6 +26,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.habittracker.MainActivityViewModel
 import com.example.habittracker.R
 import com.example.habittracker.ui.composables.buttons.BasicButton
+import com.example.habittracker.ui.composables.buttons.NegativeButton
 import com.example.habittracker.ui.composables.dialogs.DialogCallbacks
 import com.example.habittracker.ui.composables.dialogs.GenericDialog
 import com.example.habittracker.ui.composables.dialogs.InputDialog
@@ -241,14 +242,10 @@ private fun LazyListScope.deleteButton(
     modifier: Modifier = Modifier
 ) {
     item {
-        BasicButton(
-            text = stringResource(R.string.habit_details_screen_delete_button_title),
-            iconResId = R.drawable.ic_trash_24dp,
-            colors = ButtonDefaults.buttonColors(
-                containerColor = HabitTrackerColors.red50,
-                contentColor = HabitTrackerColors.red500,
-            ),
+        NegativeButton(
             onClick = onClick,
+            title = stringResource(R.string.habit_details_screen_delete_button_title),
+            iconResId = R.drawable.ic_trash_24dp,
             testTagState = testTagState.action("Delete"),
             modifier = modifier.padding(top = 24.dp)
         )

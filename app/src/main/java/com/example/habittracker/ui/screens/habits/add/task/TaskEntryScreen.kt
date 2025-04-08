@@ -21,7 +21,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.habittracker.R
 import com.example.habittracker.ui.composables.input.HabitTrackerTextField
 import com.example.habittracker.ui.composables.topbar.TopBar
-import com.example.habittracker.ui.screens.habits.add.task.section.ConfirmTaskSection
+import com.example.habittracker.ui.screens.habits.add.task.composables.ConfirmTaskButton
+import com.example.habittracker.ui.screens.habits.add.task.composables.DeleteTaskButton
 import com.example.habittracker.ui.screens.habits.add.task.section.DaysOfWeekSection
 import com.example.habittracker.ui.screens.habits.add.task.section.TimeSection
 import com.example.habittracker.ui.screens.habits.model.TaskEntryUIData
@@ -67,6 +68,7 @@ fun TaskEntryRoute(
         onTimePickerDismiss = viewModel::onTimePickerDismiss,
         onTimePickerConfirm = viewModel::onTimePickerConfirm,
         onConfirmTaskEntryClick = viewModel::onConfirmTaskEntryClick,
+        onDeleteTaskClick = viewModel::onDeleteTaskClick,
     )
 }
 
@@ -83,6 +85,7 @@ fun TaskEntryScreen(
     onTimePickerDismiss: () -> Unit,
     onTimePickerConfirm: (time: LocalTime?) -> Unit,
     onConfirmTaskEntryClick: () -> Unit,
+    onDeleteTaskClick: () -> Unit,
 ) {
     val testTagState = TestTagState("TaskEntryScreen")
 
@@ -133,12 +136,19 @@ fun TaskEntryScreen(
                 onTimePickerDismiss = onTimePickerDismiss,
             )
 
-            ConfirmTaskSection(
+            ConfirmTaskButton(
                 isConfirmEnabled = isConfirmEnabled,
                 isEditFlow = isEditFlow,
                 onConfirmClick = onConfirmTaskEntryClick,
                 testTagState = testTagState.section("ConfirmAddTaskSection")
             )
+
+            if (isEditFlow) {
+                DeleteTaskButton(
+                    onClick = onDeleteTaskClick,
+                    testTagState = testTagState
+                )
+            }
         }
     }
 }
@@ -182,7 +192,8 @@ private fun AddTaskScreenPreview(@PreviewParameter(AddTaskScreenPreviewParameter
         onTimeClick = {},
         onTimePickerDismiss = {},
         onTimePickerConfirm = {},
-        onConfirmTaskEntryClick = {}
+        onConfirmTaskEntryClick = {},
+        onDeleteTaskClick = {},
     )
 }
 //endregion
