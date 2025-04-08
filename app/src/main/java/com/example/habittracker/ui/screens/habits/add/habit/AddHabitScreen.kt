@@ -41,6 +41,7 @@ fun AddHabitRoute(
     val name by viewModel.name.collectAsStateWithLifecycle()
     val color by viewModel.color.collectAsStateWithLifecycle()
     val tasks by viewModel.tasks.collectAsStateWithLifecycle()
+    val isAddHabitEnabled by viewModel.isAddHabitEnabled.collectAsStateWithLifecycle()
 
     val uiEvent by viewModel.uiEvent.collectAsStateWithLifecycle(null)
 
@@ -59,6 +60,7 @@ fun AddHabitRoute(
         name = name,
         color = color,
         tasks = tasks,
+        isAddHabitEnabled = isAddHabitEnabled,
         onAddTaskClick = viewModel::onAddTaskClick,
         onEditTaskClick = viewModel::onEditTaskClick,
         onCloseClick = viewModel::onCloseClick,
@@ -73,6 +75,7 @@ fun AddHabitScreen(
     name: String,
     color: ColorUI?,
     tasks: List<HabitTaskUIData>,
+    isAddHabitEnabled: Boolean,
     onCloseClick: () -> Unit,
     updateHabitName: (String) -> Unit,
     onAddTaskClick: () -> Unit,
@@ -125,6 +128,7 @@ fun AddHabitScreen(
 
             ReadyToStartSection(
                 onAddHabitClick = onAddHabitClick,
+                isAddHabitEnabled = isAddHabitEnabled,
                 testTagState = testTagState.section("ReadyToStartSection")
             )
         }
@@ -168,10 +172,16 @@ private class AddHabitScreenPreviewParameterProvider : PreviewParameterProvider<
 @Preview
 @Composable
 private fun AddHabitScreenPreview(@PreviewParameter(AddHabitScreenPreviewParameterProvider::class) previewData: AddHabitScreenPreviewData) {
+    val name = previewData.name
+    val color = previewData.color
+    val tasks = previewData.tasks
+    val isAddHabitEnabled = name.isNotBlank() && color != null && tasks.isNotEmpty()
+
     AddHabitScreen(
-        name = previewData.name,
-        color = previewData.color,
-        tasks = previewData.tasks,
+        name = name,
+        color = color,
+        tasks = tasks,
+        isAddHabitEnabled = isAddHabitEnabled,
         onCloseClick = {},
         onAddTaskClick = {},
         updateHabitName = {},
