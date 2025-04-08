@@ -26,7 +26,7 @@ class LocalHabitTasksRepository @Inject constructor(private val habitTaskDao: Ha
         val habitTask = HabitTask(
             id = habitId,
             habitId = habitId,
-            name = name,
+            name = name.trim(),
             time = time,
             currentWeeklyCompletions = 0,
             requiredWeeklyCompletions = daysOfWeek.size,
@@ -35,7 +35,7 @@ class LocalHabitTasksRepository @Inject constructor(private val habitTaskDao: Ha
             updatedAt = ZonedDateTime.now(),
         )
 
-        habitTaskDao.insertHabitTask(habitTask.asHabitTaskEntity())
+        createHabitTask(habitTask)
     }
 
     override suspend fun deleteHabitTask(habitTaskId: String) =
@@ -57,7 +57,7 @@ class LocalHabitTasksRepository @Inject constructor(private val habitTaskDao: Ha
         val habitTask = getHabitTaskById(habitTaskId)
         habitTask.first()?.let { task ->
             val updatedHabitTask = task.copy(
-                name = name,
+                name = name.trim(),
                 daysOfWeek = daysOfWeek,
                 time = time,
                 requiredWeeklyCompletions = daysOfWeek.size,

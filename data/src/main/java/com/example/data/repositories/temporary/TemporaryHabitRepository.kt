@@ -56,7 +56,7 @@ class TemporaryHabitRepositoryImpl @Inject constructor(
             it.id == taskId
         }?.let { task ->
             val updatedTask = task.copy(
-                name = name,
+                name = name.trim(),
                 daysOfWeek = daysOfWeek,
                 time = time,
                 requiredWeeklyCompletions = daysOfWeek.size,
@@ -79,7 +79,7 @@ class TemporaryHabitRepositoryImpl @Inject constructor(
         val task = HabitTask(
             id = UUID.randomUUID().toString(),
             habitId = "",
-            name = name,
+            name = name.trim(),
             daysOfWeek = daysOfWeek,
             time = time,
             currentWeeklyCompletions = 0,
@@ -114,7 +114,7 @@ class TemporaryHabitRepositoryImpl @Inject constructor(
 
         val habit = Habit(
             id = habitId,
-            name = name,
+            name = name.trim(),
             color = color,
             tasks = tasks,
             goals = emptyList(),
