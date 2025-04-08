@@ -4,15 +4,17 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ktlint)
-    id("kotlin-kapt")
+    alias(libs.plugins.serialization)
+    alias(libs.plugins.ksp)
+    id("kotlin-parcelize")
 }
 
 android {
-    namespace = "com.example.habittrackernew"
+    namespace = "com.example.habittracker"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.habittrackernew"
+        applicationId = "com.example.habittracker"
         minSdk = 30
         targetSdk = 34
         versionCode = 1
@@ -42,10 +44,6 @@ android {
     }
 }
 
-kapt {
-    correctErrorTypes = true
-}
-
 ktlint {
     filter {
         exclude { file -> file.name.endsWith("Screen.kt") }
@@ -66,8 +64,10 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.kotlinx.serialization.json)
     implementation(libs.dagger.hilt)
-    kapt(libs.dagger.hilt.compiler)
+    implementation(libs.timber)
+    ksp(libs.dagger.hilt.compiler)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

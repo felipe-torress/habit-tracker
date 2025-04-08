@@ -23,7 +23,7 @@ import com.example.data.database.util.ZonedDateTimeConverter
         HabitEntity::class,
     ],
     version = 1,
-    exportSchema = true,
+    exportSchema = false,
 )
 @TypeConverters(
     ZonedDateTimeConverter::class,

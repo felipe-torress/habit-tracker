@@ -3,7 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.dagger.hilt)
     alias(libs.plugins.ktlint)
-    id("kotlin-kapt")
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -35,17 +35,15 @@ android {
     }
 }
 
-kapt {
-    correctErrorTypes = true
-}
-
 dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     implementation(libs.dagger.hilt)
-    kapt(libs.dagger.hilt.compiler)
+    implementation(libs.timber)
+    ksp(libs.androidx.room.compiler)
+    ksp(libs.dagger.hilt.compiler)
 
     testImplementation(libs.junit)
     testImplementation(libs.androidx.room.testing)

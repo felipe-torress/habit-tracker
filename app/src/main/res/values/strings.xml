@@ -1,18 +1,83 @@
 <resources>
     <string name="app_name">Habit Tracker</string>
 
+    <!--region Dialogs -->
+    <string name="time_picker_dialog_title">Selecione uma hora</string>
+    <string name="dialog_generic_title">Ops, algo deu errado</string>
+    <string name="dialog_generic_description">Sentimos muito, tivemos um problema :(</string>
+    <string name="dialog_delete_generic_title">Deletar</string>
+    <string name="dialog_delete_generic_description">Quer mesmo deletar? Esta ação não poderá ser desfeita.</string>
+    <string name="dialog_generic_try_again_description">Sentimos muito, tivemos um problema. Tente novamente mais tarde.</string>
+    <string name="dialog_text_cancel">Cancelar</string>
+    <string name="dialog_text_ok">OK</string>
+    <string name="dialog_text_save">Salvar</string>
+    <string name="dialog_text_try_again">Tentar de novo</string>
+    <string name="dialog_text_delete">Deletar</string>
+
+    <string name="rename_habit_dialog_title">Renomear Hábito</string>
+    <string name="rename_habit_dialog_placeholder">Nome do Hábito</string>
+    <!--endregion-->
+
     <!--region Home Tab -->
     <string name="home_tab_title">Home</string>
     <string name="home_screen_toolbar_title">Olá, %s</string>
     <!--endregion-->
 
     <!--region Habits Tab -->
+
     <string name="habits_tab_title">Hábitos</string>
+    <plurals name="habit_card_tasks_header_title">
+        <item quantity="one">Tarefa</item>
+        <item quantity="other">Tarefas</item>
+    </plurals>
+
+    <string name="habit_list_screen_no_habits_placeholder_title">Parece que você ainda não tem hábitos :(</string>
+    <string name="habit_list_screen_no_tasks_for_habit_warning_message">Você não tem tarefas para esse hábito</string>
+
+    <!--region Add Habit Screen -->
+    <string name="add_habit_screen_toolbar_title">Adicionar Hábito</string>
+    <string name="add_habit_screen_habit_text_field_label">Hábito</string>
+    <string name="add_habit_screen_habit_text_field_placeholder">Digite o nome do hábito</string>
+    <string name="add_habit_screen_color_picker_section_title">Cor do Hábito</string>
+    <string name="add_habit_screen_add_task_section_title">Tarefas</string>
+    <string name="add_habit_screen_add_task_section_description">Crie pequenas tarefas associadas a este hábito. Dessa maneira, você será capaz de gerenciar tarefas mais facilmente, e ter uma melhor percepção de avanço</string>
+    <string name="add_habit_screen_add_task_button_title">Adicionar Tarefa</string>
+    <string name="add_habit_screen_add_habit_button_title">Adicionar Hábito</string>
+    <string name="add_habit_screen_ready_to_start_section_title">Pronto para começar?</string>
+    <!--endregion-->
+
+    <!--region Task Entry Screen -->
+    <string name="task_entry_screen_toolbar_title_add">Adicionar Tarefa</string>
+    <string name="task_entry_screen_toolbar_title_edit">Editar Tarefa</string>
+    <string name="task_entry_screen_task_name_text_field_label">Tarefa</string>
+    <string name="task_entry_screen_task_name_text_field_placeholder">Digite o nome da tarefa</string>
+    <string name="task_entry_screen_days_of_week_section_title">Repete às/aos</string>
+    <string name="task_entry_screen_time_picker_label">Hora</string>
+    <string name="task_entry_screen_time_picker_placeholder">Selecione uma hora</string>
+    <string name="task_entry_screen_confirm_add_task_button_title_add">Adicionar Tarefa</string>
+    <string name="task_entry_screen_confirm_add_task_button_title_edit">Editar Tarefa</string>
+    <string name="task_entry_screen_delete_task_button_title">Deletar Tarefa</string>
+    <string name="task_entry_screen_delete_task_dialog_description">Tem certeza que deseja deletar esta tarefa? Esta ação não poderá ser desfeita.</string>
+    <!--endregion-->
+
+    <!--region Habit Details Screen -->
+    <string name="habit_details_screen_toolbar_title">Hábito</string>
+    <string name="habit_details_screen_load_habit_failed_dialog_title">Erro ao carregar o hábito</string>
+    <string name="habit_details_screen_load_habit_failed_dialog_description">Tivemos um problema ao carregar o hábito. Tente novamente mais tarde</string>
+    <string name="habit_details_screen_delete_habit_dialog_title">Deletar Hábito</string>
+    <string name="habit_details_screen_delete_habit_dialog_description">Quer mesmo deletar este hábito? Esta ação não poderá ser desfeita.</string>
+    <string name="habit_details_screen_delete_button_title">Deletar</string>
+    <string name="habit_details_screen_tasks_section_title">Tarefas</string>
+    <string name="habit_details_screen_tasks_section_description">Crie pequenas tarefas associadas a este hábito. Dessa maneira, você será capaz de gerenciar tarefas mais facilmente, e ter uma melhor percepção de avanço</string>
+    <string name="habit_details_screen_task_card_weekly_goal">Meta semanal</string>
+    <!--endregion-->
+
     <!--endregion-->
 
     <!--region Progress Tab -->
     <string name="progress_tab_title">Progresso</string>
     <string name="progress_screen_toolbar_title">Seu Progresso</string>
+    <string name="progress_indicator_text">%1$s/%2$s</string>
     <!--endregion-->
 
     <!--region Profile Tab -->
