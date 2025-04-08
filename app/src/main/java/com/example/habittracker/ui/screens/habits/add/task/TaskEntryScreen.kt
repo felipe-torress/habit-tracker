@@ -3,6 +3,7 @@ package com.example.habittracker.ui.screens.habits.add.task
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -136,18 +137,23 @@ fun TaskEntryScreen(
                 onTimePickerDismiss = onTimePickerDismiss,
             )
 
-            ConfirmTaskButton(
-                isConfirmEnabled = isConfirmEnabled,
-                isEditFlow = isEditFlow,
-                onConfirmClick = onConfirmTaskEntryClick,
-                testTagState = testTagState.section("ConfirmAddTaskSection")
-            )
-
-            if (isEditFlow) {
-                DeleteTaskButton(
-                    onClick = onDeleteTaskClick,
-                    testTagState = testTagState
+            Column(
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                ConfirmTaskButton(
+                    isConfirmEnabled = isConfirmEnabled,
+                    isEditFlow = isEditFlow,
+                    onConfirmClick = onConfirmTaskEntryClick,
+                    testTagState = testTagState.section("ConfirmAddTaskSection")
                 )
+
+                if (isEditFlow) {
+                    DeleteTaskButton(
+                        onClick = onDeleteTaskClick,
+                        testTagState = testTagState
+                    )
+                }
             }
         }
     }
