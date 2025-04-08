@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.data.repositories.HabitTasksRepository
 import com.example.data.repositories.temporary.TemporaryHabitRepository
+import com.example.habittracker.ui.composables.dialogs.DialogCallbacks
+import com.example.habittracker.ui.screens.habits.details.HabitDetailsDialogType
 import com.example.habittracker.ui.screens.habits.model.TaskEntryUIData
 import com.example.habittracker.ui.screens.habits.model.toTaskEntryUIData
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -117,14 +119,16 @@ class TaskEntryViewModel @Inject constructor(
         }
     }
 
-    fun onDeleteTaskClick() {
+    fun onDeleteTaskClick() = showDialog(TaskEntryDialogType.Confirmation.Delete)
+    //endregion
+
+    private fun deleteTask() {
         when (_flow.value) {
             is TaskEntryFlow.SavedTask.Edit -> deleteSavedTask()
             is TaskEntryFlow.TemporaryTask.Edit -> deleteTemporaryTask()
             else -> Unit
         }
     }
-    //endregion
 
     //region --- Saved Task ---
     private fun loadSavedTask(taskId: String) {
@@ -232,5 +236,31 @@ class TaskEntryViewModel @Inject constructor(
             } ?: Timber.e("Cannot delete task: Task ID is null")
         }
     }
+    //endregion
+
+    //region --- Dialog ---
+    private val _isDialogVisible = MutableStateFlow(false)
+    private val _dialogType = MutableStateFlow<TaskEntryDialogType>(TaskEntryDialogType.Confirmation.Delete)
+    private val _dialogCallbacks = MutableStateFlow<DialogCallbacks>(DialogCallbacks.BasicDialog())
+    val isDialogVisible: StateFlow<Boolean> get() = _isDialogVisible.asStateFlow()
+    val dialogType: StateFlow<TaskEntryDialogType> get() = _dialogType.asStateFlow()
+    val dialogCallbacks: StateFlow<DialogCallbacks> get() = _dialogCallbacks.asStateFlow()
+
+    fun dismissDialog() = _isDialogVisible.update { false }
+
+    private fun showDialog(dialogType: TaskEntryDialogType) {
+        _dialogType.update { dialogType }
+        _dialogCallbacks.update { getDialogCallbacks(dialogType) }
+        _isDialogVisible.update { true }
+    }
+
+    private fun getDialogCallbacks(dialogType: TaskEntryDialogType): DialogCallbacks =
+        when (dialogType) {
+            TaskEntryDialogType.Confirmation.Delete -> DialogCallbacks.BasicDialog(
+                onPositiveAction = ::deleteTask,
+                onNegativeAction = ::dismissDialog,
+                onDismiss = ::dismissDialog,
+            )
+        }
     //endregion
 }

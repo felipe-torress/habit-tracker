@@ -30,6 +30,7 @@ import com.example.habittracker.R
 import com.example.habittracker.ui.composables.cards.HabitCard
 import com.example.habittracker.ui.composables.loading.HabitTrackerPullToRefreshBox
 import com.example.habittracker.ui.composables.topbar.TopBar
+import com.example.habittracker.ui.screens.habits.add.task.TaskEntryFlow
 import com.example.habittracker.ui.screens.habits.model.HabitUIData
 import com.example.habittracker.ui.theme.HabitTrackerColors
 import com.example.habittracker.ui.theme.HabitTrackerTypography
@@ -41,6 +42,7 @@ fun HabitsListRoute(
     viewModel: HabitsListViewModel = hiltViewModel(),
     navigateToAddHabit: () -> Unit,
     navigateToHabitDetails: (habitId: String) -> Unit,
+    navigateToTaskEntry: (taskEntryFlow: TaskEntryFlow) -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -53,6 +55,11 @@ fun HabitsListRoute(
                 navigateToHabitDetails(habitId)
             }
 
+            is HabitsListViewModel.HabitsListEvent.NavigateToTaskEntry -> {
+                val taskEntryFlow = (uiEvent as HabitsListViewModel.HabitsListEvent.NavigateToTaskEntry).taskEntryFlow
+                navigateToTaskEntry(taskEntryFlow)
+            }
+
             else -> {}
         }
     }
@@ -62,6 +69,7 @@ fun HabitsListRoute(
         onRefresh = viewModel::refresh,
         onAddHabitClick = viewModel::onAddHabitClick,
         onHabitClick = viewModel::onHabitClick,
+        onAddTaskClick = viewModel::onAddTaskClick,
     )
 }
 
@@ -72,6 +80,7 @@ fun HabitsListScreen(
     onRefresh: () -> Unit,
     onAddHabitClick: () -> Unit,
     onHabitClick: (habitId: String) -> Unit,
+    onAddTaskClick: (habitId: String) -> Unit,
 ) {
     val testTagState = TestTagState("HabitsListScreen")
 
@@ -97,6 +106,7 @@ fun HabitsListScreen(
             Content(
                 uiState = uiState,
                 onHabitCardClick = onHabitClick,
+                onAddTaskClick = onAddTaskClick,
                 testTagState = testTagState
             )
         }
@@ -106,7 +116,8 @@ fun HabitsListScreen(
 @Composable
 private fun Content(
     uiState: HabitsListUIState,
-    onHabitCardClick: (id: String) -> Unit,
+    onHabitCardClick: (habitId: String) -> Unit,
+    onAddTaskClick: (habitId: String) -> Unit,
     testTagState: TestTagState
 ) {
     AnimatedContent(
@@ -119,6 +130,7 @@ private fun Content(
                 HabitsList(
                     habits = state.habits,
                     onHabitCardClick = onHabitCardClick,
+                    onAddTaskClick = onAddTaskClick,
                     testTagState = testTagState
                 )
             }
@@ -133,7 +145,8 @@ private fun Content(
 @Composable
 private fun HabitsList(
     habits: List<HabitUIData>,
-    onHabitCardClick: (id: String) -> Unit,
+    onHabitCardClick: (habitId: String) -> Unit,
+    onAddTaskClick: (habitId: String) -> Unit,
     testTagState: TestTagState,
     modifier: Modifier = Modifier,
 ) {
@@ -151,7 +164,8 @@ private fun HabitsList(
                 daysOfWeek = habit.daysOfWeek,
                 tasks = habit.tasks,
                 color = habit.color,
-                onClick = { onHabitCardClick(habit.id) },
+                onHeaderClick = { onHabitCardClick(habit.id) },
+                onAddTaskClick = { onAddTaskClick(habit.id) },
                 testTagState = testTagState.index(index)
             )
         }
@@ -192,6 +206,7 @@ private fun HabitsListScreenPreview(@PreviewParameter(HabitsListScreenPreviewPar
         uiState = previewData.uiState,
         onAddHabitClick = {},
         onHabitClick = {},
+        onAddTaskClick = {},
         onRefresh = {}
     )
 }

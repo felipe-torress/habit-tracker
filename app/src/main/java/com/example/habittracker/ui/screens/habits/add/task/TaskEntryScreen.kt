@@ -2,6 +2,7 @@ package com.example.habittracker.ui.screens.habits.add.task
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -20,8 +21,11 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.habittracker.R
+import com.example.habittracker.ui.composables.dialogs.DialogCallbacks
+import com.example.habittracker.ui.composables.dialogs.GenericDialog
 import com.example.habittracker.ui.composables.input.HabitTrackerTextField
 import com.example.habittracker.ui.composables.topbar.TopBar
+import com.example.habittracker.ui.screens.habits.add.task.TaskEntryDialogType.Confirmation.Delete.getDialogResources
 import com.example.habittracker.ui.screens.habits.add.task.composables.ConfirmTaskButton
 import com.example.habittracker.ui.screens.habits.add.task.composables.DeleteTaskButton
 import com.example.habittracker.ui.screens.habits.add.task.section.DaysOfWeekSection
@@ -43,6 +47,9 @@ fun TaskEntryRoute(
     val isTimePickerVisible by viewModel.isTimePickerVisible.collectAsStateWithLifecycle()
     val isConfirmEnabled by viewModel.isConfirmEnabled.collectAsStateWithLifecycle()
     val isEditFlow by viewModel.isEditFlow.collectAsStateWithLifecycle()
+    val isDialogVisible by viewModel.isDialogVisible.collectAsStateWithLifecycle()
+    val dialogCallbacks by viewModel.dialogCallbacks.collectAsStateWithLifecycle()
+    val dialogType by viewModel.dialogType.collectAsStateWithLifecycle()
 
     val uiEvent by viewModel.uiEvent.collectAsStateWithLifecycle(null)
 
@@ -61,6 +68,9 @@ fun TaskEntryRoute(
         taskEntryData = taskEntryData,
         isEditFlow = isEditFlow,
         isTimePickerVisible = isTimePickerVisible,
+        isDialogVisible = isDialogVisible,
+        dialogType = dialogType,
+        dialogCallbacks = dialogCallbacks,
         isConfirmEnabled = isConfirmEnabled,
         onCloseClick = navigateBack,
         updateTaskName = viewModel::updateName,
@@ -78,6 +88,9 @@ fun TaskEntryScreen(
     taskEntryData: TaskEntryUIData,
     isEditFlow: Boolean,
     isTimePickerVisible: Boolean,
+    isDialogVisible: Boolean,
+    dialogType: TaskEntryDialogType,
+    dialogCallbacks: DialogCallbacks,
     isConfirmEnabled: Boolean,
     onCloseClick: () -> Unit,
     onDayOfWeekClick: (DayOfWeek) -> Unit,
@@ -106,54 +119,92 @@ fun TaskEntryScreen(
             )
         },
     ) { paddingValues ->
+        Content(
+            taskEntryData = taskEntryData,
+            updateTaskName = updateTaskName,
+            testTagState = testTagState,
+            onDayOfWeekClick = onDayOfWeekClick,
+            onTimeClick = onTimeClick,
+            isTimePickerVisible = isTimePickerVisible,
+            onTimePickerConfirm = onTimePickerConfirm,
+            onTimePickerDismiss = onTimePickerDismiss,
+            isConfirmEnabled = isConfirmEnabled,
+            isEditFlow = isEditFlow,
+            onConfirmTaskEntryClick = onConfirmTaskEntryClick,
+            onDeleteTaskClick = onDeleteTaskClick,
+            modifier = Modifier.padding(paddingValues)
+        )
+
+        GenericDialog(
+            isVisible = isDialogVisible,
+            resources = getDialogResources(dialogType),
+            callbacks = dialogCallbacks
+        )
+    }
+}
+
+@Composable
+private fun Content(
+    taskEntryData: TaskEntryUIData,
+    updateTaskName: (String) -> Unit,
+    testTagState: TestTagState,
+    onDayOfWeekClick: (DayOfWeek) -> Unit,
+    onTimeClick: () -> Unit,
+    isTimePickerVisible: Boolean,
+    onTimePickerConfirm: (time: LocalTime?) -> Unit,
+    onTimePickerDismiss: () -> Unit,
+    isConfirmEnabled: Boolean,
+    isEditFlow: Boolean,
+    onConfirmTaskEntryClick: () -> Unit,
+    onDeleteTaskClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        verticalArrangement = Arrangement.spacedBy(24.dp),
+        modifier = modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+            .padding(16.dp),
+    ) {
+        HabitTrackerTextField(
+            value = taskEntryData.name,
+            onValueChange = updateTaskName,
+            label = stringResource(id = R.string.task_entry_screen_task_name_text_field_label),
+            labelIconResId = R.drawable.ic_habits_16dp,
+            placeholder = stringResource(id = R.string.task_entry_screen_task_name_text_field_placeholder),
+            testTagState = testTagState.type("TaskName"),
+        )
+
+        DaysOfWeekSection(
+            selectedDaysOfWeek = taskEntryData.daysOfWeek,
+            onDayOfWeekClick = onDayOfWeekClick,
+            testTagState = testTagState.section("DaysOfWeekSection")
+        )
+
+        TimeSection(
+            time = taskEntryData.time,
+            onClick = onTimeClick,
+            isTimePickerVisible = isTimePickerVisible,
+            onTimePickerConfirm = onTimePickerConfirm,
+            onTimePickerDismiss = onTimePickerDismiss,
+        )
+
         Column(
-            verticalArrangement = Arrangement.spacedBy(24.dp),
-            modifier = Modifier
-                .padding(paddingValues)
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            modifier = Modifier.fillMaxWidth()
         ) {
-            HabitTrackerTextField(
-                value = taskEntryData.name,
-                onValueChange = updateTaskName,
-                label = stringResource(id = R.string.task_entry_screen_task_name_text_field_label),
-                labelIconResId = R.drawable.ic_habits_16dp,
-                placeholder = stringResource(id = R.string.task_entry_screen_task_name_text_field_placeholder),
-                testTagState = testTagState.type("TaskName"),
+            ConfirmTaskButton(
+                isConfirmEnabled = isConfirmEnabled,
+                isEditFlow = isEditFlow,
+                onConfirmClick = onConfirmTaskEntryClick,
+                testTagState = testTagState.section("ConfirmAddTaskSection")
             )
 
-            DaysOfWeekSection(
-                selectedDaysOfWeek = taskEntryData.daysOfWeek,
-                onDayOfWeekClick = onDayOfWeekClick,
-                testTagState = testTagState.section("DaysOfWeekSection")
-            )
-
-            TimeSection(
-                time = taskEntryData.time,
-                onClick = onTimeClick,
-                isTimePickerVisible = isTimePickerVisible,
-                onTimePickerConfirm = onTimePickerConfirm,
-                onTimePickerDismiss = onTimePickerDismiss,
-            )
-
-            Column(
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                ConfirmTaskButton(
-                    isConfirmEnabled = isConfirmEnabled,
-                    isEditFlow = isEditFlow,
-                    onConfirmClick = onConfirmTaskEntryClick,
-                    testTagState = testTagState.section("ConfirmAddTaskSection")
+            if (isEditFlow) {
+                DeleteTaskButton(
+                    onClick = onDeleteTaskClick,
+                    testTagState = testTagState
                 )
-
-                if (isEditFlow) {
-                    DeleteTaskButton(
-                        onClick = onDeleteTaskClick,
-                        testTagState = testTagState
-                    )
-                }
             }
         }
     }
@@ -192,6 +243,9 @@ private fun AddTaskScreenPreview(@PreviewParameter(AddTaskScreenPreviewParameter
         isEditFlow = previewData.isEditFlow,
         isTimePickerVisible = previewData.isTimePickerVisible,
         isConfirmEnabled = isConfirmEnabled,
+        isDialogVisible = false,
+        dialogType = TaskEntryDialogType.Confirmation.Delete,
+        dialogCallbacks = DialogCallbacks.BasicDialog(),
         onCloseClick = {},
         onDayOfWeekClick = {},
         updateTaskName = {},

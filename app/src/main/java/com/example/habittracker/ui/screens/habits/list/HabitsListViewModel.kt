@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.data.model.Habit
 import com.example.data.repositories.HabitsRepository
+import com.example.habittracker.ui.screens.habits.add.task.TaskEntryFlow
 import com.example.habittracker.ui.screens.habits.model.toHabitUIData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -28,6 +29,8 @@ class HabitsListViewModel @Inject constructor(private val habitsRepository: Habi
         data object NavigateToAddHabit : HabitsListEvent()
 
         data class NavigateToHabitDetails(val habitId: String) : HabitsListEvent()
+
+        data class NavigateToTaskEntry(val taskEntryFlow: TaskEntryFlow.SavedTask) : HabitsListEvent()
     }
     //endregion
 
@@ -69,6 +72,12 @@ class HabitsListViewModel @Inject constructor(private val habitsRepository: Habi
     fun onHabitClick(habitId: String) {
         viewModelScope.launch {
             uiEvent.emit(HabitsListEvent.NavigateToHabitDetails(habitId))
+        }
+    }
+
+    fun onAddTaskClick(habitId: String) {
+        viewModelScope.launch {
+            uiEvent.emit(HabitsListEvent.NavigateToTaskEntry(TaskEntryFlow.SavedTask.Add(habitId)))
         }
     }
 }

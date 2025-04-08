@@ -1,12 +1,15 @@
 package com.example.habittracker.ui.composables.cards
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -17,15 +20,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import com.example.habittracker.R
+import com.example.habittracker.ui.composables.buttons.ColorfulButton
 import com.example.habittracker.ui.composables.progress.ProgressIndicator
 import com.example.habittracker.ui.screens.habits.model.ColorUI
 import com.example.habittracker.ui.screens.habits.model.HabitTaskUIData
@@ -46,7 +52,8 @@ fun HabitCard(
     daysOfWeek: List<DayOfWeek>,
     tasks: List<HabitTaskUIData>,
     color: ColorUI,
-    onClick: () -> Unit,
+    onHeaderClick: () -> Unit,
+    onAddTaskClick: () -> Unit,
     testTagState: TestTagState,
     modifier: Modifier = Modifier,
 ) {
@@ -64,13 +71,14 @@ fun HabitCard(
         Header(
             title = title,
             daysOfWeek = daysOfWeek,
-            onClick = onClick,
+            onClick = onHeaderClick,
             colors = colors,
             testTagState = localTestTagState,
         )
         Content(
             tasks = tasks,
             color = color,
+            onAddTaskClick = onAddTaskClick,
             testTagState = localTestTagState,
         )
     }
@@ -90,6 +98,7 @@ private fun Header(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
             .clip(RoundedCornerShape(16.dp))
+            .heightIn(78.dp)
             .background(colors.header)
             .clickable(
                 interactionSource = rememberInteractionsSource(),
@@ -97,7 +106,11 @@ private fun Header(
             ) { onClick() }
             .padding(16.dp),
     ) {
-        Column(modifier = Modifier.weight(1f)) {
+        Column(
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.Start,
+            modifier = Modifier.weight(1f)
+        ) {
             Text(
                 text = title,
                 style = HabitTrackerTypography.subtitle1,
@@ -105,11 +118,13 @@ private fun Header(
                 modifier = Modifier.testTag("${testTagState.origin}Title"),
             )
 
-            RepeatInfo(
-                daysOfWeek = daysOfWeek,
-                colors = colors,
-                testTagState = testTagState,
-            )
+            if (daysOfWeek.isNotEmpty()) {
+                RepeatInfo(
+                    daysOfWeek = daysOfWeek,
+                    colors = colors,
+                    testTagState = testTagState,
+                )
+            }
         }
 
         Icon(
@@ -152,6 +167,7 @@ private fun Content(
     tasks: List<HabitTaskUIData>,
     color: ColorUI,
     testTagState: TestTagState,
+    onAddTaskClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val iconColor = remember { getCardColors(color).icon }
@@ -162,23 +178,46 @@ private fun Content(
             .padding(16.dp)
             .fillMaxWidth(),
     ) {
-        Text(
-            text = pluralStringResource(R.plurals.habit_card_tasks_header_title, tasks.size),
-            style = HabitTrackerTypography.bodyLarge,
-            fontWeight = FontWeight.Bold,
-            color = iconColor,
-        )
-
-        tasks.forEachIndexed { index, task ->
-            TaskItem(
-                name = task.name,
-                time = task.time,
-                maximumProgress = task.requiredWeeklyCompletions,
-                currentProgress = task.currentWeeklyCompletions,
+        if (tasks.isNotEmpty()) {
+            TasksSection(
+                tasks = tasks,
+                iconColor = iconColor,
                 color = color,
-                testTagState = testTagState.index(index),
+                testTagState = testTagState
+            )
+        } else {
+            AddTaskSection(
+                color = color,
+                onAddTaskClick = onAddTaskClick,
+                testTagState = testTagState,
             )
         }
+    }
+}
+
+@Composable
+private fun TasksSection(
+    tasks: List<HabitTaskUIData>,
+    iconColor: Color,
+    color: ColorUI,
+    testTagState: TestTagState
+) {
+    Text(
+        text = pluralStringResource(R.plurals.habit_card_tasks_header_title, tasks.size),
+        style = HabitTrackerTypography.bodyLarge,
+        fontWeight = FontWeight.Bold,
+        color = iconColor,
+    )
+
+    tasks.forEachIndexed { index, task ->
+        TaskItem(
+            name = task.name,
+            time = task.time,
+            maximumProgress = task.requiredWeeklyCompletions,
+            currentProgress = task.currentWeeklyCompletions,
+            color = color,
+            testTagState = testTagState.index(index),
+        )
     }
 }
 
@@ -218,6 +257,52 @@ fun TaskItem(
             current = currentProgress,
             color = color,
             testTagState = testTagState,
+        )
+    }
+}
+
+@Composable
+private fun AddTaskSection(
+    color: ColorUI,
+    onAddTaskClick: () -> Unit,
+    testTagState: TestTagState,
+) {
+    val (textColor, iconColor) = when (color) {
+        ColorUI.GREEN -> HabitTrackerColors.green900 to HabitTrackerColors.green800
+        ColorUI.BLUE -> HabitTrackerColors.blue900 to HabitTrackerColors.blue800
+        ColorUI.PURPLE -> HabitTrackerColors.purple900 to HabitTrackerColors.purple800
+    }
+
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(space = 8.dp, alignment = Alignment.CenterHorizontally),
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Image(
+                painter = painterResource(R.drawable.ic_alert_16dp),
+                contentDescription = null,
+                colorFilter = ColorFilter.tint(iconColor),
+                modifier = Modifier.size(16.dp)
+            )
+
+            Text(
+                text = stringResource(R.string.habit_list_screen_no_tasks_for_habit_warning_message),
+                style = HabitTrackerTypography.bodySmall,
+                color = textColor,
+            )
+        }
+
+        ColorfulButton(
+            onClick = onAddTaskClick,
+            color = color,
+            iconResId = R.drawable.ic_progress_24dp,
+            text = stringResource(R.string.add_habit_screen_add_task_button_title),
+            testTagState = testTagState.action("AddTask"),
         )
     }
 }
@@ -293,7 +378,8 @@ private fun HabitCardPreview(
         daysOfWeek = previewData.daysOfWeek,
         tasks = previewData.tasks,
         color = previewData.color,
-        onClick = {},
+        onHeaderClick = {},
+        onAddTaskClick = {},
         testTagState = TestTagState(""),
     )
 }
