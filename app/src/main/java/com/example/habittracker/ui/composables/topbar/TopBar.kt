@@ -84,7 +84,7 @@ fun GradientTopBar(
     color: ColorUI,
     modifier: Modifier = Modifier,
 ) {
-    val navigationIconColor = when (color) {
+    val iconColor = when (color) {
         ColorUI.BLUE -> HabitTrackerColors.blue800
         ColorUI.GREEN -> HabitTrackerColors.green800
         ColorUI.PURPLE -> HabitTrackerColors.purple800
@@ -104,16 +104,16 @@ fun GradientTopBar(
 
     TopAppBar(
         title = { Title(title) },
-        navigationIcon = { if (hasNavigationIcon) navigationIcon(onNavigationIconClick, navigationIconColor) },
+        navigationIcon = { if (hasNavigationIcon) navigationIcon(onNavigationIconClick, iconColor) },
         actions = { if (hasActionButton) actionButton(onActionButtonClick) },
         scrollBehavior = pinnedScrollBehavior(),
         colors =
             TopAppBarColors(
                 containerColor = Color.Transparent,
                 scrolledContainerColor = HabitTrackerColors.backgroundColor,
-                navigationIconContentColor = HabitTrackerColors.green500,
+                navigationIconContentColor = iconColor,
                 titleContentColor = HabitTrackerColors.textColor,
-                actionIconContentColor = HabitTrackerColors.green500,
+                actionIconContentColor = iconColor,
             ),
         modifier = modifier.background(backgroundGradient),
     )

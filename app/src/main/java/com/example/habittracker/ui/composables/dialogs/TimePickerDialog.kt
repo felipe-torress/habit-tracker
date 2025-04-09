@@ -1,6 +1,12 @@
 package com.example.habittracker.ui.composables.dialogs
 
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -11,7 +17,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -24,12 +29,14 @@ import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -48,11 +55,17 @@ fun TimePickerDialog(
     onCancel: () -> Unit,
     onConfirm: (localTime: LocalTime) -> Unit,
 ) {
+    val initialZonedDateTime = LocalTime.now()
+
     // 24 hour time picker
-    val state = rememberTimePickerState(is24Hour = true)
+    val state = rememberTimePickerState(
+        is24Hour = true,
+        initialHour = initialZonedDateTime.hour,
+        initialMinute = initialZonedDateTime.minute,
+    )
 
     val localTime = remember { derivedStateOf { getLocalTime(state.hour, state.minute) } }
-    var mode = remember { TimePickerMode.Dial }
+    var mode by remember { mutableStateOf(TimePickerMode.Dial) }
 
     fun switchMode() {
         mode = when (mode) {
@@ -70,7 +83,8 @@ fun TimePickerDialog(
         Surface(
             shape = shape,
             modifier = Modifier
-                .width(IntrinsicSize.Min)
+                .padding(horizontal = 48.dp)
+                .fillMaxWidth()
                 .height(IntrinsicSize.Min)
                 .background(color = HabitTrackerColors.backgroundColor, shape = shape),
         ) {
@@ -98,7 +112,35 @@ private fun Content(
     state: TimePickerState,
     mode: TimePickerMode,
 ) {
-    AnimatedContent(targetState = mode, label = "TimePíckerDialogContent") {
+    AnimatedContent(
+        contentAlignment = Alignment.Center,
+        targetState = mode,
+        label = "TimePíckerDialogContent",
+        transitionSpec = {
+            slideInVertically(
+                animationSpec = tween(
+                    durationMillis = 300,
+                    delayMillis = 300,
+                ),
+                initialOffsetY = { height -> -height },
+            ) +
+                fadeIn(
+                    animationSpec = tween(
+                        durationMillis = 300,
+                        delayMillis = 300,
+                    ),
+                ) togetherWith slideOutVertically(
+                    animationSpec = tween(
+                        durationMillis = 300,
+                    ),
+                    targetOffsetY = { height -> height },
+                ) + fadeOut(
+                    animationSpec = tween(
+                        durationMillis = 300,
+                    ),
+                )
+        },
+    ) {
         when (it) {
             TimePickerMode.Dial -> DialTimePicker(state)
             TimePickerMode.Input -> InputTimePicker(state)
@@ -110,8 +152,7 @@ private fun Content(
 private fun Header() {
     Text(
         text = stringResource(id = R.string.time_picker_dialog_title),
-        style = HabitTrackerTypography.caption,
-        fontWeight = FontWeight.Bold,
+        style = HabitTrackerTypography.bodyLarge,
         color = HabitTrackerColors.textColor,
         modifier = Modifier
             .fillMaxWidth()
