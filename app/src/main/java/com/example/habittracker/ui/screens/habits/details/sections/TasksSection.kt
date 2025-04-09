@@ -54,7 +54,7 @@ fun LazyListScope.tasksSection(
                 color = color,
                 onEditTaskClick = onEditTaskClick,
                 testTagState = testTagState,
-                onAddTask = onAddTask
+                onAddTask = onAddTask,
             )
         } else {
             addTaskWarning(
@@ -71,7 +71,7 @@ private fun LazyListScope.tasksList(
     color: ColorUI,
     onEditTaskClick: (taskId: String) -> Unit,
     testTagState: TestTagState,
-    onAddTask: () -> Unit
+    onAddTask: () -> Unit,
 ) {
     itemsIndexed(items = tasks) { index, task ->
         val isFirstItem = index == 0
@@ -117,18 +117,18 @@ fun LazyListScope.addTaskWarning(
                 .clip(RoundedCornerShape(16.dp))
                 .background(backgroundColor)
                 .fillMaxWidth()
-                .padding(16.dp)
+                .padding(16.dp),
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(space = 8.dp, alignment = Alignment.CenterHorizontally),
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             ) {
                 Image(
                     painter = painterResource(R.drawable.ic_alert_16dp),
                     contentDescription = null,
                     colorFilter = ColorFilter.tint(iconColor),
-                    modifier = Modifier.size(16.dp)
+                    modifier = Modifier.size(16.dp),
                 )
 
                 Text(

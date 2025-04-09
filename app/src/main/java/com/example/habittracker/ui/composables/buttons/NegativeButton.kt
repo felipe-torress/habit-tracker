@@ -28,26 +28,27 @@ fun NegativeButton(
         ),
         onClick = onClick,
         testTagState = testTagState,
-        modifier = modifier
+        modifier = modifier,
     )
 }
 
-////region --- Preview ---
+// //region --- Preview ---
 private data class NegativeButtonPreviewData(val iconResId: Int? = null)
 
 private class NegativeButtonPreviewProvider : PreviewParameterProvider<NegativeButtonPreviewData> {
     override val values = sequenceOf(
         // No Icon
         NegativeButtonPreviewData(),
-
         // With Icon
-        NegativeButtonPreviewData(iconResId = R.drawable.ic_trash_24dp)
+        NegativeButtonPreviewData(iconResId = R.drawable.ic_trash_24dp),
     )
 }
 
 @Preview
 @Composable
-private fun NegativeButtonPreview(@PreviewParameter(NegativeButtonPreviewProvider::class) previewData: NegativeButtonPreviewData) {
+private fun NegativeButtonPreview(
+    @PreviewParameter(NegativeButtonPreviewProvider::class) previewData: NegativeButtonPreviewData,
+) {
     NegativeButton(
         onClick = {},
         title = stringResource(R.string.habit_details_screen_delete_button_title),
@@ -55,8 +56,8 @@ private fun NegativeButtonPreview(@PreviewParameter(NegativeButtonPreviewProvide
         testTagState = TestTagState(
             origin = "Preview",
             action = "NegativeButton",
-            section = "Test"
-        )
+            section = "Test",
+        ),
     )
 }
 //endregion

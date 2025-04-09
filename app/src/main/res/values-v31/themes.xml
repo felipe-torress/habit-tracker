@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.HabitTracker" parent="android:Theme.Material.Light.NoActionBar" />
-
     <style name="Theme.App.Starting" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">@color/background</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/animated_logo</item>
         <item name="postSplashScreenTheme">@style/Theme.HabitTracker</item>
+        <item name="android:windowSplashScreenBrandingImage">
+            @drawable/ic_studio_1001_branding_image
+        </item>
     </style>
 </resources>

@@ -6,7 +6,6 @@ import timber.log.Timber
 
 @HiltAndroidApp
 class HabitTrackerApplication : Application() {
-
     override fun onCreate() {
         super.onCreate()
 

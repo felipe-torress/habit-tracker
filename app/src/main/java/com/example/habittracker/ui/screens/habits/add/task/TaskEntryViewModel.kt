@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.data.repositories.HabitTasksRepository
 import com.example.data.repositories.temporary.TemporaryHabitRepository
 import com.example.habittracker.ui.composables.dialogs.DialogCallbacks
-import com.example.habittracker.ui.screens.habits.details.HabitDetailsDialogType
 import com.example.habittracker.ui.screens.habits.model.TaskEntryUIData
 import com.example.habittracker.ui.screens.habits.model.toTaskEntryUIData
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -31,19 +30,18 @@ class TaskEntryViewModel @Inject constructor(
     private val temporaryHabitRepository: TemporaryHabitRepository,
     private val habitTasksRepository: HabitTasksRepository,
 ) : ViewModel() {
-
     //region --- UI ---
-    private val _initialTaskEntryData = MutableStateFlow(TaskEntryUIData())
-    private val _habitId = MutableStateFlow<String?>(null)
-    private val _flow = MutableStateFlow<TaskEntryFlow>(TaskEntryFlow.TemporaryTask.Add)
-    private var _taskId: String? = null
+    private val initialTaskEntryData = MutableStateFlow(TaskEntryUIData())
+    private val flow = MutableStateFlow<TaskEntryFlow>(TaskEntryFlow.TemporaryTask.Add)
+    private var habitId: String? = null
+    private var taskId: String? = null
 
     private val _taskEntryData = MutableStateFlow(TaskEntryUIData())
     private val _isTimePickerVisible = MutableStateFlow(false)
     val taskEntryData: StateFlow<TaskEntryUIData> get() = _taskEntryData.asStateFlow()
     val isTimePickerVisible: StateFlow<Boolean> get() = _isTimePickerVisible.asStateFlow()
 
-    val isEditFlow: StateFlow<Boolean> = _flow.map { flow ->
+    val isEditFlow: StateFlow<Boolean> = flow.map { flow ->
         flow is TaskEntryFlow.SavedTask.Edit || flow is TaskEntryFlow.TemporaryTask.Edit
     }.stateIn(
         scope = viewModelScope,
@@ -53,7 +51,7 @@ class TaskEntryViewModel @Inject constructor(
 
     val isConfirmEnabled: StateFlow<Boolean> = combine(
         taskEntryData,
-        _initialTaskEntryData,
+        initialTaskEntryData,
     ) { taskEntryData, initialTaskEntryData ->
         taskEntryData != initialTaskEntryData && taskEntryData.isValidToSave()
     }.stateIn(
@@ -101,17 +99,17 @@ class TaskEntryViewModel @Inject constructor(
     }
 
     fun loadTask(taskEntryFlow: TaskEntryFlow) {
-        _flow.update { taskEntryFlow }
+        flow.update { taskEntryFlow }
         when (taskEntryFlow) {
             is TaskEntryFlow.TemporaryTask.Edit -> loadTemporaryTask(taskEntryFlow.taskId)
             is TaskEntryFlow.SavedTask.Edit -> loadSavedTask(taskEntryFlow.taskId)
-            is TaskEntryFlow.SavedTask.Add -> _habitId.update { taskEntryFlow.habitId }
+            is TaskEntryFlow.SavedTask.Add -> habitId = taskEntryFlow.habitId
             is TaskEntryFlow.TemporaryTask.Add -> Unit
         }
     }
 
     fun onConfirmTaskEntryClick() {
-        when (_flow.value) {
+        when (flow.value) {
             is TaskEntryFlow.SavedTask.Add -> addSavedTask()
             is TaskEntryFlow.SavedTask.Edit -> updateSavedTask()
             is TaskEntryFlow.TemporaryTask.Add -> addTemporaryTask()
@@ -123,7 +121,7 @@ class TaskEntryViewModel @Inject constructor(
     //endregion
 
     private fun deleteTask() {
-        when (_flow.value) {
+        when (flow.value) {
             is TaskEntryFlow.SavedTask.Edit -> deleteSavedTask()
             is TaskEntryFlow.TemporaryTask.Edit -> deleteTemporaryTask()
             else -> Unit
@@ -134,9 +132,9 @@ class TaskEntryViewModel @Inject constructor(
     private fun loadSavedTask(taskId: String) {
         viewModelScope.launch(Dispatchers.IO) {
             habitTasksRepository.getHabitTaskById(taskId).first()?.let { task ->
-                _taskId = task.id
+                this@TaskEntryViewModel.taskId = task.id
                 val taskEntryUIData = task.toTaskEntryUIData()
-                _initialTaskEntryData.update { taskEntryUIData }
+                initialTaskEntryData.update { taskEntryUIData }
                 _taskEntryData.update { taskEntryUIData }
                 Timber.i("Saved task loaded")
             } ?: Timber.w("Saved Task not found")
@@ -145,7 +143,7 @@ class TaskEntryViewModel @Inject constructor(
 
     private fun updateSavedTask() {
         viewModelScope.launch(Dispatchers.IO) {
-            val taskId = _taskId ?: return@launch
+            val taskId = taskId ?: return@launch
             _taskEntryData.value.getValidDataAndPerformAction { name, daysOfWeek, time ->
                 habitTasksRepository.updateHabitTask(
                     habitTaskId = taskId,
@@ -161,7 +159,7 @@ class TaskEntryViewModel @Inject constructor(
     private fun addSavedTask() {
         viewModelScope.launch(Dispatchers.IO) {
             _taskEntryData.value.getValidDataAndPerformAction { name, daysOfWeek, time ->
-                _habitId.value?.let { habitId ->
+                habitId?.let { habitId ->
                     habitTasksRepository.createHabitTask(
                         habitId = habitId,
                         name = name,
@@ -176,7 +174,7 @@ class TaskEntryViewModel @Inject constructor(
 
     private fun deleteSavedTask() {
         viewModelScope.launch(Dispatchers.IO) {
-            _taskId?.let { taskId ->
+            taskId?.let { taskId ->
                 habitTasksRepository.deleteHabitTask(taskId)
                 navigateBack()
             } ?: Timber.e("Cannot delete task: Task ID is null")
@@ -189,9 +187,9 @@ class TaskEntryViewModel @Inject constructor(
         temporaryHabitRepository.temporaryTasks.value.find {
             it.id == taskId
         }?.let { task ->
-            _taskId = task.id
+            this.taskId = task.id
             val taskEntryUIData = task.toTaskEntryUIData()
-            _initialTaskEntryData.update { taskEntryUIData }
+            initialTaskEntryData.update { taskEntryUIData }
             _taskEntryData.update { taskEntryUIData }
             Timber.i("Temporary task loaded")
         } ?: Timber.w("Temporary Task not found")
@@ -200,7 +198,7 @@ class TaskEntryViewModel @Inject constructor(
     private fun editTemporaryTask() {
         viewModelScope.launch(Dispatchers.IO) {
             _taskEntryData.value.getValidDataAndPerformAction { name, daysOfWeek, time ->
-                _taskId?.let { taskId ->
+                taskId?.let { taskId ->
                     temporaryHabitRepository.editTask(
                         taskId = taskId,
                         name = name,
@@ -210,7 +208,6 @@ class TaskEntryViewModel @Inject constructor(
 
                     navigateBack()
                 }
-
             }
         }
     }
@@ -230,7 +227,7 @@ class TaskEntryViewModel @Inject constructor(
 
     private fun deleteTemporaryTask() {
         viewModelScope.launch(Dispatchers.IO) {
-            _taskId?.let { taskId ->
+            taskId?.let { taskId ->
                 temporaryHabitRepository.deleteTask(taskId)
                 navigateBack()
             } ?: Timber.e("Cannot delete task: Task ID is null")

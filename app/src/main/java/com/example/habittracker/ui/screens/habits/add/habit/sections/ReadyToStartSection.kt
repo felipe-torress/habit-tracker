@@ -55,7 +55,6 @@ private class ReadyToStartSectionPreviewProvider : PreviewParameterProvider<Read
     override val values = sequenceOf(
         // Enabled Button
         ReadyToStartSectionPreviewData(),
-
         // Disabled Button
         ReadyToStartSectionPreviewData(isAddHabitEnabled = false),
     )
@@ -63,7 +62,9 @@ private class ReadyToStartSectionPreviewProvider : PreviewParameterProvider<Read
 
 @Preview
 @Composable
-fun ReadyToStartSectionPreview(@PreviewParameter(ReadyToStartSectionPreviewProvider::class) previewData: ReadyToStartSectionPreviewData) {
+fun ReadyToStartSectionPreview(
+    @PreviewParameter(ReadyToStartSectionPreviewProvider::class) previewData: ReadyToStartSectionPreviewData,
+) {
     ReadyToStartSection(
         onAddHabitClick = {},
         isAddHabitEnabled = previewData.isAddHabitEnabled,

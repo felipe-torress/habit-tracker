@@ -45,7 +45,6 @@ fun ColorfulButton(
     )
 }
 
-
 //region --- Preview ---
 private data class ColorfulButtonPreviewData(
     val color: ColorUI = ColorUI.GREEN,
@@ -64,7 +63,6 @@ private class ColorfulButtonPreviewParameterProvider : PreviewParameterProvider<
         ColorfulButtonPreviewData(enabled = false),
         // Button with icon - disabled - GREEN
         ColorfulButtonPreviewData(iconResId = R.drawable.ic_habits_24dp, enabled = false),
-
         // Button with no icon - enabled - BLUE
         ColorfulButtonPreviewData(color = ColorUI.BLUE),
         // Button with icon - enabled - BLUE
@@ -73,7 +71,6 @@ private class ColorfulButtonPreviewParameterProvider : PreviewParameterProvider<
         ColorfulButtonPreviewData(color = ColorUI.BLUE, enabled = false),
         // Button with icon - disabled - BLUE
         ColorfulButtonPreviewData(color = ColorUI.BLUE, iconResId = R.drawable.ic_habits_24dp, enabled = false),
-
         // Button with no icon - enabled - PURPLE
         ColorfulButtonPreviewData(color = ColorUI.PURPLE),
         // Button with icon - enabled - PURPLE

@@ -8,12 +8,19 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
 object CustomNavType {
-
     val TaskEntryFlowType = object : NavType<TaskEntryFlow>(isNullableAllowed = false) {
-        override fun put(bundle: Bundle, key: String, value: TaskEntryFlow) {
+        override fun put(
+            bundle: Bundle,
+            key: String,
+            value: TaskEntryFlow,
+        ) {
             bundle.putParcelable(key, value)
         }
-        override fun get(bundle: Bundle, key: String): TaskEntryFlow {
+
+        override fun get(
+            bundle: Bundle,
+            key: String,
+        ): TaskEntryFlow {
             return bundle.getParcelable(key)!!
         }
 
