@@ -48,8 +48,14 @@ fun TimePickerDialog(
     onCancel: () -> Unit,
     onConfirm: (localTime: LocalTime) -> Unit,
 ) {
+    val initialZonedDateTime = LocalTime.now()
+
     // 24 hour time picker
-    val state = rememberTimePickerState(is24Hour = true)
+    val state = rememberTimePickerState(
+        is24Hour = true,
+        initialHour = initialZonedDateTime.hour,
+        initialMinute = initialZonedDateTime.minute
+    )
 
     val localTime = remember { derivedStateOf { getLocalTime(state.hour, state.minute) } }
     var mode = remember { TimePickerMode.Dial }
@@ -110,8 +116,7 @@ private fun Content(
 private fun Header() {
     Text(
         text = stringResource(id = R.string.time_picker_dialog_title),
-        style = HabitTrackerTypography.caption,
-        fontWeight = FontWeight.Bold,
+        style = HabitTrackerTypography.bodyLarge,
         color = HabitTrackerColors.textColor,
         modifier = Modifier
             .fillMaxWidth()
