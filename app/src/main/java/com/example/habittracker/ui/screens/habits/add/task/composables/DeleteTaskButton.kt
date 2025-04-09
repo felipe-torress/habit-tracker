@@ -11,7 +11,8 @@ import com.example.habittracker.ui.utils.testTags.TestTagState
 fun DeleteTaskButton(
     onClick: () -> Unit,
     testTagState: TestTagState,
-    modifier: Modifier = Modifier) {
+    modifier: Modifier = Modifier,
+) {
     NegativeButton(
         onClick = onClick,
         title = stringResource(R.string.task_entry_screen_delete_task_button_title),

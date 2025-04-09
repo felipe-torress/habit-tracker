@@ -7,11 +7,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 @Parcelize
 sealed class TaskEntryFlow : Parcelable {
-
     @Serializable
     @Parcelize
     sealed class TemporaryTask : TaskEntryFlow(), Parcelable {
-
         @Serializable
         @Parcelize
         data object Add : TemporaryTask(), Parcelable

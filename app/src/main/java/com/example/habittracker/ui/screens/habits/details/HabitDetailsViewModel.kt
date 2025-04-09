@@ -95,7 +95,11 @@ class HabitDetailsViewModel @Inject constructor(
     fun onAddTask() {
         habit.value?.let { habit ->
             viewModelScope.launch {
-                uiEvent.emit(HabitDetailsEvent.NavigateToTaskEntry(taskEntryFlow = TaskEntryFlow.SavedTask.Add(habitId = habit.id)))
+                uiEvent.emit(
+                    HabitDetailsEvent.NavigateToTaskEntry(
+                        taskEntryFlow = TaskEntryFlow.SavedTask.Add(habitId = habit.id),
+                    ),
+                )
             }
         } ?: Timber.w("Not able to add task: habit is null")
     }

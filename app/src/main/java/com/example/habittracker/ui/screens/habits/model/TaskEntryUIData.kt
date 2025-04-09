@@ -30,13 +30,16 @@ data class TaskEntryUIData(
         return copy(time = newTime)
     }
 
-    suspend fun getValidDataAndPerformAction(block: suspend (name: String, daysOfWeek: List<DayOfWeek>, time: LocalTime) -> Unit) {
+    suspend fun getValidDataAndPerformAction(
+        block: suspend (name: String, daysOfWeek: List<DayOfWeek>, time: LocalTime) -> Unit,
+    ) {
         if (isValidToSave()) {
             block(name, daysOfWeek, time!!)
-        } else Timber.e("Task entry is not valid to save: name=$name, daysOfWeek=$daysOfWeek, time=$time")
+        } else {
+            Timber.e("Task entry is not valid to save: name=$name, daysOfWeek=$daysOfWeek, time=$time")
+        }
     }
 }
-
 
 fun HabitTask.toTaskEntryUIData(): TaskEntryUIData {
     return TaskEntryUIData(

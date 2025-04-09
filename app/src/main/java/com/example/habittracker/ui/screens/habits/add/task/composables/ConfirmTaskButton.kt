@@ -22,7 +22,7 @@ fun ConfirmTaskButton(
                 R.string.task_entry_screen_confirm_add_task_button_title_edit
             } else {
                 R.string.task_entry_screen_confirm_add_task_button_title_add
-            }
+            },
         ),
         iconResId = R.drawable.ic_progress_24dp,
         enabled = isConfirmEnabled,

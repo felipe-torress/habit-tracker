@@ -109,7 +109,7 @@ private fun Header(
         Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.Start,
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f),
         ) {
             Text(
                 text = title,
@@ -183,7 +183,7 @@ private fun Content(
                 tasks = tasks,
                 iconColor = iconColor,
                 color = color,
-                testTagState = testTagState
+                testTagState = testTagState,
             )
         } else {
             AddTaskSection(
@@ -200,7 +200,7 @@ private fun TasksSection(
     tasks: List<HabitTaskUIData>,
     iconColor: Color,
     color: ColorUI,
-    testTagState: TestTagState
+    testTagState: TestTagState,
 ) {
     Text(
         text = pluralStringResource(R.plurals.habit_card_tasks_header_title, tasks.size),
@@ -276,18 +276,18 @@ private fun AddTaskSection(
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(16.dp),
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth(),
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(space = 8.dp, alignment = Alignment.CenterHorizontally),
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         ) {
             Image(
                 painter = painterResource(R.drawable.ic_alert_16dp),
                 contentDescription = null,
                 colorFilter = ColorFilter.tint(iconColor),
-                modifier = Modifier.size(16.dp)
+                modifier = Modifier.size(16.dp),
             )
 
             Text(

@@ -32,7 +32,6 @@ fun HabitTrackerApp(
     appState: AppState = rememberAppState(),
     statusBarColor: Color,
 ) {
-
     // Set the status bar text color to dark
     val window = (LocalContext.current as Activity).window
     val controller = WindowInsetsControllerCompat(window, window.decorView)

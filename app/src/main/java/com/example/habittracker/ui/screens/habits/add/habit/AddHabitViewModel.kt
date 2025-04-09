@@ -38,6 +38,7 @@ class AddHabitViewModel @Inject constructor(
 
     sealed class AddHabitEvent {
         data object NavigateBack : AddHabitEvent()
+
         data class NavigateToTaskEntry(val taskEntryFlow: TaskEntryFlow.TemporaryTask) : AddHabitEvent()
     }
     //endregion
