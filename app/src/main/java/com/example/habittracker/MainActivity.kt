@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.example.habittracker.ui.HabitTrackerApp
 import com.example.habittracker.ui.theme.HabitTrackerTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -17,6 +18,12 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        installSplashScreen().apply {
+            setKeepOnScreenCondition {
+                !mainActivityViewModel.shouldHideSplashScreen.value
+            }
+        }
+
         enableEdgeToEdge()
         setContent {
             HabitTrackerTheme {
