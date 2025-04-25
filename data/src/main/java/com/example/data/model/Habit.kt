@@ -11,9 +11,3 @@ data class Habit(
     val goals: List<Goal>,
     val tasks: List<HabitTask>,
 )
-
-enum class HabitColor {
-    BLUE,
-    GREEN,
-    PURPLE,
-}
