@@ -4,6 +4,8 @@ import com.example.data.database.HabitTrackerDatabase
 import com.example.data.database.dao.GoalDao
 import com.example.data.database.dao.HabitDao
 import com.example.data.database.dao.HabitTaskDao
+import com.example.data.database.dao.TaskWeeklyProgressDao
+import com.example.data.database.dao.WeekDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,4 +22,11 @@ internal object DaosModule {
 
     @Provides
     fun providesHabitTaskDao(database: HabitTrackerDatabase): HabitTaskDao = database.habitTaskDao()
+
+    @Provides
+    fun providesTaskWeeklyProgressDao(database: HabitTrackerDatabase): TaskWeeklyProgressDao =
+        database.taskWeeklyProgressDao()
+
+    @Provides
+    fun providesWeekDao(database: HabitTrackerDatabase): WeekDao = database.weekDao()
 }

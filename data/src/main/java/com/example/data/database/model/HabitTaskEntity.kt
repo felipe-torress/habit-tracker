@@ -32,6 +32,7 @@ data class HabitTaskEntity(
     val habitId: String,
     val name: String,
     val time: LocalTime,
+    // TODO: Remove current and required weekly completions
     @ColumnInfo(name = "current_weekly_completions")
     val currentWeeklyCompletions: Int,
     @ColumnInfo(name = "required_weekly_completions")
